@@ -44,9 +44,8 @@ public abstract class ComponentManager {
 	 * @param type The desired type.
 	 * @return Whether this container has a component of that type.
 	 */
-	@SuppressWarnings("unchecked")
-	public <T extends Component> boolean hasComponent(T... type) {
-		return components.containsKey((Class<T>) type.getClass().getComponentType());
+	public boolean hasComponent(Class<?> type){
+		return components.containsKey(type);
 	}
 	
 }
