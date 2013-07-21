@@ -28,6 +28,11 @@ public final class Entity extends ComponentManager {
 	private boolean deleted = false;
 	
 	/**
+	 * Changed flag.
+	 */
+	private boolean changed = false;
+	
+	/**
 	 * Assigns the Entity's metadata.
 	 * @param tag This Entity's unique tag.
 	 * @param group This Entity's group name.
@@ -72,6 +77,25 @@ public final class Entity extends ComponentManager {
 	 */
 	public boolean isDeleted() {
 		return deleted;
+	}
+	
+	/**
+	 * @return Whether this Entity's components were changed.
+	 */
+	public boolean wasChanged() {
+		return changed;
+	}
+
+	@Override
+	public void addComponent(Component value) {
+		super.addComponent(value);
+		changed = true;
+	}
+
+	@Override
+	public void removeComponent(Component value) {
+		super.removeComponent(value);
+		changed = true;
 	}
 	
 }

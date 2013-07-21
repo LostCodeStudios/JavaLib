@@ -15,51 +15,52 @@ public class EntityManager {
 	/**
 	 * Contains all entities.
 	 */
-	private List<Entity> entities;
-	
-	/**
-	 * Contains all entity's that have been removed in this iteration of the game loop.
-	 */
-	private List<Entity> entityRemovalList;
+	private List<Entity> entities = new ArrayList<Entity>();
 	
 	/**
 	 * Contains all tagged entities mapped to their tags.
 	 */
-	private Map<String, Entity> entitiesByTag;
+	private Map<String, Entity> entitiesByTag = new HashMap<String, Entity>();
 	
 	/**
 	 * Contains all entity groups mapped to their names.
 	 */
-	private Map<String, List<Entity>> entitiesByGroup;
+	private Map<String, List<Entity>> entitiesByGroup = new HashMap<String, List<Entity>>();
 	
 	/**
 	 * Contains all entities of each type, mapped to the type name.
 	 */
-	private Map<String, List<Entity>> entitiesByType;
+	private Map<String, List<Entity>> entitiesByType = new HashMap<String, List<Entity>>();
 	
 	/**
-	 * Instantiates the manager's entity list and maps.
+	 * Contains all entities that have been added in this iteration of the game loop.
 	 */
-	public EntityManager() {
-		entities = new ArrayList<Entity>();
-		entitiesByTag = new HashMap<String, Entity>();
-		entitiesByGroup = new HashMap<String, List<Entity>>(); //TODO: Should these be HashMaps?
-		entitiesByType = new HashMap<String, List<Entity>>();
-	}
+	private List<Entity> newEntities = new ArrayList<Entity>();
+	
+	/**
+	 * Contains all entities that have been changed in this iteration of the game loop.
+	 */
+	private List<Entity> changedEntities = new ArrayList<Entity>();
+	
+	/**
+	 * Contains all entities that have been removed in this iteration of the game loop.
+	 */
+	private List<Entity> removedEntities = new ArrayList<Entity>();
 	
 	/**
 	 * Checks for {@link Entity Entities} that have been marked for removal, and adds them to the removal list.
 	 */
 	public void process() {
 		
-		entityRemovalList.clear();
+		newEntities.clear();
+		changedEntities.clear();
+		removedEntities.clear();
 		
 		for (int i = entities.size() - 1; i >= 0; i--) {
 			Entity e = entities.get(i);
 			
 			if (e.isDeleted()) {
-				entityRemovalList.add(e);
-				remove(e);
+				remove(e); //This will add e to the removal list
 			}
 		}
 	}
@@ -70,7 +71,11 @@ public class EntityManager {
 	 */
 	public void add(Entity e) {
 		
-		entities.add(e); //Add to entity list
+		//Add to entity list
+		entities.add(e);
+		
+		//Mark for pre-processing
+		newEntities.add(e);
 		
 		//Map to tag
 		if (!e.getTag().isEmpty()) {
@@ -114,6 +119,10 @@ public class EntityManager {
 		//Remove from entity list
 		entities.remove(e);
 		
+		//Mark for post-removal processing
+		removedEntities.add(e);
+		
+		
 		//Remove from tag map
 		if (!e.getTag().isEmpty()) {
 			entitiesByTag.remove(e);
@@ -130,7 +139,7 @@ public class EntityManager {
 			//Likewise, we can assume the type list exists as well.
 			entitiesByType.get(e.getType()).remove(e);
 		}
-		
+	
 	}
 	
 	/**
@@ -141,10 +150,24 @@ public class EntityManager {
 	}
 	
 	/**
-	 * @return The manager's entity removal list.
+	 * @return Entities that have been added in this iteration of the game loop.
 	 */
-	public List<Entity> getRemovalList() {
-		return entityRemovalList;
+	public List<Entity> getNewEntities() {
+		return newEntities;
+	}
+	
+	/**
+	 * @return Entities that have been changed in this iteration of the game loop.
+	 */
+	public List<Entity> getChangedEntities() {
+		return changedEntities;
+	}
+	
+	/**
+	 * @return Entities that have been deleted in this iteration of the game loop.
+	 */
+	public List<Entity> getRemovedEntities() {
+		return removedEntities;
 	}
 	
 	/**

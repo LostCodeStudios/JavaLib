@@ -3,24 +3,52 @@ package com.punchline.javalib.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO: Make abstract
 public class EntityWorld extends ComponentManager {
 
 	/**
 	 * This world's {@link EntityManager}.
 	 */
-	EntityManager entities;
+	protected EntityManager entities;
+	
+	/**
+	 * This world's {@link SystemManager}.
+	 */
+	protected SystemManager systems;
 	
 	/**
 	 * Template map.
 	 */
-	Map<String, EntityTemplate> templates;
+	private Map<String, EntityTemplate> templates;
 	
 	/**
-	 * Instantiates the EntityWorld's {@link EntityManager}, template map, and component map.
+	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
 	 */
 	public EntityWorld() {
 		entities = new EntityManager();
-		templates = new HashMap<String, EntityTemplate>(); //TODO: HashMap?
+		
+		systems = new SystemManager();
+		
+		templates = new HashMap<String, EntityTemplate>();
+		
+		buildComponents();
+		buildSystems();
+		buildTemplates();
+		buildEntities();
+	}
+	
+	/**
+	 * Runs all system processing.
+	 */
+	public void process() {
+		
+		entities.process();
+		
+		systems.process(
+				entities.getNewEntities(), 
+				entities.getChangedEntities(), 
+				entities.getRemovedEntities());
+		
 	}
 	
 	/**
@@ -34,5 +62,25 @@ public class EntityWorld extends ComponentManager {
 		entities.add(e);
 		return e;
 	}
+	
+	/**
+	 * Adds necessary components to the world. Called by the constructor.
+	 */
+	private void buildComponents() { }
+	
+	/**
+	 * Adds necessary systems to the world. Called by the constructor.
+	 */
+	private void buildSystems() { }
+	
+	/**
+	 * Adds necessary templates to the world. Called by the constructor.
+	 */
+	private void buildTemplates() { }
+	
+	/**
+	 * Adds necessary entities to the world. Called by the constructor.
+	 */
+	private void buildEntities() { }
 	
 }
