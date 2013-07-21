@@ -18,6 +18,11 @@ public class EntityManager {
 	private List<Entity> entities;
 	
 	/**
+	 * Contains all entity's that have been removed in this iteration of the game loop.
+	 */
+	private List<Entity> entityRemovalList;
+	
+	/**
 	 * Contains all tagged entities mapped to their tags.
 	 */
 	private Map<String, Entity> entitiesByTag;
@@ -40,6 +45,23 @@ public class EntityManager {
 		entitiesByTag = new HashMap<String, Entity>();
 		entitiesByGroup = new HashMap<String, List<Entity>>(); //TODO: Should these be HashMaps?
 		entitiesByType = new HashMap<String, List<Entity>>();
+	}
+	
+	/**
+	 * Checks for {@link Entity Entities} that have been marked for removal, and adds them to the removal list.
+	 */
+	public void process() {
+		
+		entityRemovalList.clear();
+		
+		for (int i = entities.size() - 1; i >= 0; i--) {
+			Entity e = entities.get(i);
+			
+			if (e.isDeleted()) {
+				entityRemovalList.add(e);
+				remove(e);
+			}
+		}
 	}
 	
 	/**
@@ -110,7 +132,20 @@ public class EntityManager {
 		}
 		
 	}
-
+	
+	/**
+	 * @return The manager's entity list.
+	 */
+	public List<Entity> getEntities() {
+		return entities;
+	}
+	
+	/**
+	 * @return The manager's entity removal list.
+	 */
+	public List<Entity> getRemovalList() {
+		return entityRemovalList;
+	}
 	
 	/**
 	 * @param tag The tag of the desired entity.

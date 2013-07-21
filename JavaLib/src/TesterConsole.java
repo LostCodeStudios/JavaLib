@@ -11,7 +11,7 @@ public class TesterConsole {
 		e.addComponent(new TestComponent());
 		TestComponent c = e.getComponent();
 		System.out.println(c.getClass().getName());
-		System.out.println(e.<TestComponent> hasComponent());
+		System.out.println(e.hasComponent(TestComponent.class));
 		
 		
 		
