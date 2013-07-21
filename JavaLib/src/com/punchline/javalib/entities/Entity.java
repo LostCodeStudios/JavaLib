@@ -5,10 +5,10 @@ import java.util.Map;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
- * @author Nathaniel
+ * @author Nathaniel + WIlliam
  *
  */
-public final class Entity extends ComponentContainer {
+public final class Entity extends ComponentManager {
 	
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
@@ -29,6 +29,7 @@ public final class Entity extends ComponentContainer {
 	 * Contains all of this entity's components, each mapped to a String showing the type of the component.
 	 */
 	Map<Class<?>, Component> components;
+	
 	
 	public Entity(String tag, String group, String type) {
 		this.tag = tag;
@@ -57,5 +58,5 @@ public final class Entity extends ComponentContainer {
 	public String getType() {
 		return type;
 	}
-	
+
 }

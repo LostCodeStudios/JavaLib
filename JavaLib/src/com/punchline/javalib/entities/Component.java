@@ -8,15 +8,15 @@ package com.punchline.javalib.entities;
 public abstract class Component {
 	
 	/**
-	 * Called when this Component is added to a {@link ComponentContainer}.
-	 * @param container The {@link ComponentContainer} this Component is added to.
+	 * Called when this Component is added to a {@link ComponentManager}.
+	 * @param container The {@link ComponentManager} this Component is added to.
 	 */
-	public void onAdd(ComponentContainer container) { }
+	public void onAdd(ComponentManager container) { }
 	
 	/**
-	 * Called when this Component is removed from a {@link ComponentContainer}.
-	 * @param container The {@link ComponentContainer} this Component is removed from.
+	 * Called when this Component is removed from a {@link ComponentManager}.
+	 * @param container The {@link ComponentManager} this Component is removed from.
 	 */
-	public void onRemove(ComponentContainer container) { }
+	public void onRemove(ComponentManager container) { }
 	
 }

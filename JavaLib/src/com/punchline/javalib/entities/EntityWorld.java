@@ -3,7 +3,7 @@ package com.punchline.javalib.entities;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityWorld extends ComponentContainer {
+public class EntityWorld extends ComponentManager {
 
 	/**
 	 * This world's {@link EntityManager}.

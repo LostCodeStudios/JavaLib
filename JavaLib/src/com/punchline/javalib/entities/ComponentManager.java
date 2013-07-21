@@ -9,7 +9,7 @@ import java.util.Map;
  * @author Nathaniel
  *
  */
-public abstract class ComponentContainer {
+public abstract class ComponentManager {
 
 	Map<Class<?>, Component> components = new HashMap<Class<?>, Component>(); //HashMap?
 	
