@@ -6,18 +6,11 @@ package com.punchline.javalib.entities;
  *
  */
 public abstract class Component {
-
-	/**
-	 * This unique string is used for identifying components of this type.
-	 */
-	protected static String componentID = "";
 	
 	/**
 	 * @return This component type's unique ID.
 	 */
-	public static String getID() {
-		return componentID;
-	}
+	public static String getID() { return ""; }
 	
 	/**
 	 * Called when this Component is added to a {@link ComponentContainer}.
