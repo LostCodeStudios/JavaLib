@@ -25,12 +25,6 @@ public final class Entity extends ComponentManager {
 	 */
 	String type = "";
 	
-	/**
-	 * Contains all of this entity's components, each mapped to a String showing the type of the component.
-	 */
-	Map<Class<?>, Component> components;
-	
-	
 	public Entity(String tag, String group, String type) {
 		this.tag = tag;
 		this.group = group;

@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class ComponentManager {
 
-	Map<Class<?>, Component> components = new HashMap<Class<?>, Component>(); //HashMap?
+	private Map<Class<?>, Component> components = new HashMap<Class<?>, Component>(); //HashMap?
 	
 	/**
 	 * Adds the given component to this container.
