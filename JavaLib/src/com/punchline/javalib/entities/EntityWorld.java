@@ -1,8 +1,9 @@
 package com.punchline.javalib.entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class EntityWorld {
+public class EntityWorld extends ComponentContainer {
 
 	/**
 	 * This world's {@link EntityManager}.
@@ -13,6 +14,14 @@ public class EntityWorld {
 	 * Template map.
 	 */
 	Map<String, EntityTemplate> templates;
+	
+	/**
+	 * Instantiates the EntityWorld's {@link EntityManager}, template map, and component map.
+	 */
+	public EntityWorld() {
+		entities = new EntityManager();
+		templates = new HashMap<String, EntityTemplate>(); //TODO: HashMap?
+	}
 	
 	/**
 	 * Creates an {@link Entity} using the {@link EntityTemplate} associated with the given tag.

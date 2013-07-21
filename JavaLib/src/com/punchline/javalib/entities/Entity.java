@@ -8,7 +8,7 @@ import java.util.Map;
  * @author Nathaniel
  *
  */
-public final class Entity {
+public final class Entity extends ComponentContainer {
 	
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
@@ -56,32 +56,6 @@ public final class Entity {
 	 */
 	public String getType() {
 		return type;
-	}
-	
-	/**
-	 * Adds the given component to this entity's component map, with the key of the component's type identifier.
-	 * @param value
-	 */
-	@SuppressWarnings("static-access")
-	public void addComponent(Component value) {
-		components.put(value.getID(), value);
-	}
-	
-	/**
-	 * Removes the given component from this entity's component map.
-	 * @param value
-	 */
-	@SuppressWarnings("static-access")
-	public void removeComponent(Component value) {
-		components.remove(value.getID());
-	}
-	
-	/**
-	 * @param key The type identifier for the desired component.
-	 * @return The desired component.
-	 */
-	public Component getComponent(String key) {
-		return components.get(key);
 	}
 	
 }
