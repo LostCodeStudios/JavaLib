@@ -11,15 +11,14 @@ import java.util.Map;
  */
 public abstract class ComponentContainer {
 
-	Map<String, Component> components = new HashMap<String, Component>(); //HashMap?
+	Map<Class<?>, Component> components = new HashMap<Class<?>, Component>(); //HashMap?
 	
 	/**
 	 * Adds the given component to this container.
 	 * @param value The component to be added.
 	 */
-	@SuppressWarnings("static-access")
 	public void addComponent(Component value) {
-		components.put(value.getID(), value);
+		components.put(value.getClass(), value);
 		value.onAdd(this);
 	}
 
@@ -27,26 +26,25 @@ public abstract class ComponentContainer {
 	 * Removes the given component from this container.
 	 * @param value The component to be removed.
 	 */
-	@SuppressWarnings("static-access")
 	public void removeComponent(Component value) {
 		value.onRemove(this);
-		components.remove(value.getID());
+		components.remove(value.getClass());
 	}
 	
 	/**
-	 * @param typeID The desired type.
+	 * @param type The desired type.
 	 * @return This container's component of that type.
 	 */
-	public Component getComponent(String typeID) {
-		return components.get(typeID);
+	public Component getComponent(Class<?> type) {
+		return components.get(type);
 	}
 	
 	/**
-	 * @param typeID The desired type.
+	 * @param type The desired type.
 	 * @return Whether this container has a component of that type.
 	 */
-	public boolean hasComponent(String typeID) {
-		return components.containsKey(typeID);
+	public boolean hasComponent(Class<?> type) {
+		return components.containsKey(type);
 	}
 	
 }

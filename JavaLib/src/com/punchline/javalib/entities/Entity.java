@@ -28,13 +28,13 @@ public final class Entity extends ComponentContainer {
 	/**
 	 * Contains all of this entity's components, each mapped to a String showing the type of the component.
 	 */
-	Map<String, Component> components;
+	Map<Class<?>, Component> components;
 	
 	public Entity(String tag, String group, String type) {
 		this.tag = tag;
 		this.group = group;
 		this.type = type;
-		this.components = new HashMap<String, Component>(); //TODO: Is HashMap the best type to use for this?
+		this.components = new HashMap<Class<?>, Component>(); //TODO: Is HashMap the best type to use for this?
 	}
 	
 	/**

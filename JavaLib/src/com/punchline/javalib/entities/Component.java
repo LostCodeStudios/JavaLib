@@ -8,11 +8,6 @@ package com.punchline.javalib.entities;
 public abstract class Component {
 	
 	/**
-	 * @return This component type's unique ID.
-	 */
-	public static String getID() { return ""; }
-	
-	/**
 	 * Called when this Component is added to a {@link ComponentContainer}.
 	 * @param container The {@link ComponentContainer} this Component is added to.
 	 */
