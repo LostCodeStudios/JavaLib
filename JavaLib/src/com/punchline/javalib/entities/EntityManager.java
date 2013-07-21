@@ -15,22 +15,22 @@ public class EntityManager {
 	/**
 	 * Contains all entities.
 	 */
-	List<Entity> entities;
+	private List<Entity> entities;
 	
 	/**
 	 * Contains all tagged entities mapped to their tags.
 	 */
-	Map<String, Entity> entitiesByTag;
+	private Map<String, Entity> entitiesByTag;
 	
 	/**
 	 * Contains all entity groups mapped to their names.
 	 */
-	Map<String, List<Entity>> entitiesByGroup;
+	private Map<String, List<Entity>> entitiesByGroup;
 	
 	/**
 	 * Contains all entities of each type, mapped to the type name.
 	 */
-	Map<String, List<Entity>> entitiesByType;
+	private Map<String, List<Entity>> entitiesByType;
 	
 	/**
 	 * Instantiates the manager's entity list and maps.
@@ -110,13 +110,7 @@ public class EntityManager {
 		}
 		
 	}
-	
-	/**
-	 * @return The manager's entity list.
-	 */
-	public List<Entity> getEntities() {
-		return entities;
-	}
+
 	
 	/**
 	 * @param tag The tag of the desired entity.
