@@ -10,18 +10,29 @@ public final class Entity extends ComponentManager {
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
 	 */
-	String tag = "";
+	private String tag = "";
 	
 	/**
 	 * The name of the group this entity belongs to. This must be set only once, by a template.
 	 */
-	String group = "";
+	private String group = "";
 	
 	/**
 	 * This entity's type. This must be set only once, by a template.
 	 */
-	String type = "";
+	private String type = "";
 	
+	/**
+	 * Deletion flag.
+	 */
+	private boolean deleted = false;
+	
+	/**
+	 * Assigns the Entity's metadata.
+	 * @param tag This Entity's unique tag.
+	 * @param group This Entity's group name.
+	 * @param type This Entity's type.
+	 */
 	public Entity(String tag, String group, String type) {
 		this.tag = tag;
 		this.group = group;
@@ -48,5 +59,19 @@ public final class Entity extends ComponentManager {
 	public String getType() {
 		return type;
 	}
+	
+	/**
+	 * Flags this entity for deletion by the {@link EntityManager}.
+	 */
+	public void delete() {
+		deleted = true;
+	}
 
+	/**
+	 * @return Whether this Entity has been flagged for deletion.
+	 */
+	public boolean isDeleted() {
+		return deleted;
+	}
+	
 }
