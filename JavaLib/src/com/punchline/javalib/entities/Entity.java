@@ -1,8 +1,5 @@
 package com.punchline.javalib.entities;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
  * @author Nathaniel + WIlliam
@@ -29,7 +26,6 @@ public final class Entity extends ComponentManager {
 		this.tag = tag;
 		this.group = group;
 		this.type = type;
-		this.components = new HashMap<Class<?>, Component>(); //TODO: Is HashMap the best type to use for this?
 	}
 	
 	/**
