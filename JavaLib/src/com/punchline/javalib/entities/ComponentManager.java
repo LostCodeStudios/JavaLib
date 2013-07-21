@@ -35,16 +35,18 @@ public abstract class ComponentManager {
 	 * @param type The desired type.
 	 * @return This container's component of that type.
 	 */
-	public Component getComponent(Class<?> type) {
-		return components.get(type);
+	@SuppressWarnings("unchecked")
+	public <T extends Component> T getComponent(T... type) {
+		return (T)components.get((Class<T>) type.getClass().getComponentType());
 	}
 	
 	/**
 	 * @param type The desired type.
 	 * @return Whether this container has a component of that type.
 	 */
-	public boolean hasComponent(Class<?> type) {
-		return components.containsKey(type);
+	@SuppressWarnings("unchecked")
+	public <T extends Component> boolean hasComponent(T... type) {
+		return components.containsKey((Class<T>) type.getClass().getComponentType());
 	}
 	
 }
