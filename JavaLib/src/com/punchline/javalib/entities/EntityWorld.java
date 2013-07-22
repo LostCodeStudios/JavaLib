@@ -66,21 +66,21 @@ public class EntityWorld extends ComponentManager {
 	/**
 	 * Adds necessary components to the world. Called by the constructor.
 	 */
-	private void buildComponents() { }
+	protected void buildComponents() { }
 	
 	/**
 	 * Adds necessary systems to the world. Called by the constructor.
 	 */
-	private void buildSystems() { }
+	protected void buildSystems() { }
 	
 	/**
 	 * Adds necessary templates to the world. Called by the constructor.
 	 */
-	private void buildTemplates() { }
+	protected void buildTemplates() { }
 	
 	/**
 	 * Adds necessary entities to the world. Called by the constructor.
 	 */
-	private void buildEntities() { }
+	protected void buildEntities() { }
 	
 }

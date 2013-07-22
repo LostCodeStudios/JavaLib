@@ -50,11 +50,19 @@ public class SystemManager {
 			}
 			
 			for (Entity e : changedEntities) {
-				system.changed(e); //If this Entity can no longer be processed, remove it.
+				if (system.isProcessing(e)) {
+					if (!system.canProcess(e)) {
+						system.remove(e);
+						continue;
+					}
+					
+					system.onChanged(e);
+				}
+				
 			}
 			
 			for (Entity e : removedEntities) {
-				if (system.canProcess(e)) {
+				if (system.isProcessing(e)) {
 					system.remove(e); //The system was processing this Entity, so remove it.
 				}
 			}

@@ -3,9 +3,24 @@ package com.punchline.javalib.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base class for all EntitySystems. An EntitySystem contains a predicate for determining which Entities concern it,
+ * as well as a process() method for performing logic on Entities.
+ * @author Nathaniel
+ *
+ */
 public abstract class EntitySystem {
 	
 	private List<Entity> entities = new ArrayList<Entity>();
+	
+	/**
+	 * Checks if an Entity is part of this system's processing list.
+	 * @param e The Entity to check for.
+	 * @return  Whether it's in this system's processing list.
+	 */
+	public boolean isProcessing(Entity e) {
+		return entities.contains(e);
+	}
 	
 	/**
 	 * Predicate for determining if an {@link Entity} needs to be sent to this system for processing.
@@ -44,14 +59,6 @@ public abstract class EntitySystem {
 	 * @param e The added Entity.
 	 */
 	protected void onAdded(Entity e) { }
-	
-	public void changed(Entity e) {
-		if (entities.contains(e) && !canProcess(e)) {
-			remove(e); return;
-		}
-		
-		onChanged(e);
-	}
 	
 	/**
 	 * Called when one of this system's Entities is changed.

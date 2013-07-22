@@ -17,6 +17,7 @@ public class EntityManager {
 	 */
 	private List<Entity> entities = new ArrayList<Entity>();
 	
+	//TODO: Do we get rid of these?
 	/**
 	 * Contains all tagged entities mapped to their tags.
 	 */

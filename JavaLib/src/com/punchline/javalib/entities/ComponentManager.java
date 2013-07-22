@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class ComponentManager {
 
-	private Map<Class<?>, Component> components = new HashMap<Class<?>, Component>(); //HashMap?
+	private Map<Class<?>, Component> components = new HashMap<Class<?>, Component>();
 	
 	/**
 	 * Adds the given component to this container.
@@ -44,7 +44,7 @@ public abstract class ComponentManager {
 	 * @param type The desired type.
 	 * @return Whether this container has a component of that type.
 	 */
-	public boolean hasComponent(Class<?> type){
+	public boolean hasComponent(Class<? extends Component> type){
 		return components.containsKey(type);
 	}
 	
