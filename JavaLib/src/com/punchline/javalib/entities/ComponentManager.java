@@ -17,9 +17,10 @@ public abstract class ComponentManager {
 	 * Adds the given component to this container.
 	 * @param value The component to be added.
 	 */
-	public void addComponent(Component value) {
+	public <T extends Component> T addComponent(T value) {
 		components.put(value.getClass(), value);
 		value.onAdd(this);
+		return (T)value;
 	}
 
 	/**
