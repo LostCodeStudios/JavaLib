@@ -3,6 +3,7 @@ package com.punchline.javalib.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.systems.RenderSystem;
@@ -73,7 +74,7 @@ public class EntityWorld {
 		systems.process(
 				entities.getNewEntities(), 
 				entities.getChangedEntities(), 
-				entities.getRemovedEntities());
+				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime());
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		
