@@ -87,9 +87,9 @@ public final class Entity extends ComponentManager {
 	}
 
 	@Override
-	public void addComponent(Component value) {
-		super.addComponent(value);
+	public <T extends Component> T addComponent(T value) {
 		changed = true;
+		return super.addComponent(value);
 	}
 
 	@Override
