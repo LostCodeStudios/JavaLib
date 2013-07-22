@@ -15,6 +15,23 @@ public abstract class EntitySystem {
 	private long previousTime;
 	private float deltaTime;
 	
+	private float interval = 0f;
+	private float elapsed = 0f;
+	
+	/**
+	 * Constructs an EntitySystem.
+	 */
+	public EntitySystem() {
+	}
+	
+	/**
+	 * Constructs an EntitySystem with a required interval between calls of its processEntities() method.
+	 * @param interval The seconds required between calls.
+	 */
+	public EntitySystem(float interval) {
+		this.interval = interval;
+	}
+	
 	/**
 	 * Checks if an Entity is part of this system's processing list.
 	 * @param e The Entity to check for.
@@ -30,6 +47,35 @@ public abstract class EntitySystem {
 	 * @return Whether this system needs to process the given {@link Entity}.
 	 */
 	public abstract boolean canProcess(Entity e);
+	
+	/**
+	 * @return The amount of seconds that need to pass between calls of processEntities().
+	 */
+	public float getInterval() {
+		return interval;
+	}
+	
+	/**
+	 * @return The amount of seconds that have passed since the last call of processEntities().
+	 */
+	public float getElapsedInterval() {
+		return elapsed;
+	}
+	
+	/**
+	 * Adds to the time elapsed since the last call of processEntities().
+	 * @param elapsed The seconds elapsed.
+	 */
+	public void addElapsedInterval(float elapsed) {
+		this.elapsed += elapsed;
+	}
+	
+	/**
+	 * Resets the timer for this system's interval.
+	 */
+	public void resetElapsedInterval() {
+		elapsed -= interval;
+	}
 	
 	/**
 	 * Processes the given list of entities.

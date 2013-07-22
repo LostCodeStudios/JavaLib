@@ -40,7 +40,7 @@ public class SystemManager {
 	 * @param changedEntities Modified entities.
 	 * @param removedEntities Outgoing entities.
 	 */
-	public void process(List<Entity> newEntities, List<Entity> changedEntities, List<Entity> removedEntities) {
+	public void process(List<Entity> newEntities, List<Entity> changedEntities, List<Entity> removedEntities, float deltaSeconds) {
 		
 		for (EntitySystem system : systems) {
 			
@@ -66,6 +66,17 @@ public class SystemManager {
 				if (system.isProcessing(e)) {
 					system.remove(e); //The system was processing this Entity, so remove it.
 				}
+			}
+			
+			if (system.getInterval() > 0) {
+				system.addElapsedInterval(deltaSeconds);
+				
+				if (system.getElapsedInterval() >= system.getInterval()) {
+					system.processEntities();
+					system.resetElapsedInterval();
+				}
+			} else {
+				system.processEntities();
 			}
 			
 		}
