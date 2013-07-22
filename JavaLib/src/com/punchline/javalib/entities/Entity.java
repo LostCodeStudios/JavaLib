@@ -83,7 +83,12 @@ public final class Entity extends ComponentManager {
 	 * @return Whether this Entity's components were changed.
 	 */
 	public boolean wasChanged() {
-		return changed;
+		if (changed) {
+			changed = false;
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

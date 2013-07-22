@@ -12,6 +12,8 @@ import java.util.List;
 public abstract class EntitySystem {
 	
 	private List<Entity> entities = new ArrayList<Entity>();
+	private long previousTime;
+	private float deltaTime;
 	
 	/**
 	 * Checks if an Entity is part of this system's processing list.
@@ -34,9 +36,15 @@ public abstract class EntitySystem {
 	 * @param entities A list of all desired entities.
 	 */
 	public void processEntities() {
+		
+		long time = System.nanoTime();
+		deltaTime = (float)((time - previousTime));
+		
 		for (Entity e : entities) {
 			process(e);
 		}
+		
+		previousTime = time;
 	}
 	
 	/**

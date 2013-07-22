@@ -59,6 +59,13 @@ public class EntityWorld {
 	}
 	
 	/**
+	 * @return This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 */
+	public World getPhysicsWorld() {
+		return physicsWorld;
+	}
+	
+	/**
 	 * Creates an {@link Entity} using the {@link EntityTemplate} associated with the given tag.
 	 * @param template The tag of the template.
 	 * @param args Arguments for creating the {@link Entity}.
