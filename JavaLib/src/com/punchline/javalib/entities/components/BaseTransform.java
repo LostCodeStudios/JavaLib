@@ -16,6 +16,11 @@ public abstract class BaseTransform extends Component {
 	public abstract Vector2 getPosition();
 	
 	/**
+	 * @return The center of this Transform.
+	 */
+	public abstract Vector2 getOrigin();
+	
+	/**
 	 * Sets the position of this Transform.
 	 * @param position The new position.
 	 */

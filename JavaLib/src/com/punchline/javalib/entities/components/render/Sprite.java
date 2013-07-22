@@ -46,11 +46,11 @@ public class Sprite extends Renderable {
 	}
 	
 	/**
-	 * Sets the Sprite's position.
-	 * @param position
+	 * Sets the Sprite's center position.
+	 * @param position The new position.
 	 */
-	public void setPosition(Vector2 position) {
-		sprite.setPosition(position.x, position.y);
+	public void setPosition(Vector2 position) {		
+		sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
 	}
 	
 	/**

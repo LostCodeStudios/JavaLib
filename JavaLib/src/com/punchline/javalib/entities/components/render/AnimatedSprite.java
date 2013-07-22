@@ -75,7 +75,8 @@ public class AnimatedSprite extends Renderable {
 
 	@Override
 	public void setPosition(Vector2 position) {
-		this.position = position;
+		TextureRegion region = getCurrentFrame(0f);
+		this.position = position.sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
 	}
 
 	@Override
