@@ -3,8 +3,10 @@ package com.punchline.javalib.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 //TODO: Make abstract
-public class EntityWorld extends ComponentManager {
+public class EntityWorld {
 
 	/**
 	 * This world's {@link EntityManager}.
@@ -15,6 +17,11 @@ public class EntityWorld extends ComponentManager {
 	 * This world's {@link SystemManager}.
 	 */
 	protected SystemManager systems;
+	
+	/**
+	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 */
+	protected World physicsWorld;
 	
 	/**
 	 * Template map.
