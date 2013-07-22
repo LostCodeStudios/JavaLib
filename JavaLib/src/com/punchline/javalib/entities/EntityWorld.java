@@ -3,11 +3,17 @@ package com.punchline.javalib.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.punchline.javalib.entities.systems.RenderSystem;
 
 //TODO: Make abstract
 public class EntityWorld {
 
+	final float TIME_STEP = 1.0f / 60.0f;
+	final int VELOCITY_ITERATIONS = 6;
+	final int POSITION_ITERATIONS = 2;
+	
 	/**
 	 * This world's {@link EntityManager}.
 	 */
@@ -19,9 +25,19 @@ public class EntityWorld {
 	protected SystemManager systems;
 	
 	/**
+	 * This world's {@link RenderSystem}.
+	 */
+	protected RenderSystem renderSystem;
+	
+	/**
 	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
 	protected World physicsWorld;
+	
+	/**
+	 * This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 */
+	protected Camera camera;
 	
 	/**
 	 * Template map.
@@ -30,13 +46,16 @@ public class EntityWorld {
 	
 	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
+	 * @param camera The camera that will be used for rendering this world.
 	 */
-	public EntityWorld() {
+	public EntityWorld(Camera camera) {
 		entities = new EntityManager();
 		
 		systems = new SystemManager();
 		
 		templates = new HashMap<String, EntityTemplate>();
+		
+		this.camera = camera;
 		
 		buildComponents();
 		buildSystems();
@@ -56,6 +75,8 @@ public class EntityWorld {
 				entities.getChangedEntities(), 
 				entities.getRemovedEntities());
 		
+		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+		
 	}
 	
 	/**
@@ -63,6 +84,13 @@ public class EntityWorld {
 	 */
 	public World getPhysicsWorld() {
 		return physicsWorld;
+	}
+	
+	/**
+	 * @return This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 */
+	public Camera getCamera() {
+		return camera;
 	}
 	
 	/**
@@ -85,7 +113,11 @@ public class EntityWorld {
 	/**
 	 * Adds necessary systems to the world. Called by the constructor.
 	 */
-	protected void buildSystems() { }
+	protected void buildSystems() {
+		
+		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
+		
+	}
 	
 	/**
 	 * Adds necessary templates to the world. Called by the constructor.

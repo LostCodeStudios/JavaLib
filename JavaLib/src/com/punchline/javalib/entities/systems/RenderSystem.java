@@ -45,7 +45,6 @@ public class RenderSystem extends ComponentSystem {
 		
 		r.setPosition(t.getPosition());
 		r.setRotation(t.getRotation());
-		r.setScale(t.getScale());
 		
 		r.draw(spriteBatch, deltaSeconds());
 		

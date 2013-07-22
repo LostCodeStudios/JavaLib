@@ -20,9 +20,4 @@ public abstract class BaseTransform extends Component {
 	 */
 	public abstract float getRotation();
 	
-	/**
-	 * @return The scale of this Transform.
-	 */
-	public abstract float getScale();
-	
 }

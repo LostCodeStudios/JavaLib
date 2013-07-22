@@ -28,8 +28,9 @@ public class SystemManager {
 	 * They will not be added to the system's processing list.
 	 * @param system The system to be added.
 	 */
-	public void addSystem(EntitySystem system) {
+	public EntitySystem addSystem(EntitySystem system) {
 		systems.add(system);
+		return system;
 	}
 	
 	/**
