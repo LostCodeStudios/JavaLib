@@ -44,7 +44,7 @@ public class RenderSystem extends ComponentSystem {
 		BaseTransform t = e.getComponent();
 		
 		r.setPosition(t.getPosition());
-		r.setRotation(t.getRotation());
+		r.setRotation((float)Math.toDegrees(t.getRotation()));
 		
 		r.draw(spriteBatch, deltaSeconds());
 		

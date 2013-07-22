@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.systems.RenderSystem;
 
@@ -48,8 +49,10 @@ public class EntityWorld {
 	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
 	 * @param camera The camera that will be used for rendering this world.
+	 * @param gravity The gravity vector2.
+	 * @param doSleeping Whether the world allows sleeping.
 	 */
-	public EntityWorld(Camera camera) {
+	public EntityWorld(Camera camera, Vector2 gravity, boolean doSleeping) {
 		entities = new EntityManager();
 		
 		systems = new SystemManager();
@@ -58,7 +61,8 @@ public class EntityWorld {
 		
 		this.camera = camera;
 		
-		buildComponents();
+		physicsWorld = new World(gravity, doSleeping);
+		
 		buildSystems();
 		buildTemplates();
 		buildEntities();
@@ -69,12 +73,12 @@ public class EntityWorld {
 	 */
 	public void process() {
 		
-		entities.process();
-		
 		systems.process(
 				entities.getNewEntities(), 
 				entities.getChangedEntities(), 
 				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime());
+		
+		entities.process();
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		
@@ -101,15 +105,19 @@ public class EntityWorld {
 	 * @return The created entity.
 	 */
 	public Entity createEntity(String template, Object... args) {
-		Entity e = templates.get(template).buildEntity(args);
+		Entity e = templates.get(template).buildEntity(this, args);
 		entities.add(e);
 		return e;
 	}
 	
 	/**
-	 * Adds necessary components to the world. Called by the constructor.
+	 * Adds an EntityTemplate to the template map.
+	 * @param templateKey The template's key.
+	 * @param template The template.
 	 */
-	protected void buildComponents() { }
+	public void addTemplate(String templateKey, EntityTemplate template) {
+		templates.put(templateKey, template);
+	}
 	
 	/**
 	 * Adds necessary systems to the world. Called by the constructor.
