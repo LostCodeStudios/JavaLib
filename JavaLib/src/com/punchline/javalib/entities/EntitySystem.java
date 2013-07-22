@@ -38,7 +38,7 @@ public abstract class EntitySystem {
 	public void processEntities() {
 		
 		long time = System.nanoTime();
-		deltaTime = (float)((time - previousTime));
+		deltaTime = (float)((time - previousTime) / 1000000000.0);
 		
 		for (Entity e : entities) {
 			process(e);
@@ -52,6 +52,14 @@ public abstract class EntitySystem {
 	 * @param e The entity to be processed.
 	 */
 	protected void process(Entity e) { }
+	
+	/**
+	 * Gets the amount of seconds between this call of processEntities() and the previous call of processEntities().
+	 * @return The delta time, in seconds.
+	 */
+	public float deltaSeconds() {
+		return deltaTime;
+	}
 	
 	/**
 	 * Adds the given entity to the processing list.

@@ -1,17 +1,16 @@
-package com.punchline.javalib.entities.components;
+package com.punchline.javalib.entities.components.render;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.punchline.javalib.entities.Component;
 
 /**
  * Component wrapper for a LibGDX {@link com.badlogic.gdx.graphics.g2d.Sprite Sprite}.
  * @author Nathaniel
  *
  */
-public class Sprite extends Component {
+public class Sprite extends Renderable {
 
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	
@@ -26,7 +25,7 @@ public class Sprite extends Component {
 				texture, (int)source.x, (int)source.y, 
 				(int)source.width, (int)source.height);
 		
-		sprite.setOrigin(origin.x, origin.y);
+		setOrigin(origin);
 	}
 	
 	/**
@@ -62,11 +61,21 @@ public class Sprite extends Component {
 		sprite.setRotation(degrees);
 	}
 	
+	@Override
+	public void setScale(float scale) {
+		sprite.setScale(scale);
+	}
+	
+	@Override
+	public void setOrigin(Vector2 origin) {
+		sprite.setOrigin(origin.x, origin.y);
+	}
+	
 	/**
 	 * Draws the Sprite.
 	 * @param spriteBatch The SpriteBatch for drawing.
 	 */
-	public void draw(SpriteBatch spriteBatch) {
+	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		sprite.draw(spriteBatch);
 	}
 	

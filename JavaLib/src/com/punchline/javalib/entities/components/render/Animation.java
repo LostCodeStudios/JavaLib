@@ -1,19 +1,25 @@
-package com.punchline.javalib.entities.components;
+package com.punchline.javalib.entities.components.render;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.punchline.javalib.entities.Component;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Component wrapper for a LibGDX {@link com.badlogic.gdx.graphics.g2d.Animation Animation}.
  * @author Nathaniel
  *
  */
-public class Animation extends Component {
+public class Animation extends Renderable {
 
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
 	private float stateTime = 0f;
 	private boolean looping = true;
+	
+	private Vector2 position;
+	private float rotation = 0f;
+	private float scale = 1f;
+	private Vector2 origin;
 	
 	/**
 	 * Constructs an Animation.
@@ -48,6 +54,8 @@ public class Animation extends Component {
 		
 		animation = new com.badlogic.gdx.graphics.g2d.Animation(frameDuration, regions);
 		
+		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
+		
 	}
 	
 	/**
@@ -63,7 +71,9 @@ public class Animation extends Component {
 		
 		TextureRegion[][] tmp = new TextureRegion[frameRows][frameCols];
 		
-		tmp = TextureRegion.split(texture, texture.getWidth() / frameCols, texture.getHeight() / frameRows);
+		int frameWidth = texture.getWidth() / frameCols;
+		int frameHeight = texture.getHeight() / frameRows;
+		tmp = TextureRegion.split(texture, frameWidth, frameHeight);
 		
 		int i = 0;
 		
@@ -74,6 +84,8 @@ public class Animation extends Component {
 		}
 		
 		animation = new com.badlogic.gdx.graphics.g2d.Animation(frameDuration, regions);
+		
+		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
 		
 	}
 	
@@ -94,12 +106,38 @@ public class Animation extends Component {
 	}
 	
 	/**
-	 * @param stateTime The total amount of time that this Animation has been running.
-	 * @param looping Whether this Animation is looping.
+	 * @param deltaSeconds The amount of seconds since the last time the current frame was checked.
 	 * @return The current frame.
 	 */
-	public TextureRegion getCurrentFrame(float stateTime) {
-		return animation.getKeyFrame(stateTime, looping);
+	public TextureRegion getCurrentFrame(float deltaSeconds) {
+		return animation.getKeyFrame(stateTime += deltaSeconds, looping);
+	}
+
+	@Override
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+
+	@Override
+	public void setRotation(float degrees) {
+		this.rotation = degrees;
+	}
+	
+	@Override
+	public void setScale(float scale) {
+		this.scale = scale;
+	}
+
+	@Override
+	public void setOrigin(Vector2 origin) {
+		this.origin = origin;
+	}
+	
+	@Override
+	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
+		TextureRegion region = getCurrentFrame(deltaSeconds);
+		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
+				region.getRegionWidth(), region.getRegionHeight(), scale, scale, rotation);
 	}
 	
 }
