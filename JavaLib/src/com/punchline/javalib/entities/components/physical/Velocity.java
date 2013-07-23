@@ -1,11 +1,12 @@
 /**
  * 
  */
-package com.punchline.javalib.entities.components;
+package com.punchline.javalib.entities.components.physical;
 
 import com.punchline.javalib.entities.Component;
 
 /**
+ * Velocity interface for velocity
  * @author William
  * @created Jul 23, 2013
  */

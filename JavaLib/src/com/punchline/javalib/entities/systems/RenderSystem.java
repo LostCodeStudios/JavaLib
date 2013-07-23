@@ -3,7 +3,7 @@ package com.punchline.javalib.entities.systems;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.components.Transform;
+import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 
 /**
