@@ -31,7 +31,7 @@ public class EntityTest {
 	public void onAddComponentTest() {
 		Entity e = new Entity("tag", "group", "type");
 		
-		Particle p = e.addComponent(new Particle(e, Vector2.Zero, 0f, Vector2.Zero));
+		Particle p = e.addComponent(new Particle(e, new Vector2(0,0), 0f, new Vector2(0,0)));
 		Velocity v = e.getComponent();
 		Transform t = e.getComponent();
 		p.setAngularVelocity(22);
