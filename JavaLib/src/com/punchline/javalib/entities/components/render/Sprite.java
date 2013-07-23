@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.punchline.javalib.entities.ComponentManager;
 
 /**
  * Component wrapper for a LibGDX {@link com.badlogic.gdx.graphics.g2d.Sprite Sprite}.
  * @author Nathaniel
  *
  */
-public class Sprite extends Renderable {
+public class Sprite implements Renderable {
 
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	
@@ -49,7 +50,7 @@ public class Sprite extends Renderable {
 	 * Default constructor for blank/null spirte.
 	 * @throws Exception 
 	 */
-	public Sprite() throws Exception{
+	public Sprite(){
 		//Hi NAT!
 	}
 	
@@ -85,6 +86,16 @@ public class Sprite extends Renderable {
 	 */
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		sprite.draw(spriteBatch);
+	}
+
+	@Override
+	public void onAdd(ComponentManager container) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onRemove(ComponentManager container) {
+		// TODO Auto-generated method stub
 	}
 	
 }

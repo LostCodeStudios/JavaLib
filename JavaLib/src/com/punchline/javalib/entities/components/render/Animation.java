@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.punchline.javalib.entities.ComponentManager;
 
 /**
  * Component wrapper for a LibGDX {@link com.badlogic.gdx.graphics.g2d.Animation Animation}.
  * @author Nathaniel
  *
  */
-public class Animation extends Renderable {
+public class Animation implements Renderable {
 
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
 	private float stateTime = 0f;
@@ -139,6 +140,18 @@ public class Animation extends Renderable {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
 				region.getRegionWidth(), region.getRegionHeight(), scale, scale, rotation);
+	}
+
+	@Override
+	public void onAdd(ComponentManager container) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRemove(ComponentManager container) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

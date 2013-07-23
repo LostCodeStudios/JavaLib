@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.punchline.javalib.entities.ComponentManager;
 
 /**
  * A sprite that contains multiple Animations, each mapped to a String showing the state which that animation represents.
@@ -13,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Nathaniel
  *
  */
-public class AnimatedSprite extends Renderable {
+public class AnimatedSprite implements Renderable {
 
 	private Map<String, Animation> animations;
 	private String state;
@@ -99,6 +100,18 @@ public class AnimatedSprite extends Renderable {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
 				region.getRegionWidth(), region.getRegionHeight(), scale, scale, rotation);
+	}
+
+	@Override
+	public void onAdd(ComponentManager container) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRemove(ComponentManager container) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
