@@ -27,6 +27,9 @@ public class Body implements Transform, Velocity {
 		body = world.getPhysicsWorld().createBody(bodyDef);
 		body.setUserData(e);
 		body.createFixture(fixtureDef);
+		
+		e.addComponent(Transform.class, this);
+		e.addComponent(Velocity.class, this);
 	}
 	
 	
@@ -123,8 +126,7 @@ public class Body implements Transform, Velocity {
 	 */
 	@Override
 	public void onAdd(ComponentManager container) {
-		container.addComponent(Transform.class, this);
-		container.addComponent(Velocity.class, this);
+
 	}
 
 	/**

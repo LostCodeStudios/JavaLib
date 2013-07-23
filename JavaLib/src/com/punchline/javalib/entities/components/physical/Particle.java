@@ -5,6 +5,7 @@ package com.punchline.javalib.entities.components.physical;
 
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.ComponentManager;
+import com.punchline.javalib.entities.Entity;
 
 /**
  * @author William
@@ -46,13 +47,16 @@ public class Particle implements Velocity, Transform {
 	 * @param rotation The rotation of the particle.
 	 * @param origin The origin of the particle.
 	 */
-	public Particle(Vector2 position, float rotation, Vector2 origin){
+	public Particle(Entity e, Vector2 position, float rotation, Vector2 origin){
 		linearVelocity = Vector2.Zero;
 		angularVelocity = 0f;
 		
 		this.origin = origin;
 		this.rotation = rotation;
 		this.position = position;
+		
+		e.addComponent(Transform.class, this);
+		e.addComponent(Velocity.class, this);
 	}
 	
 	/**
@@ -60,8 +64,8 @@ public class Particle implements Velocity, Transform {
 	 * @param position The position of the particle.
 	 * @param rotation The rotation of the particle.
 	 */
-	public Particle(Vector2 position, float rotation){
-		this(position, rotation, Vector2.Zero);
+	public Particle(Entity e, Vector2 position, float rotation){
+		this(e, position, rotation, Vector2.Zero);
 	}
 
 	
@@ -160,8 +164,6 @@ public class Particle implements Velocity, Transform {
 	 */
 	@Override
 	public void onAdd(ComponentManager container) {
-		container.addComponent(Transform.class, this);
-		container.addComponent(Velocity.class, this);
 	}
 
 	/** 

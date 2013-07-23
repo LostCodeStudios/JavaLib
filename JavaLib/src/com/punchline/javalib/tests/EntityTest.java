@@ -22,5 +22,10 @@ public class EntityTest {
 			assertEquals("x != p; getComponent failure", x, p);
 
 	}
+	
+	@Test
+	public void onAddComponentTest() {
+		
+	}
 
 }
