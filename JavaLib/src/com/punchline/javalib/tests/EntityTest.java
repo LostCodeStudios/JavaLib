@@ -8,12 +8,11 @@ import org.junit.runners.JUnit4;
 import com.punchline.javalib.entities.*;
 import com.punchline.javalib.entities.components.Sprite;
 
-@SuppressWarnings("unused")
 @RunWith(JUnit4.class)
 public class EntityTest {
 
 	@Test
-	public void addComponentTest() {
+	public void addgetComponentTest() {
 		Entity e = new Entity("tag", "group", "type");
 		Sprite x = e.addComponent(new Sprite());
 		Sprite p = e.getComponent();
