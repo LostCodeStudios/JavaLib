@@ -74,7 +74,6 @@ public final class DebugRenderSystem extends EntitySystem {
 		if (enabled) {
 			physicsDebugRenderer.render(world, camera.combined);
 			
-			//TODO: Render system delta times and other debug information.
 			Map<String, Float> performance = systems.systemPerformance();			
 			
 			spriteBatch.begin();
