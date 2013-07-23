@@ -5,7 +5,7 @@ package com.punchline.javalib.entities;
  * @author Nathaniel
  *
  */
-public abstract class EntityGroupTemplate {
+public interface EntityGroupTemplate {
 
 	/**
 	 * Creates a group of entities.
@@ -13,6 +13,6 @@ public abstract class EntityGroupTemplate {
 	 * @param args Arguments for the creation of the group.
 	 * @return The entity group.
 	 */
-	public abstract Entity[] buildEntities(EntityWorld world, Object... args);
+	public Entity[] buildEntities(EntityWorld world, Object... args);
 	
 }

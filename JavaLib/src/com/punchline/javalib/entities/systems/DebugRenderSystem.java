@@ -26,6 +26,7 @@ public final class DebugRenderSystem extends EntitySystem {
 
 	private World world;
 	private Camera camera;
+	private Camera debugCamera;
 	private SystemManager systems;
 	
 	private SpriteBatch spriteBatch;
@@ -44,9 +45,7 @@ public final class DebugRenderSystem extends EntitySystem {
 	public DebugRenderSystem(World world, Camera camera, SystemManager systems) {
 		
 		this.world = world;
-		this.camera = new OrthographicCamera(
-				Convert.pixelsToMeters(camera.viewportWidth), 
-				Convert.pixelsToMeters(camera.viewportHeight));
+		this.camera = camera;
 		
 		this.systems = systems;
 		
@@ -85,7 +84,13 @@ public final class DebugRenderSystem extends EntitySystem {
 			}
 			
 			if (visible) {
-				physicsDebugRenderer.render(world, camera.combined);
+				
+				debugCamera = new OrthographicCamera(
+						Convert.pixelsToMeters(camera.viewportWidth), 
+						Convert.pixelsToMeters(camera.viewportHeight));
+				debugCamera.position.set(Convert.pixelsToMeters(camera.position));
+				
+				physicsDebugRenderer.render(world, debugCamera.combined);
 				
 				Map<String, Float> performance = systems.systemPerformance();			
 				
@@ -112,6 +117,7 @@ public final class DebugRenderSystem extends EntitySystem {
 				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i * font.getLineHeight());
 				
 				spriteBatch.end();
+				
 			}
 		}
 	}
