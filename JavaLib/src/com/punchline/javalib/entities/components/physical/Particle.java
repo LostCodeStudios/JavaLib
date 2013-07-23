@@ -28,7 +28,6 @@ public class Particle implements Velocity, Transform {
 	 */
 	private Vector2 origin;
 	
-	
 	/**
 	 * The linear velocity of a particle.
 	 */
@@ -116,6 +115,46 @@ public class Particle implements Velocity, Transform {
 		return origin;
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Vector2 getLinearVelocity() {
+		return linearVelocity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setLinearVelocity(Vector2 linearVelocity) {
+		this.linearVelocity = linearVelocity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public float getAngularVelocity() {
+		return angularVelocity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setAngularVelocity(float angularVelocity) {
+		this.angularVelocity = angularVelocity;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Adds the Transform and Velocity interfaces to the entity.
 	 */
@@ -133,4 +172,5 @@ public class Particle implements Velocity, Transform {
 	public void onRemove(ComponentManager container) {
 	}
 
+	
 }

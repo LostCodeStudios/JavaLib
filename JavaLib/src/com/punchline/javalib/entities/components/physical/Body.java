@@ -76,8 +76,48 @@ public class Body implements Transform, Velocity {
 	public Vector2 getOrigin() {
 		return body.getWorldCenter();
 	}
+	
+	
+	
+	
+	//VELOCITY
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Vector2 getLinearVelocity() {
+		return body.getLinearVelocity();
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setLinearVelocity(Vector2 linearVelocity) {
+		body.setLinearVelocity(linearVelocity);
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public float getAngularVelocity() {
+		return body.getAngularVelocity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setAngularVelocity(float angularVelocity) {
+		body.setAngularVelocity(angularVelocity);
+	}
+
+	
+	
+	
+
+	//COMPONENT
 	/**
 	 * Adds the Transform and Velocity interfaces to the entity.
 	 */
