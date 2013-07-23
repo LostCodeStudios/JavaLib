@@ -92,15 +92,15 @@ public final class Entity extends ComponentManager {
 	}
 
 	@Override
-	public Component addComponent(Class<? extends Component> type, Component value) {
+	public <T extends Component> T addComponent(Class<? extends Component> type, T value) {
 		changed = true;
-		return super.addComponent(type, value);
+		return super.<T>addComponent(type, value);
 	}
 	
 	@Override
 	public <T extends Component> T addComponent(T value) {
 		changed = true;
-		return super.addComponent(value);
+		return super.<T>addComponent(value);
 	}
 
 	@Override

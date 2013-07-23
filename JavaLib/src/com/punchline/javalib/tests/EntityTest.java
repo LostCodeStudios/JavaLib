@@ -13,16 +13,14 @@ public class EntityTest {
 
 	@Test
 	public void addgetComponentTest() {
-		try{
+
 			Entity e = new Entity("tag", "group", "type");
-			Sprite x = e.addComponent(new Sprite());
-			Sprite p = e.getComponent();
+			
+			Renderable x = e.addComponent(Renderable.class, new Sprite());
+			Renderable p = e.getComponent();
 		
 			assertEquals("x != p; getComponent failure", x, p);
-		}
-		catch(Exception e) {
-			
-		}
+
 	}
 
 }
