@@ -1,7 +1,9 @@
 package com.punchline.javalib.entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SystemManager {
 
@@ -81,6 +83,19 @@ public class SystemManager {
 			
 		}
 		
+	}
+	
+	/**
+	 * @return A map of system names with their respective delta times, for measuring performance.
+	 */
+	public Map<String, Float> systemPerformance() {
+		Map<String, Float> performance = new HashMap<String, Float>();
+		
+		for (EntitySystem system : systems) {
+			performance.put(system.getClass().getSimpleName(), system.deltaSeconds());
+		}
+		
+		return performance;
 	}
 	
 }

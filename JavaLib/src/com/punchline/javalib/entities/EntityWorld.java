@@ -132,7 +132,7 @@ public class EntityWorld {
 		
 		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
 		
-		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera));
+		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
 		
 	}
 	
