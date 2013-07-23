@@ -1,10 +1,12 @@
 package com.punchline.javalib.entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
@@ -69,6 +71,7 @@ public abstract class EntityWorld implements Disposable {
 		systems = new SystemManager();
 		
 		templates = new HashMap<String, EntityTemplate>();
+		groupTemplates = new HashMap<String, EntityGroupTemplate>();
 		
 		this.camera = camera;
 		positionCamera();
@@ -108,6 +111,11 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
+	 * @return This world's boundaries.
+	 */
+	public abstract Rectangle getBounds();
+	
+	/**
 	 * @return This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
 	public World getPhysicsWorld() {
@@ -139,8 +147,8 @@ public abstract class EntityWorld implements Disposable {
 	 * @param args Arguments for creating the entity group.
 	 * @return The group of entities.
 	 */
-	public Entity[] createEntityGroup(String template, Object... args) {
-		Entity[] group = groupTemplates.get(template).buildEntities(this, args);
+	public ArrayList<Entity> createEntityGroup(String template, Object... args) {
+		ArrayList<Entity> group = groupTemplates.get(template).buildEntities(this, args);
 		
 		for (Entity e : group) {
 			entities.add(e); //Add the group to the world.
