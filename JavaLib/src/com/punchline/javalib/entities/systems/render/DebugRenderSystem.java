@@ -1,4 +1,4 @@
-package com.punchline.javalib.entities.systems;
+package com.punchline.javalib.entities.systems.render;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -109,6 +109,10 @@ public final class DebugRenderSystem extends EntitySystem {
 				spriteBatch.end();
 			}
 		}
+	}
+
+	@Override
+	protected void process(Entity e) {
 	}
 	
 }

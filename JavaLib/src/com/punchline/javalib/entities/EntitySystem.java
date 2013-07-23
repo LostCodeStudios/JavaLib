@@ -104,7 +104,7 @@ public abstract class EntitySystem implements Disposable {
 	 * Processes an individual entity.
 	 * @param e The entity to be processed.
 	 */
-	protected void process(Entity e) { }
+	protected abstract void process(Entity e);
 	
 	/**
 	 * @return The amount of seconds between this call of processEntities() and the previous call of processEntities().

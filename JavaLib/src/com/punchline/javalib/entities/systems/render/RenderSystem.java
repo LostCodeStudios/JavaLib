@@ -1,10 +1,11 @@
-package com.punchline.javalib.entities.systems;
+package com.punchline.javalib.entities.systems.render;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
+import com.punchline.javalib.entities.systems.ComponentSystem;
 
 /**
  * System for rendering every {@link Entity} that has a {@link Renderable} component.
