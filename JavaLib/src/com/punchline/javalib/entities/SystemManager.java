@@ -5,9 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SystemManager {
+import com.badlogic.gdx.utils.Disposable;
+
+public class SystemManager implements Disposable {
 
 	private List<EntitySystem> systems = new ArrayList<EntitySystem>();
+	
+	/**
+	 * Disposes of all systems.
+	 */
+	@Override
+	public void dispose() {
+		
+		for (int i = systems.size() - 1; i >= 0; i--) {
+			systems.get(i).dispose();
+			systems.remove(i);
+		}
+		
+	}
 	
 	/**
 	 * Adds a system to the SystemManager.

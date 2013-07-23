@@ -3,13 +3,15 @@ package com.punchline.javalib.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Disposable;
+
 /**
  * Base class for all EntitySystems. An EntitySystem contains a predicate for determining which Entities concern it,
  * as well as a process() method for performing logic on Entities.
  * @author Nathaniel
  *
  */
-public abstract class EntitySystem {
+public abstract class EntitySystem implements Disposable {
 	
 	private List<Entity> entities = new ArrayList<Entity>();
 	

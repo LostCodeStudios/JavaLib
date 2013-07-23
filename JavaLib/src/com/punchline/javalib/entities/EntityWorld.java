@@ -7,11 +7,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.systems.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.RenderSystem;
 
-//TODO: Make abstract
-public class EntityWorld {
+public abstract class EntityWorld implements Disposable {
 
 	final float TIME_STEP = 1.0f / 60.0f;
 	final int VELOCITY_ITERATIONS = 6;
@@ -72,6 +72,17 @@ public class EntityWorld {
 		buildSystems();
 		buildTemplates();
 		buildEntities();
+	}
+	
+	/**
+	 * Disposes of all EntitySystems, and the physics world.
+	 */
+	@Override
+	public void dispose() {
+		
+		systems.dispose();
+		physicsWorld.dispose();
+		
 	}
 	
 	/**

@@ -16,13 +16,23 @@ public final class RenderSystem extends ComponentSystem {
 	Camera camera;
 	SpriteBatch spriteBatch;
 
+	/**
+	 * Constructs a RenderSystem.
+	 * @param camera The camera for rendering.
+	 */
 	public RenderSystem(Camera camera) {
 		super(Renderable.class);
 		
 		this.camera = camera;
+		
 		spriteBatch = new SpriteBatch();
 	}
 
+	@Override
+	public void dispose() {
+		spriteBatch.dispose();
+	}
+	
 	@Override
 	public void processEntities() {
 		
@@ -48,6 +58,6 @@ public final class RenderSystem extends ComponentSystem {
 		
 		r.draw(spriteBatch, deltaSeconds());
 		
-	}
+	}	
 	
 }

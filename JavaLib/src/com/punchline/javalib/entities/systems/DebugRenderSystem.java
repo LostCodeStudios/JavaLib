@@ -28,7 +28,6 @@ public final class DebugRenderSystem extends EntitySystem {
 	private BitmapFont font;
 	private Box2DDebugRenderer physicsDebugRenderer;
 	
-	
 	public boolean enabled = false;
 	
 	/**
@@ -48,6 +47,14 @@ public final class DebugRenderSystem extends EntitySystem {
 		physicsDebugRenderer = new Box2DDebugRenderer();
 		
 	}
+	
+	@Override
+	public void dispose() {
+		spriteBatch.dispose();
+		font.dispose();
+		physicsDebugRenderer.dispose();
+	}
+	
 
 	@Override
 	public boolean canProcess(Entity e) {
@@ -92,8 +99,5 @@ public final class DebugRenderSystem extends EntitySystem {
 		}
 		
 	}
-	
-	
-	
 	
 }
