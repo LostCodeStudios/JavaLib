@@ -47,12 +47,10 @@ public class Sprite implements Renderable {
 	}
 	
 	/**
-	 * Default constructor for blank/null spirte.
+	 * Default constructor for blank/null sprite.
 	 * @throws Exception 
 	 */
-	public Sprite(){
-		//Hi NAT!
-	}
+	public Sprite() { }
 	
 	/**
 	 * Sets the Sprite's center position.
