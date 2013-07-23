@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntitySystem;
 import com.punchline.javalib.entities.SystemManager;
+import com.punchline.javalib.utils.Convert;
 
 /**
  * System for rendering debug information.
@@ -42,7 +44,10 @@ public final class DebugRenderSystem extends EntitySystem {
 	public DebugRenderSystem(World world, Camera camera, SystemManager systems) {
 		
 		this.world = world;
-		this.camera = camera;
+		this.camera = new OrthographicCamera(
+				Convert.pixelsToMeters(camera.viewportWidth), 
+				Convert.pixelsToMeters(camera.viewportHeight));
+		
 		this.systems = systems;
 		
 		spriteBatch = new SpriteBatch();
