@@ -114,7 +114,7 @@ public final class SoundManager {
 	 */
 	public static Sound removeSound(String key) {
 		return soundEffects.remove(key);
-	}
+	} //Comment lol
 	
 	/**
 	 * Plays a sound effect.
