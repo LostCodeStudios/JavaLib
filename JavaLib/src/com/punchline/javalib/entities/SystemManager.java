@@ -1,11 +1,28 @@
 package com.punchline.javalib.entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class SystemManager {
+import com.badlogic.gdx.utils.Disposable;
+
+public class SystemManager implements Disposable {
 
 	private List<EntitySystem> systems = new ArrayList<EntitySystem>();
+	
+	/**
+	 * Disposes of all systems.
+	 */
+	@Override
+	public void dispose() {
+		
+		for (int i = systems.size() - 1; i >= 0; i--) {
+			systems.get(i).dispose();
+			systems.remove(i);
+		}
+		
+	}
 	
 	/**
 	 * Adds a system to the SystemManager.
@@ -28,8 +45,9 @@ public class SystemManager {
 	 * They will not be added to the system's processing list.
 	 * @param system The system to be added.
 	 */
-	public void addSystem(EntitySystem system) {
+	public EntitySystem addSystem(EntitySystem system) {
 		systems.add(system);
+		return system;
 	}
 	
 	/**
@@ -39,7 +57,7 @@ public class SystemManager {
 	 * @param changedEntities Modified entities.
 	 * @param removedEntities Outgoing entities.
 	 */
-	public void process(List<Entity> newEntities, List<Entity> changedEntities, List<Entity> removedEntities) {
+	public void process(List<Entity> newEntities, List<Entity> changedEntities, List<Entity> removedEntities, float deltaSeconds) {
 		
 		for (EntitySystem system : systems) {
 			
@@ -67,8 +85,32 @@ public class SystemManager {
 				}
 			}
 			
+			if (system.getInterval() > 0) {
+				system.addElapsedInterval(deltaSeconds);
+				
+				if (system.getElapsedInterval() >= system.getInterval()) {
+					system.processEntities();
+					system.resetElapsedInterval();
+				}
+			} else {
+				system.processEntities();
+			}
+			
 		}
 		
+	}
+	
+	/**
+	 * @return A map of system names with their respective delta times, for measuring performance.
+	 */
+	public Map<String, Float> systemPerformance() {
+		Map<String, Float> performance = new HashMap<String, Float>();
+		
+		for (EntitySystem system : systems) {
+			performance.put(system.getClass().getSimpleName(), system.processTime());
+		}
+		
+		return performance;
 	}
 	
 }

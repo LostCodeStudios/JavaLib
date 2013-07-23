@@ -83,9 +83,20 @@ public final class Entity extends ComponentManager {
 	 * @return Whether this Entity's components were changed.
 	 */
 	public boolean wasChanged() {
-		return changed;
+		if (changed) {
+			changed = false;
+			return true;
+		}
+
+		return false;
 	}
 
+	@Override
+	public Component addComponent(Class<? extends Component> type, Component value) {
+		changed = true;
+		return super.addComponent(type, value);
+	}
+	
 	@Override
 	public <T extends Component> T addComponent(T value) {
 		changed = true;

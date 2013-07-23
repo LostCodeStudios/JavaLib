@@ -22,7 +22,18 @@ public abstract class ComponentManager {
 		value.onAdd(this);
 		return (T)value;
 	}
-
+	
+	/**
+	 * Adds the given component to this container.
+	 * @param type The type of the Component.
+	 * @param value The component to be added.
+	 */
+	public Component addComponent(Class<? extends Component> type, Component value) {
+		components.put(type, value);
+		value.onAdd(this);
+		return value;
+	}
+	
 	/**
 	 * Removes the given component from this container.
 	 * @param value The component to be removed.
