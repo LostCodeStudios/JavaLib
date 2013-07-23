@@ -46,6 +46,13 @@ public class Sprite extends Renderable {
 	}
 	
 	/**
+	 * Default constructor for blank/null spirte.
+	 * @throws Exception 
+	 */
+	public Sprite() throws Exception{
+	}
+	
+	/**
 	 * Sets the Sprite's center position.
 	 * @param position The new position.
 	 */
