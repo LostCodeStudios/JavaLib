@@ -12,8 +12,10 @@ import java.util.List;
 public abstract class EntitySystem {
 	
 	private List<Entity> entities = new ArrayList<Entity>();
+	
 	private long previousTime;
 	private float deltaTime;
+	private float processTime;
 	
 	private float interval = 0f;
 	private float elapsed = 0f;
@@ -91,6 +93,9 @@ public abstract class EntitySystem {
 		}
 		
 		previousTime = time;
+		time = System.nanoTime();
+		
+		processTime = (float)((time - previousTime) / 1000000000.0);
 	}
 	
 	/**
@@ -100,11 +105,17 @@ public abstract class EntitySystem {
 	protected void process(Entity e) { }
 	
 	/**
-	 * Gets the amount of seconds between this call of processEntities() and the previous call of processEntities().
-	 * @return The delta time, in seconds.
+	 * @return The amount of seconds between this call of processEntities() and the previous call of processEntities().
 	 */
 	public float deltaSeconds() {
 		return deltaTime;
+	}
+	
+	/**
+	 * @return The amount of seconds this system took during its last call of processEntities().
+	 */
+	public float processTime() {
+		return processTime;
 	}
 	
 	/**

@@ -92,7 +92,7 @@ public class SystemManager {
 		Map<String, Float> performance = new HashMap<String, Float>();
 		
 		for (EntitySystem system : systems) {
-			performance.put(system.getClass().getSimpleName(), system.deltaSeconds());
+			performance.put(system.getClass().getSimpleName(), system.processTime());
 		}
 		
 		return performance;
