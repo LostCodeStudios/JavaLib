@@ -31,6 +31,7 @@ public final class DebugRenderSystem extends EntitySystem {
 	private Box2DDebugRenderer physicsDebugRenderer;
 	
 	public boolean enabled = false;
+	public boolean visible = false;
 	
 	/**
 	 * Constructs a DebugRenderSystem.
@@ -72,40 +73,42 @@ public final class DebugRenderSystem extends EntitySystem {
 		
 		super.processEntities();
 		
-		if (Gdx.input.isKeyPressed(Keys.F1)) {
-			enabled = !enabled; //Toggles debug
-		}
-		
 		if (enabled) {
-			physicsDebugRenderer.render(world, camera.combined);
-			
-			Map<String, Float> performance = systems.systemPerformance();			
-			
-			spriteBatch.begin();
-			
-			int i = 1;
-			String systemName = "";
-			Float systemPerformance = 0f;
-			
-			Entry<String, Float> next;
-			Iterator<Entry<String, Float>> iter = performance.entrySet().iterator();
-			
-			while (iter.hasNext()) {
-				
-				next = iter.next();
-				systemName = next.getKey();
-				systemPerformance = next.getValue();
-				
-				font.draw(spriteBatch, systemName + ": " + systemPerformance.toString(), 0, i * font.getLineHeight());
-				
-				i++;
+		
+			if (Gdx.input.isKeyPressed(Keys.F1)) {
+				visible = !visible; //Toggles debug view
 			}
 			
-			font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i * font.getLineHeight());
-			
-			spriteBatch.end();
+			if (visible) {
+				physicsDebugRenderer.render(world, camera.combined);
+				
+				Map<String, Float> performance = systems.systemPerformance();			
+				
+				spriteBatch.begin();
+				
+				int i = 1;
+				String systemName = "";
+				Float systemPerformance = 0f;
+				
+				Entry<String, Float> next;
+				Iterator<Entry<String, Float>> iter = performance.entrySet().iterator();
+				
+				while (iter.hasNext()) {
+					
+					next = iter.next();
+					systemName = next.getKey();
+					systemPerformance = next.getValue();
+					
+					font.draw(spriteBatch, systemName + ": " + systemPerformance.toString(), 0, i * font.getLineHeight());
+					
+					i++;
+				}
+				
+				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i * font.getLineHeight());
+				
+				spriteBatch.end();
+			}
 		}
-		
 	}
 	
 }
