@@ -5,7 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.*;
+import com.punchline.javalib.entities.components.physical.Particle;
+import com.punchline.javalib.entities.components.physical.Transform;
+import com.punchline.javalib.entities.components.physical.Velocity;
 import com.punchline.javalib.entities.components.render.*;
 
 @RunWith(JUnit4.class)
@@ -25,7 +29,16 @@ public class EntityTest {
 	
 	@Test
 	public void onAddComponentTest() {
+		Entity e = new Entity("tag", "group", "type");
 		
+		Particle p = e.addComponent(new Particle(e, Vector2.Zero, 0f, Vector2.Zero));
+		Velocity v = e.getComponent();
+		Transform t = e.getComponent();
+		p.setAngularVelocity(22);
+		v.setAngularVelocity(43);
+		
+		assertEquals("p != t; onAddComponent failure", p, t);
+		assertEquals("v != t; onAddComponent failure", v, t);
 	}
 
 }
