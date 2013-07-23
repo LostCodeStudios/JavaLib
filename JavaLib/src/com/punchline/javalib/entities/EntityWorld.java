@@ -10,8 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import com.punchline.javalib.entities.systems.DebugRenderSystem;
-import com.punchline.javalib.entities.systems.RenderSystem;
+import com.punchline.javalib.entities.systems.physical.ParticleSystem;
+import com.punchline.javalib.entities.systems.render.DebugRenderSystem;
+import com.punchline.javalib.entities.systems.render.RenderSystem;
 
 public abstract class EntityWorld implements Disposable {
 
@@ -184,10 +185,12 @@ public abstract class EntityWorld implements Disposable {
 	 * Adds necessary systems to the world. Called by the constructor.
 	 */
 	protected void buildSystems() {
-		
+		//RENDER
 		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
-		
 		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
+		
+		//PHYSICAL
+		systems.addSystem(new ParticleSystem());
 		
 	}
 	
