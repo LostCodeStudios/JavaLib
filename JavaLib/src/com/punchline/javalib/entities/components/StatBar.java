@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.Component;
  * @author Nathaniel
  *
  */
-public abstract class StatBar extends Component {
+public abstract class StatBar implements Component {
 	
 	protected double current;
 	protected double max;
