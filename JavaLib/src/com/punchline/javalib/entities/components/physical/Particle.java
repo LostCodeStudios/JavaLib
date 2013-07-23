@@ -9,37 +9,73 @@ import com.punchline.javalib.entities.ComponentManager;
 /**
  * @author William
  * @created Jul 23, 2013
+ * The particle class.
  */
 public class Particle implements Velocity, Transform {
-
+	//FIELDS
 	/**
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onAdd(com.punchline.javalib.entities.ComponentManager)
+	 * The position of the particle.
 	 */
-	@Override
-	public void onAdd(ComponentManager container) {
-		// TODO Auto-generated method stub
-
+	private Vector2 position;
+	
+	/**
+	 * The rotation of the particle.
+	 */
+	private float rotation;
+	
+	/**
+	 * The origin of the particle.
+	 */
+	private Vector2 origin;
+	
+	
+	/**
+	 * The linear velocity of a particle.
+	 */
+	private Vector2 linearVelocity;
+	
+	/**
+	 * The angular velocity of a particle.
+	 */
+	private float angularVelocity;
+	
+	
+	//CONSTRUCTOR
+	/**
+	 * Initializes a particle with a given transform.
+	 * @param position The position of the particle.
+	 * @param rotation The rotation of the particle.
+	 * @param origin The origin of the particle.
+	 */
+	public Particle(Vector2 position, float rotation, Vector2 origin){
+		linearVelocity = Vector2.Zero;
+		angularVelocity = 0f;
+		
+		this.origin = origin;
+		this.rotation = rotation;
+		this.position = position;
+	}
+	
+	/**
+	 * Initializes a particle with a given transform (without an origin)
+	 * @param position The position of the particle.
+	 * @param rotation The rotation of the particle.
+	 */
+	public Particle(Vector2 position, float rotation){
+		this(position, rotation, Vector2.Zero);
 	}
 
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onRemove(com.punchline.javalib.entities.ComponentManager)
-	 */
-	@Override
-	public void onRemove(ComponentManager container) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
+	
+	
+	//METHODS
 	/** 
 	 * {@inheritDoc}
 	 * @see com.punchline.javalib.entities.components.physical.Transform#getPosition()
 	 */
 	@Override
 	public Vector2 getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return position;
 	}
 
 	/** 
@@ -48,8 +84,8 @@ public class Particle implements Velocity, Transform {
 	 */
 	@Override
 	public Vector2 setPosition(Vector2 position) {
-		// TODO Auto-generated method stub
-		return null;
+		this.position = position;
+		return getPosition();
 	}
 
 	/** 
@@ -58,8 +94,7 @@ public class Particle implements Velocity, Transform {
 	 */
 	@Override
 	public float getRotation() {
-		// TODO Auto-generated method stub
-		return 0;
+		return rotation;
 	}
 
 	/** 
@@ -68,8 +103,8 @@ public class Particle implements Velocity, Transform {
 	 */
 	@Override
 	public float setRotation(float rotation) {
-		// TODO Auto-generated method stub
-		return 0;
+		this.rotation = rotation;
+		return getRotation();
 	}
 
 	/** 
@@ -78,8 +113,24 @@ public class Particle implements Velocity, Transform {
 	 */
 	@Override
 	public Vector2 getOrigin() {
-		// TODO Auto-generated method stub
-		return null;
+		return origin;
+	}
+	
+	/**
+	 * Adds the Transform and Velocity interfaces to the entity.
+	 */
+	@Override
+	public void onAdd(ComponentManager container) {
+		container.addComponent(Transform.class, this);
+		container.addComponent(Velocity.class, this);
+	}
+
+	/** 
+	 * {@inheritDoc}
+	 * @see com.punchline.javalib.entities.Component#onRemove(com.punchline.javalib.entities.ComponentManager)
+	 */
+	@Override
+	public void onRemove(ComponentManager container) {
 	}
 
 }

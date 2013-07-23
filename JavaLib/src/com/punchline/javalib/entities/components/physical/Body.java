@@ -79,10 +79,12 @@ public class Body implements Transform, Velocity {
 
 
 	/**
-	 * {@inheritDoc}
+	 * Adds the Transform and Velocity interfaces to the entity.
 	 */
 	@Override
 	public void onAdd(ComponentManager container) {
+		container.addComponent(Transform.class, this);
+		container.addComponent(Velocity.class, this);
 	}
 
 	/**
