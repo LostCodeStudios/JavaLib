@@ -53,6 +53,11 @@ public abstract class EntityWorld implements Disposable {
 	private Map<String, EntityTemplate> templates;
 	
 	/**
+	 * Group template map.
+	 */
+	private Map<String, EntityGroupTemplate> groupTemplates;
+	
+	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
 	 * @param camera The camera that will be used for rendering this world.
 	 * @param gravity The gravity vector2.
@@ -128,12 +133,37 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
+	 * Creates a group of Entities using the {@link EntityGroupTemplate} associated with the given tag.
+	 * @param template The tag of the template to use.
+	 * @param args Arguments for creating the entity group.
+	 * @return The group of entities.
+	 */
+	public Entity[] createEntityGroup(String template, Object... args) {
+		Entity[] group = groupTemplates.get(template).buildEntities(this, args);
+		
+		for (Entity e : group) {
+			entities.add(e); //Add the group to the world.
+		}
+		
+		return group;
+	}
+	
+	/**
 	 * Adds an EntityTemplate to the template map.
 	 * @param templateKey The template's key.
 	 * @param template The template.
 	 */
 	public void addTemplate(String templateKey, EntityTemplate template) {
 		templates.put(templateKey, template);
+	}
+	
+	/**
+	 * Adds an EntityGroupTemplate to the group template map.
+	 * @param templateKey The template's key.
+	 * @param template The template.
+	 */
+	public void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
+		groupTemplates.put(templateKey, template);
 	}
 	
 	/**
