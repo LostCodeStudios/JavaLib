@@ -50,6 +50,7 @@ public class Sprite extends Renderable {
 	 * @throws Exception 
 	 */
 	public Sprite() throws Exception{
+		//Hi NAT!
 	}
 	
 	/**
