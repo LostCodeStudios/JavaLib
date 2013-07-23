@@ -71,6 +71,7 @@ public abstract class EntityWorld implements Disposable {
 		templates = new HashMap<String, EntityTemplate>();
 		
 		this.camera = camera;
+		positionCamera();
 		
 		physicsWorld = new World(gravity, doSleeping);
 		
@@ -165,6 +166,11 @@ public abstract class EntityWorld implements Disposable {
 	public void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
 		groupTemplates.put(templateKey, template);
 	}
+	
+	/**
+	 * Positions the camera.
+	 */
+	protected void positionCamera() { }
 	
 	/**
 	 * Adds necessary systems to the world. Called by the constructor.
