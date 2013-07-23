@@ -91,18 +91,27 @@ public final class Entity extends ComponentManager {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public <T extends Component> T addComponent(Class<? extends Component> type, T value) {
 		changed = true;
 		return super.<T>addComponent(type, value);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public <T extends Component> T addComponent(T value) {
 		changed = true;
 		return super.<T>addComponent(value);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void removeComponent(Component value) {
 		super.removeComponent(value);

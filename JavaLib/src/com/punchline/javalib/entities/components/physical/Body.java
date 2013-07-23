@@ -35,44 +35,61 @@ public class Body implements Transform, Velocity {
 	}
 	
 	//TRANSFORM
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Vector2 setPosition(Vector2 position) {
 		body.setTransform(position, body.getAngle());
 		return body.getPosition();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public float getRotation() {
 		return body.getAngle();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public float setRotation(float rotation){
 		body.setTransform(getPosition(), rotation);
 		return getRotation();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Vector2 getOrigin() {
 		return body.getWorldCenter();
 	}
 
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onAdd(ComponentManager container) {
-		// TODO Auto-generated method stub
-		
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onRemove(ComponentManager container) {
-		// TODO Auto-generated method stub
-		
+
 	}
 }
