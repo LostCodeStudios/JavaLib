@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,6 +45,7 @@ public final class DebugRenderSystem extends EntitySystem {
 		
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
+		font.setColor(1f, 1f, 1f, 0.5f);
 		physicsDebugRenderer = new Box2DDebugRenderer();
 		
 	}
@@ -72,7 +74,6 @@ public final class DebugRenderSystem extends EntitySystem {
 		if (enabled) {
 			physicsDebugRenderer.render(world, camera.combined);
 			
-			//TODO: Render system delta times and other debug information.
 			Map<String, Float> performance = systems.systemPerformance();			
 			
 			spriteBatch.begin();
@@ -94,6 +95,8 @@ public final class DebugRenderSystem extends EntitySystem {
 				
 				i++;
 			}
+			
+			font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i * font.getLineHeight());
 			
 			spriteBatch.end();
 		}

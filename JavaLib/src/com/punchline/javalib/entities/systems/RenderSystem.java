@@ -51,10 +51,13 @@ public final class RenderSystem extends ComponentSystem {
 	protected void process(Entity e) {
 		
 		Renderable r = e.getComponent();
-		BaseTransform t = e.getComponent();
 		
-		r.setPosition(t.getPosition());
-		r.setRotation((float)Math.toDegrees(t.getRotation()));
+		if (e.hasComponent(BaseTransform.class)) { 
+			BaseTransform t = e.getComponent();
+		
+			r.setPosition(t.getPosition());
+			r.setRotation((float)Math.toDegrees(t.getRotation()));
+		}
 		
 		r.draw(spriteBatch, deltaSeconds());
 		

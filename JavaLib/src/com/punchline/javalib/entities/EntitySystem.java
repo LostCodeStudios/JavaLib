@@ -97,7 +97,7 @@ public abstract class EntitySystem implements Disposable {
 		previousTime = time;
 		time = System.nanoTime();
 		
-		processTime = (float)((time - previousTime) / 1000000000.0);
+		processTime = (float)((time - previousTime) / 1000.0);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities.components.render;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,15 +27,16 @@ public class Animation implements Renderable {
 	 * Constructs an Animation.
 	 * @param texture The Animation's texture.
 	 * @param animationRegion The region on the texture which contains the complete animation.
-	 * @param frameWidth The width of each animation frame.
-	 * @param frameHeight The height of each animation frame.
 	 * @param frameCols The amount of columns in the animation.
 	 * @param frameRows The amount of rows in the animation.
 	 * @param frameDuration The duration of each frame, in seconds.
 	 */
-	public Animation(Texture texture, TextureRegion animationRegion, int frameWidth, int frameHeight, int frameCols, int frameRows, float frameDuration) {
+	public Animation(Texture texture, TextureRegion animationRegion, int frameCols, int frameRows, float frameDuration) {
 		
 		TextureRegion[] regions = new TextureRegion[frameCols * frameRows];
+		
+		int frameWidth = animationRegion.getRegionWidth() / frameCols;
+		int frameHeight = animationRegion.getRegionHeight() / frameRows;
 		
 		int i = 0;
 		
@@ -88,6 +90,17 @@ public class Animation implements Renderable {
 		
 		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
 		
+	}
+	
+	/**
+	 * Constructs an Animation.
+	 * @param textureHandle A FileHandle pointing to the texture.
+	 * @param frameCols The number of columns in the animation.
+	 * @param frameRows The number of rows in the animation.
+	 * @param frameDuration The duration of each frame, in seconds.
+	 */
+	public Animation(FileHandle textureHandle, int frameCols, int frameRows, float frameDuration) {
+		this(new Texture(textureHandle), frameCols, frameRows, frameDuration);
 	}
 	
 	/**
