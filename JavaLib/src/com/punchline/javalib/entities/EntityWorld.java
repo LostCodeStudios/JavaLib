@@ -185,6 +185,7 @@ public abstract class EntityWorld implements Disposable {
 	 * Adds necessary systems to the world. Called by the constructor.
 	 */
 	protected void buildSystems() {
+		
 		//RENDER
 		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
 		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
