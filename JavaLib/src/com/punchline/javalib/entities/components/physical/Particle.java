@@ -48,7 +48,7 @@ public class Particle implements Velocity, Transform {
 	 * @param origin The origin of the particle.
 	 */
 	public Particle(Entity e, Vector2 position, float rotation, Vector2 origin){
-		linearVelocity = Vector2.Zero;
+		linearVelocity = new Vector2(0, 0);
 		angularVelocity = 0f;
 		
 		this.origin = origin;
@@ -65,7 +65,7 @@ public class Particle implements Velocity, Transform {
 	 * @param rotation The rotation of the particle.
 	 */
 	public Particle(Entity e, Vector2 position, float rotation){
-		this(e, position, rotation, Vector2.Zero);
+		this(e, position, rotation, new Vector2(0, 0));
 	}
 
 	
@@ -151,13 +151,6 @@ public class Particle implements Velocity, Transform {
 	public void setAngularVelocity(float angularVelocity) {
 		this.angularVelocity = angularVelocity;
 	}
-
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Adds the Transform and Velocity interfaces to the entity.

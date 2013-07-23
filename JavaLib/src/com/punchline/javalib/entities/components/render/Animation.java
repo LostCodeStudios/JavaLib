@@ -130,7 +130,7 @@ public class Animation implements Renderable {
 	@Override
 	public void setPosition(Vector2 position) {
 		TextureRegion region = getCurrentFrame(0f);
-		this.position = position.sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
+		this.position = new Vector2(position).sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
 	}
 
 	@Override
