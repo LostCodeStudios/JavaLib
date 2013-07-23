@@ -10,7 +10,7 @@ import com.punchline.javalib.entities.EntitySystem;
  */
 public abstract class TypeSystem extends EntitySystem {
 
-	String type;
+	private String type;
 	
 	/**
 	 * Makes a new TypeSystem.

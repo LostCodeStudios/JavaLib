@@ -13,9 +13,9 @@ import com.punchline.javalib.entities.systems.RenderSystem;
 
 public abstract class EntityWorld implements Disposable {
 
-	final float TIME_STEP = 1.0f / 60.0f;
-	final int VELOCITY_ITERATIONS = 6;
-	final int POSITION_ITERATIONS = 2;
+	private final float TIME_STEP = 1.0f / 60.0f;
+	private final int VELOCITY_ITERATIONS = 6;
+	private final int POSITION_ITERATIONS = 2;
 	
 	/**
 	 * This world's {@link EntityManager}.

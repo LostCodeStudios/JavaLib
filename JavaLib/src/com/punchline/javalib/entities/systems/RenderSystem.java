@@ -13,8 +13,8 @@ import com.punchline.javalib.entities.components.render.Renderable;
  */
 public final class RenderSystem extends ComponentSystem {
 	
-	Camera camera;
-	SpriteBatch spriteBatch;
+	private Camera camera;
+	private SpriteBatch spriteBatch;
 
 	/**
 	 * Constructs a RenderSystem.

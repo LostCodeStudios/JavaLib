@@ -13,7 +13,7 @@ import com.punchline.javalib.entities.EntityWorld;
  */
 public class Body extends BaseTransform {
 
-	com.badlogic.gdx.physics.box2d.Body body;
+	private com.badlogic.gdx.physics.box2d.Body body;
 	
 	/**
 	 * Constructs a body component.

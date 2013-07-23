@@ -10,7 +10,7 @@ import com.punchline.javalib.entities.EntitySystem;
  */
 public abstract class TagSystem extends EntitySystem {
 
-	String tag;
+	private String tag;
 	
 	/**
 	 * Makes a TagSystem.

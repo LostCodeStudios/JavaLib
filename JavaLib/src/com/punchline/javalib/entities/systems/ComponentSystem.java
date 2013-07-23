@@ -13,7 +13,7 @@ import com.punchline.javalib.entities.EntitySystem;
  */
 public abstract class ComponentSystem extends EntitySystem {
 
-	ArrayList<Class<? extends Component>> componentTypes;
+	private ArrayList<Class<? extends Component>> componentTypes;
 	
 	/**
 	 * Makes a ComponentSystem.

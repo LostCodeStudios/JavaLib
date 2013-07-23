@@ -10,7 +10,7 @@ import com.punchline.javalib.entities.EntitySystem;
  */
 public abstract class GroupSystem extends EntitySystem {
 
-	String group;
+	private String group;
 	
 	/**
 	 * Makes a new GroupSystem.
