@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.EntityWorld;
  * @author Nathaniel
  *
  */
-public class Body extends BaseTransform {
+public class Body implements Transform, Velocity {
 
 	private com.badlogic.gdx.physics.box2d.Body body;
 	
@@ -28,29 +28,36 @@ public class Body extends BaseTransform {
 		body.createFixture(fixtureDef);
 	}
 	
+	
+	public com.badlogic.gdx.physics.box2d.Body getBody(){
+		return body;
+	}
+	
+	//TRANSFORM
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
 	
 	@Override
-	public Vector2 getOrigin() {
-		return body.getWorldCenter();
-	}
-	
-	@Override
-	public void setPosition(Vector2 position) {
-		body.getPosition().set(position);
+	public Vector2 setPosition(Vector2 position) {
+		body.setTransform(position, body.getAngle());
+		return body.getPosition();
 	}
 
 	@Override
 	public float getRotation() {
 		return body.getAngle();
 	}
-
+	
 	@Override
-	public void setAngularVelocity(float velocity) {
-		body.setAngularVelocity(velocity);
+	public float setRotation(float rotation){
+		body.setTransform(getPosition(), rotation);
+		return getRotation();
 	}
 	
+	@Override
+	public Vector2 getOrigin() {
+		return body.getWorldCenter();
+	}
 }
