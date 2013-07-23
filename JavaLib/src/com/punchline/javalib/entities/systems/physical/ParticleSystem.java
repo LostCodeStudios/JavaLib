@@ -40,8 +40,12 @@ public class ParticleSystem extends ComponentSystem {
 		
 		//Move the particle
 		Vector2 pos = p.getPosition().cpy();
-		p.setPosition(pos.mul(p.getLinearVelocity().x, p.getLinearVelocity().y).mul(deltaSeconds()));
-		p.setRotation(p.getRotation() * p.getAngularVelocity() * deltaSeconds());
+		Vector2 velocity = new Vector2(p.getLinearVelocity().x * deltaSeconds(), p.getLinearVelocity().y * deltaSeconds());
+		pos.add(velocity);
+		p.setPosition(pos);
+		
+		float angularVelocity = p.getAngularVelocity() * deltaSeconds();
+		p.setRotation(p.getRotation() + angularVelocity);
 	}
 
 }
