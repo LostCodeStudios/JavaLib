@@ -3,7 +3,7 @@ package com.punchline.javalib.entities.systems;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.components.BaseTransform;
+import com.punchline.javalib.entities.components.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 
 /**
@@ -52,8 +52,8 @@ public final class RenderSystem extends ComponentSystem {
 		
 		Renderable r = e.getComponent();
 		
-		if (e.hasComponent(BaseTransform.class)) { 
-			BaseTransform t = e.getComponent();
+		if (e.hasComponent(Transform.class)) { 
+			Transform t = e.getComponent();
 		
 			r.setPosition(t.getPosition());
 			r.setRotation((float)Math.toDegrees(t.getRotation()));

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -70,6 +71,10 @@ public final class DebugRenderSystem extends EntitySystem {
 	public void processEntities() {
 		
 		super.processEntities();
+		
+		if (Gdx.input.isKeyPressed(Keys.F1)) {
+			enabled = !enabled; //Toggles debug
+		}
 		
 		if (enabled) {
 			physicsDebugRenderer.render(world, camera.combined);
