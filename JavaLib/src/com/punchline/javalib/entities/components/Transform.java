@@ -4,12 +4,13 @@
 package com.punchline.javalib.entities.components;
 
 import com.badlogic.gdx.math.Vector2;
+import com.punchline.javalib.entities.Component;
 
 /**
  * @author William
  * @created Jul 23, 2013
  */
-public interface Transform {
+public interface Transform extends Component{
 	/**
 	 * @return The position of this Transform.
 	 */

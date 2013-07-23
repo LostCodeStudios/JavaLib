@@ -3,6 +3,7 @@ package com.punchline.javalib.entities.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 
@@ -59,5 +60,19 @@ public class Body implements Transform, Velocity {
 	@Override
 	public Vector2 getOrigin() {
 		return body.getWorldCenter();
+	}
+
+
+	@Override
+	public void onAdd(ComponentManager container) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onRemove(ComponentManager container) {
+		// TODO Auto-generated method stub
+		
 	}
 }
