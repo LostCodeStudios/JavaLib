@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.punchline.javalib.entities.systems.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.RenderSystem;
 
 //TODO: Make abstract
@@ -30,6 +31,11 @@ public class EntityWorld {
 	 * This world's {@link RenderSystem}.
 	 */
 	protected RenderSystem renderSystem;
+	
+	/**
+	 * This world's {@link DebugRenderSystem}.
+	 */
+	protected DebugRenderSystem debugView;
 	
 	/**
 	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
@@ -125,6 +131,8 @@ public class EntityWorld {
 	protected void buildSystems() {
 		
 		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
+		
+		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera));
 		
 	}
 	

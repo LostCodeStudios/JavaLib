@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.components.render.Renderable;
  * @author Nathaniel
  *
  */
-public class RenderSystem extends ComponentSystem {
+public final class RenderSystem extends ComponentSystem {
 	
 	Camera camera;
 	SpriteBatch spriteBatch;
