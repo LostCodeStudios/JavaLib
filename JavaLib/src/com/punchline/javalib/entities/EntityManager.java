@@ -5,19 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.utils.Pool;
+
 /**
  * Contains and organizes game {@link Entity Entities}, sorting them according to tag, group, and type for easy access.
  * @author Nathaniel
  *
  */
-public class EntityManager {
+public class EntityManager extends Pool<Entity>{
 	
 	/**
 	 * Contains all entities.
 	 */
 	private List<Entity> entities = new ArrayList<Entity>();
 	
-	//TODO: Do we get rid of these?
 	/**
 	 * Contains all tagged entities mapped to their tags.
 	 */
@@ -32,6 +33,9 @@ public class EntityManager {
 	 * Contains all entities of each type, mapped to the type name.
 	 */
 	private Map<String, List<Entity>> entitiesByType = new HashMap<String, List<Entity>>();
+	
+	
+	
 	
 	/**
 	 * Contains all entities that have been added in this iteration of the game loop.
@@ -48,15 +52,25 @@ public class EntityManager {
 	 */
 	private List<Entity> removedEntities = new ArrayList<Entity>();
 	
+	
+	
+	
 	/**
 	 * Checks for {@link Entity Entities} that have been marked for removal, and adds them to the removal list.
 	 */
 	public void process() {
 		
+		//Clears the information/post-processing lists.
 		newEntities.clear();
 		changedEntities.clear();
+		for(Entity e : removedEntities){
+			removedEntities.remove(e); //Removes the entity from the removal post-process.
+			this.free(e); //Frees the entity from the entity pool. See pooling.
+		}
 		removedEntities.clear();
 		
+		
+		//Processes Entities that may be deleted.
 		for (int i = entities.size() - 1; i >= 0; i--) {
 			Entity e = entities.get(i);
 			
@@ -142,6 +156,16 @@ public class EntityManager {
 		}
 	
 	}
+	
+	/**
+	 * Adds a new Entity to the entity pool for re-use,etc.
+	 */
+	@Override
+	protected Entity newObject() {
+		return new Entity();
+	}
+	
+	
 	
 	/**
 	 * @return The manager's entity list.

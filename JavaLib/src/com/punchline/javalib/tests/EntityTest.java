@@ -29,7 +29,8 @@ public class EntityTest {
 	
 	@Test
 	public void onAddComponentTest() {
-		Entity e = new Entity("tag", "group", "type");
+		Entity e = new Entity();
+		e.init("tag", "group", "type");
 		
 		Particle p = e.addComponent(new Particle(e, new Vector2(0,0), 0f, new Vector2(0,0)));
 		Velocity v = e.getComponent();

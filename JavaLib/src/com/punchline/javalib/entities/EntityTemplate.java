@@ -9,10 +9,11 @@ public interface EntityTemplate {
 	
 	/**
 	 * Creates an entity.
+	 * @param e The entity to be built
 	 * @param world An EntityWorld.
 	 * @param args Arguments.
 	 * @return An {@link Entity} of this template.
 	 */
-	public Entity buildEntity(EntityWorld world, Object... args);
+	public Entity buildEntity(Entity e, EntityWorld world, Object... args);
 	
 }

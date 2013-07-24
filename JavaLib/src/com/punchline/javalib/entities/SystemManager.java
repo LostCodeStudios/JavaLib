@@ -61,12 +61,14 @@ public class SystemManager implements Disposable {
 		
 		for (EntitySystem system : systems) {
 			
+			//Processes all of new Entities.
 			for (Entity e : newEntities) {
 				if (system.canProcess(e)) {
 					system.add(e); //The system can process this Entity, so add it
 				}
 			}
 			
+			//Processes all of the change entities.
 			for (Entity e : changedEntities) {
 				if (system.isProcessing(e)) {
 					if (!system.canProcess(e)) {
@@ -79,6 +81,7 @@ public class SystemManager implements Disposable {
 				
 			}
 			
+			//Processes all of the removed entities
 			for (Entity e : removedEntities) {
 				if (system.isProcessing(e)) {
 					system.remove(e); //The system was processing this Entity, so remove it.

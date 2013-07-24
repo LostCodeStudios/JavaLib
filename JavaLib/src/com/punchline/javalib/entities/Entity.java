@@ -1,11 +1,13 @@
 package com.punchline.javalib.entities;
 
+import com.badlogic.gdx.utils.Pool.Poolable;
+
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
  * @author Nathaniel + WIlliam
  *
  */
-public final class Entity extends ComponentManager {
+public final class Entity extends ComponentManager implements Poolable {
 	
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
@@ -22,6 +24,8 @@ public final class Entity extends ComponentManager {
 	 */
 	private String type = "";
 	
+	
+	
 	/**
 	 * Deletion flag.
 	 */
@@ -32,17 +36,31 @@ public final class Entity extends ComponentManager {
 	 */
 	private boolean changed = false;
 	
+	
+	
+	
+	/**
+	 * Creates a default entity object.
+	 * However to really initialize an entity, use a template, and call {@link init init}
+	 */
+	public Entity() 
+	{
+	}
+	
 	/**
 	 * Assigns the Entity's metadata.
 	 * @param tag This Entity's unique tag.
 	 * @param group This Entity's group name.
 	 * @param type This Entity's type.
 	 */
-	public Entity(String tag, String group, String type) {
+	public void init(String tag, String group, String type) {
 		this.tag = tag;
 		this.group = group;
 		this.type = type;
 	}
+	
+	
+	
 	
 	/**
 	 * @return This entity's unique tag.
@@ -73,6 +91,18 @@ public final class Entity extends ComponentManager {
 	}
 
 	/**
+	 * Resets the entity for reuse in the Entity pool.
+	 */
+	@Override
+	public void reset() {
+		tag = "";
+		group = "";
+		type = "";
+		deleted = false;
+		changed = false;
+	}	
+	
+	/**
 	 * @return Whether this Entity has been flagged for deletion.
 	 */
 	public boolean isDeleted() {
@@ -90,6 +120,9 @@ public final class Entity extends ComponentManager {
 
 		return false;
 	}
+
+	
+	
 
 	/**
 	 * {@inheritDoc}
@@ -117,5 +150,6 @@ public final class Entity extends ComponentManager {
 		super.removeComponent(value);
 		changed = true;
 	}
-	
+
+
 }

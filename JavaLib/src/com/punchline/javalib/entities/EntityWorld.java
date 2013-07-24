@@ -20,6 +20,9 @@ public abstract class EntityWorld implements Disposable {
 	private final int VELOCITY_ITERATIONS = 6;
 	private final int POSITION_ITERATIONS = 2;
 	
+	
+	
+	
 	/**
 	 * This world's {@link EntityManager}.
 	 */
@@ -31,14 +34,14 @@ public abstract class EntityWorld implements Disposable {
 	protected SystemManager systems;
 	
 	/**
-	 * This world's {@link RenderSystem}.
+	 * Template map.
 	 */
-	protected RenderSystem renderSystem;
+	private Map<String, EntityTemplate> templates;
 	
 	/**
-	 * This world's {@link DebugRenderSystem}.
+	 * Group template map.
 	 */
-	protected DebugRenderSystem debugView;
+	private Map<String, EntityGroupTemplate> groupTemplates;
 	
 	/**
 	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
@@ -50,15 +53,24 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected Camera camera;
 	
-	/**
-	 * Template map.
-	 */
-	private Map<String, EntityTemplate> templates;
+	
+	//SYSTEMS
 	
 	/**
-	 * Group template map.
+	 * This world's {@link RenderSystem}.
 	 */
-	private Map<String, EntityGroupTemplate> groupTemplates;
+	protected RenderSystem renderSystem;
+	
+	/**
+	 * This world's {@link DebugRenderSystem}.
+	 */
+	protected DebugRenderSystem debugView;
+	
+	
+
+	
+	
+	//INIT
 	
 	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
@@ -83,6 +95,34 @@ public abstract class EntityWorld implements Disposable {
 		buildTemplates();
 		buildEntities();
 	}
+	
+	/**
+	 * Adds necessary systems to the world. Called by the constructor.
+	 */
+	protected void buildSystems() {
+		
+		//RENDER
+		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
+		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
+		
+		//PHYSICAL
+		systems.addSystem(new ParticleSystem());
+		
+	}
+	
+	/**
+	 * Adds necessary templates to the world. Called by the constructor.
+	 */
+	protected void buildTemplates() { }
+	
+	/**
+	 * Adds necessary entities to the world. Called by the constructor.
+	 */
+	protected void buildEntities() { }
+	
+	
+	
+	//FUNCTIONING LOOP
 	
 	/**
 	 * Disposes of all EntitySystems, and the physics world.
@@ -111,6 +151,11 @@ public abstract class EntityWorld implements Disposable {
 		
 	}
 	
+	
+	
+	
+	//GETTERS/SETTERS
+	
 	/**
 	 * @return This world's boundaries.
 	 */
@@ -131,13 +176,21 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
+	 * Positions the camera.
+	 */
+	protected void positionCamera() { }
+	
+	
+	
+	//ENTITY/TEMPLATE CREATION
+	/**
 	 * Creates an {@link Entity} using the {@link EntityTemplate} associated with the given tag.
 	 * @param template The tag of the template.
 	 * @param args Arguments for creating the {@link Entity}.
 	 * @return The created entity.
 	 */
 	public Entity createEntity(String template, Object... args) {
-		Entity e = templates.get(template).buildEntity(this, args);
+		Entity e = templates.get(template).buildEntity(entities.obtain(), this, args); //Grab an entity from the entity pool and send it
 		entities.add(e);
 		return e;
 	}
@@ -158,6 +211,7 @@ public abstract class EntityWorld implements Disposable {
 		return group;
 	}
 	
+
 	/**
 	 * Adds an EntityTemplate to the template map.
 	 * @param templateKey The template's key.
@@ -175,34 +229,5 @@ public abstract class EntityWorld implements Disposable {
 	public void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
 		groupTemplates.put(templateKey, template);
 	}
-	
-	/**
-	 * Positions the camera.
-	 */
-	protected void positionCamera() { }
-	
-	/**
-	 * Adds necessary systems to the world. Called by the constructor.
-	 */
-	protected void buildSystems() {
-		
-		//RENDER
-		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
-		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
-		
-		//PHYSICAL
-		systems.addSystem(new ParticleSystem());
-		
-	}
-	
-	/**
-	 * Adds necessary templates to the world. Called by the constructor.
-	 */
-	protected void buildTemplates() { }
-	
-	/**
-	 * Adds necessary entities to the world. Called by the constructor.
-	 */
-	protected void buildEntities() { }
-	
+
 }
