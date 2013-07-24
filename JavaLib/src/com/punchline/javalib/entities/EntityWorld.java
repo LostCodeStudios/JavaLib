@@ -85,7 +85,7 @@ public abstract class EntityWorld implements Disposable {
 	public EntityWorld(InputMultiplexer input, Camera camera, Vector2 gravity, boolean doSleeping) {
 		entities = new EntityManager();
 		
-		systems = new SystemManager(this);
+		systems = new SystemManager();
 		
 		templates = new HashMap<String, EntityTemplate>();
 		groupTemplates = new HashMap<String, EntityGroupTemplate>();
@@ -108,7 +108,7 @@ public abstract class EntityWorld implements Disposable {
 		
 		//RENDER
 		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
-		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
+		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
 		
 		input.addProcessor(debugView);
 		
@@ -137,7 +137,6 @@ public abstract class EntityWorld implements Disposable {
 	@Override
 	public void dispose() {
 		
-		input.removeProcessor(debugView);
 		systems.dispose();
 		physicsWorld.dispose();
 		
