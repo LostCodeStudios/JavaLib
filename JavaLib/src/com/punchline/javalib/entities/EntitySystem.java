@@ -156,4 +156,10 @@ public abstract class EntitySystem implements Disposable {
 	 */
 	protected void onRemoved(Entity e) { }
 	
+	
+	
+	/**
+	 * The entity world in which this system is contained.
+	 */
+	public EntityWorld World;
 }

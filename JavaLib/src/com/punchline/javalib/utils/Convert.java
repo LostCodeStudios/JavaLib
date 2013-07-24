@@ -25,7 +25,29 @@ public class Convert {
 		meterPixelRatio = mPRatio;
 	}
 	
-	//CONVERSION UTILS
+	
+	
+	//RADIANDEGREE
+	/**
+	 * Converts radians to degrees.
+	 * @param radians The angle in radians to be converted to degrees.
+	 * @return The angle converted to degrees.
+	 */
+	public static float radiansToDegrees(float radians){
+		return (radians/(float)Math.PI)*180;
+	}
+	
+	/**
+	 * Converts degrees to radians.
+	 * @param radians The angle in degrees to be converted to radians.
+	 * @return The angle converted to radians.
+	 */
+	public static float degreesToRadians(float degrees){
+		return (degrees/180f)*(float)Math.PI;
+	}
+	
+	
+	//PIXELMETER
 	
 	/**
 	 * Converts meters to pixels.

@@ -12,6 +12,21 @@ public class SystemManager implements Disposable {
 	private List<EntitySystem> systems = new ArrayList<EntitySystem>();
 	
 	/**
+	 * The world in which all systems are contained
+	 */
+	EntityWorld world;
+	
+	
+	/**
+	 * Initializes the SystemManager
+	 * @param world Gives all sub components a world call-back/accessor. 
+	 */
+	public SystemManager(EntityWorld world){
+		this.world = world;
+	}
+	
+	
+	/**
 	 * Disposes of all systems.
 	 */
 	@Override
@@ -32,7 +47,7 @@ public class SystemManager implements Disposable {
 	 */
 	public void addSystem(EntitySystem system, List<Entity> entities) {
 		systems.add(system);
-		
+		system.World = world;
 		for (Entity e : entities) {
 			if (system.canProcess(e)) {
 				system.add(e);

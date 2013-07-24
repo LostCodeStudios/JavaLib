@@ -104,14 +104,12 @@ public class AnimatedSprite implements Renderable {
 
 	@Override
 	public void onAdd(ComponentManager container) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onRemove(ComponentManager container) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 }
