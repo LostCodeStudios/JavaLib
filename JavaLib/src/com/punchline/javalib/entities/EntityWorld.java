@@ -23,17 +23,17 @@ public abstract class EntityWorld implements Disposable {
 	private final int POSITION_ITERATIONS = 2;
 	
 	/**
-	 * The InputMultiplexer managing this world's game.
+	 * The InputMultiplexer managing this physicsWorld's game.
 	 */
 	protected InputMultiplexer input;
 	
 	/**
-	 * This world's {@link EntityManager}.
+	 * This physicsWorld's {@link EntityManager}.
 	 */
 	protected EntityManager entities;
 	
 	/**
-	 * This world's {@link SystemManager}.
+	 * This physicsWorld's {@link SystemManager}.
 	 */
 	protected SystemManager systems;
 	
@@ -48,12 +48,12 @@ public abstract class EntityWorld implements Disposable {
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
 	/**
-	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 * This physicsWorld's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
 	protected World physicsWorld;
 	
 	/**
-	 * This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 * This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
 	 */
 	protected Camera camera;
 	
@@ -61,12 +61,12 @@ public abstract class EntityWorld implements Disposable {
 	//SYSTEMS
 	
 	/**
-	 * This world's {@link RenderSystem}.
+	 * This physicsWorld's {@link RenderSystem}.
 	 */
 	protected RenderSystem renderSystem;
 	
 	/**
-	 * This world's {@link DebugRenderSystem}.
+	 * This physicsWorld's {@link DebugRenderSystem}.
 	 */
 	protected DebugRenderSystem debugView;
 	
@@ -79,9 +79,9 @@ public abstract class EntityWorld implements Disposable {
 	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
 	 * @param input The InputMultiplexer of the game containing this EntityWorld.
-	 * @param camera The camera that will be used for rendering this world.
+	 * @param camera The camera that will be used for rendering this physicsWorld.
 	 * @param gravity The gravity vector2.
-	 * @param doSleeping Whether the world allows sleeping.
+	 * @param doSleeping Whether the physicsWorld allows sleeping.
 	 */
 	public EntityWorld(InputMultiplexer input, Camera camera, Vector2 gravity, boolean doSleeping) {
 		entities = new EntityManager();
@@ -103,7 +103,7 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
-	 * Adds necessary systems to the world. Called by the constructor.
+	 * Adds necessary systems to the physicsWorld. Called by the constructor.
 	 */
 	protected void buildSystems() {
 		
@@ -120,12 +120,12 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
-	 * Adds necessary templates to the world. Called by the constructor.
+	 * Adds necessary templates to the physicsWorld. Called by the constructor.
 	 */
 	protected void buildTemplates() { }
 	
 	/**
-	 * Adds necessary entities to the world. Called by the constructor.
+	 * Adds necessary entities to the physicsWorld. Called by the constructor.
 	 */
 	protected void buildEntities() { }
 	
@@ -134,7 +134,7 @@ public abstract class EntityWorld implements Disposable {
 	//FUNCTIONING LOOP
 	
 	/**
-	 * Disposes of all EntitySystems, and the physics world.
+	 * Disposes of all EntitySystems, and the physics physicsWorld.
 	 */
 	@Override
 	public void dispose() {
@@ -166,23 +166,32 @@ public abstract class EntityWorld implements Disposable {
 	//GETTERS/SETTERS
 	
 	/**
-	 * @return This world's boundaries.
+	 * @return This physicsWorld's boundaries.
 	 */
 	public abstract Rectangle getBounds();
 	
 	/**
-	 * @return This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 * @return This physicsWorld's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
 	public World getPhysicsWorld() {
 		return physicsWorld;
 	}
 	
 	/**
-	 * @return This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 * @return This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
 	 */
 	public Camera getCamera() {
 		return camera;
 	}
+	
+	/**
+	 * The entity count in the physicsWorld.
+	 * @return The count of entities active in the physicsWorld.
+	 */
+	public int getEntityCount(){
+		return entities.getEntities().size();
+	}
+	
 	
 	/**
 	 * Positions the camera.
@@ -214,7 +223,7 @@ public abstract class EntityWorld implements Disposable {
 		ArrayList<Entity> group = groupTemplates.get(template).buildEntities(this, args);
 		
 		for (Entity e : group) {
-			entities.add(e); //Add the group to the world.
+			entities.add(e); //Add the group to the physicsWorld.
 		}
 		
 		return group;
