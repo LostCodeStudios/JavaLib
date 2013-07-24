@@ -2,9 +2,12 @@ package com.punchline.javalib;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.punchline.javalib.utils.SoundManager;
 
 /**
@@ -23,6 +26,12 @@ public abstract class BaseGame extends Game {
 	 * Whether the game should take up the entire monitor.
 	 */
 	protected boolean fullScreen = false;
+	
+	/**
+	 * The texture that will be drawn as the game's cursor. If null, the default system mouse will be drawn.
+	 */
+	protected Texture cursorTexture;
+	private boolean useCursor = false;
 	
 	/**
 	 * The game window's width, in pixels.
@@ -54,6 +63,8 @@ public abstract class BaseGame extends Game {
 	 */
 	protected float backgroundBlue = 0f;
 	
+	protected SpriteBatch spriteBatch;
+	
 	/**
 	 * The game's {@link com.badlogic.gdx.InputMultiplexer InputMultiplexer}.
 	 */
@@ -72,8 +83,15 @@ public abstract class BaseGame extends Game {
 		
 		Gdx.graphics.setDisplayMode(w, h, fullScreen);
 		
+		if (cursorTexture != null) {
+			useCursor = true;
+			Gdx.input.setCursorCatched(true);
+		}
+		
 		input = new InputMultiplexer();
 		Gdx.input.setInputProcessor(input);
+		
+		spriteBatch = new SpriteBatch();
 		
 		loadSounds();
 		
@@ -108,6 +126,16 @@ public abstract class BaseGame extends Game {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		super.render();
+		
+		if (useCursor) {
+			spriteBatch.begin();
+			spriteBatch.draw(cursorTexture, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+			spriteBatch.end();
+		}
+		
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
 	}
 	
 	/**
