@@ -59,4 +59,11 @@ public abstract class ComponentManager {
 		return components.containsKey(type);
 	}
 	
+	/**
+	 * Clears all of the components in a component container
+	 */
+	protected void clearComponents(){
+		components.clear();
+	}
+	
 }

@@ -48,7 +48,7 @@ public class ParticleSystem extends ComponentSystem {
 		if(e.hasComponent(Collidable.class)){
 			com.badlogic.gdx.physics.box2d.World c = World.getPhysicsWorld();
 			
-			//Perform the raycast.
+			//Perform the raycast
 			c.rayCast(new RayCastCallback(){
 				Entity e;
 				public RayCastCallback init(Entity e){

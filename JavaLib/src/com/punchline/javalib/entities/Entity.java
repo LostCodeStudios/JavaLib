@@ -95,11 +95,13 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	@Override
 	public void reset() {
+		clearComponents();
 		tag = "";
 		group = "";
 		type = "";
 		deleted = false;
 		changed = false;
+		
 	}	
 	
 	/**
@@ -151,5 +153,9 @@ public final class Entity extends ComponentManager implements Poolable {
 		changed = true;
 	}
 
-
+	@Override
+	public void clearComponents(){
+		super.clearComponents();
+		changed = true;
+	}
 }
