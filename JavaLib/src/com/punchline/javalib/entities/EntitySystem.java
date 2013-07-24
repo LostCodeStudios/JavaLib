@@ -3,6 +3,7 @@ package com.punchline.javalib.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -16,7 +17,6 @@ public abstract class EntitySystem implements Disposable {
 	private List<Entity> entities = new ArrayList<Entity>();
 	
 	private long previousTime;
-	private float deltaTime;
 	private float processTime;
 	
 	private float interval = 0f;
@@ -88,7 +88,6 @@ public abstract class EntitySystem implements Disposable {
 	public void processEntities() {
 		
 		long time = System.nanoTime();
-		deltaTime = (float)((time - previousTime) / 1000000000.0);
 		
 		for (Entity e : entities) {
 			process(e);
@@ -110,7 +109,7 @@ public abstract class EntitySystem implements Disposable {
 	 * @return The amount of seconds between this call of processEntities() and the previous call of processEntities().
 	 */
 	public float deltaSeconds() {
-		return deltaTime;
+		return Gdx.graphics.getDeltaTime();
 	}
 	
 	/**
