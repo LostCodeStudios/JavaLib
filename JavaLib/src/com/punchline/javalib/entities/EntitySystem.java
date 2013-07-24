@@ -151,15 +151,21 @@ public abstract class EntitySystem implements Disposable {
 	}
 	
 	/**
+	 * Sets this system's EntityWorld.
+	 * @param world The EntityWorld containing this system.
+	 */
+	public void setWorld(EntityWorld world) {
+		this.world = world;
+	}
+	
+	/**
 	 * Called when an Entity is removed from the system's processing list.
 	 * @param e The removed entity.
 	 */
 	protected void onRemoved(Entity e) { }
 	
-	
-	
 	/**
 	 * The entity world in which this system is contained.
 	 */
-	public EntityWorld World;
+	protected EntityWorld world;
 }

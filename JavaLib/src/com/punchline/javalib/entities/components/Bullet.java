@@ -20,7 +20,7 @@ public class Bullet implements Component {
 	private float damage = 0;
 	
 	/**
-	 * The fierer of the bullet.
+	 * The firer of the bullet.
 	 */
 	private Entity firer;
 	

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.punchline.javalib.entities.systems.physical.EntityRemovalSystem;
 import com.punchline.javalib.entities.systems.physical.ParticleSystem;
 import com.punchline.javalib.entities.systems.render.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.render.RenderSystem;
@@ -114,6 +115,7 @@ public abstract class EntityWorld implements Disposable {
 		
 		//PHYSICAL
 		systems.addSystem(new ParticleSystem());
+		systems.addSystem(new EntityRemovalSystem());
 		
 	}
 	

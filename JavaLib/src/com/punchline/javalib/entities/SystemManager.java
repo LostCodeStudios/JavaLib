@@ -46,7 +46,7 @@ public class SystemManager implements Disposable {
 	 * determining which should be added to the system's processing list.
 	 */
 	public void addSystem(EntitySystem system, List<Entity> entities) {
-		system.World = world;
+		system.setWorld(world);
 		systems.add(system);
 		for (Entity e : entities) {
 			if (system.canProcess(e)) {
@@ -61,7 +61,7 @@ public class SystemManager implements Disposable {
 	 * @param system The system to be added.
 	 */
 	public EntitySystem addSystem(EntitySystem system) {
-		system.World = world;
+		system.setWorld(world);
 		systems.add(system);
 		return system;
 	}
