@@ -24,8 +24,8 @@ public class CameraMovementSystem extends InputSystem  {
 	
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
-	private boolean movingUp = false;
 	private boolean movingDown = false;
+	private boolean movingUp = false;
 	
 	/**
 	 * Makes a CameraMovementSystem
@@ -162,7 +162,7 @@ public class CameraMovementSystem extends InputSystem  {
 			movingUp = false;
 		}
 		
-		return false;
+		return false; //Let other systems take mouse input.
 	}
 	
 }
