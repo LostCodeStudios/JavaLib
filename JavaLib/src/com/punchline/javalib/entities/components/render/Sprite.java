@@ -2,6 +2,7 @@ package com.punchline.javalib.entities.components.render;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.ComponentManager;
@@ -36,6 +37,15 @@ public class Sprite implements Renderable {
 	 */
 	public Sprite(Texture texture, Rectangle source) {
 		this(texture, source, new Vector2(source.width / 2, source.height / 2));
+	}
+	
+	/**
+	 * Constructs a Sprite with its origin at its center.
+	 * @param texture The Sprite's {@link com.badlogic.gdx.graphics.Texture Texture}.
+	 * @param source The Sprite's source rectangle.
+	 */
+	public Sprite(Texture texture, TextureRegion source) {
+		this(texture, new Rectangle(source.getRegionX(), source.getRegionY(), source.getRegionWidth(), source.getRegionHeight()));
 	}
 	
 	/**
