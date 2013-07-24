@@ -27,8 +27,7 @@ public class ParticleSystem extends ComponentSystem {
 	 */
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	/** {@inheritDoc}

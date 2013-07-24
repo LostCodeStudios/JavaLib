@@ -59,7 +59,6 @@ public class Health implements Component {
 	 */
 	@Override
 	public void onAdd(ComponentManager container) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -68,7 +67,6 @@ public class Health implements Component {
 	 */
 	@Override
 	public void onRemove(ComponentManager container) {
-		// TODO Auto-generated method stub
 
 	}
 

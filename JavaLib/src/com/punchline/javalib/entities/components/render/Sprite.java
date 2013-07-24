@@ -87,13 +87,13 @@ public class Sprite implements Renderable {
 	}
 
 	@Override
-	public void onAdd(ComponentManager container) {
-		// TODO Auto-generated method stub
+	public void onAdd(ComponentManager container){
+	
 	}
 
 	@Override
 	public void onRemove(ComponentManager container) {
-		// TODO Auto-generated method stub
+		
 	}
 	
 }
