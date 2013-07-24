@@ -2,6 +2,7 @@ package com.punchline.javalib.entities.systems.physical;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.systems.ComponentSystem;
 
@@ -26,6 +27,11 @@ public class EntityRemovalSystem extends ComponentSystem {
 	 */
 	public EntityRemovalSystem() {
 		super(Transform.class);
+	}
+	
+	@Override
+	public void setWorld(EntityWorld world) {
+		super.setWorld(world);
 		
 		//Set up the removal bounds
 		Rectangle bounds = world.getBounds();
@@ -35,7 +41,7 @@ public class EntityRemovalSystem extends ComponentSystem {
 		this.bounds.width += REMOVAL_THRESHOLD * 2;
 		this.bounds.height += REMOVAL_THRESHOLD * 2;
 	}
-	
+
 	@Override
 	public void dispose() { }
 
