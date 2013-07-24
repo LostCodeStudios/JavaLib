@@ -17,8 +17,8 @@ public class EntityTest {
 
 	@Test
 	public void addgetComponentTest() {
-
-			Entity e = new Entity("tag", "group", "type");
+			Entity e = new Entity();
+			e.init("tag", "group", "type");
 			
 			Renderable x = e.addComponent(Renderable.class, new Sprite());
 			Renderable p = e.getComponent();
