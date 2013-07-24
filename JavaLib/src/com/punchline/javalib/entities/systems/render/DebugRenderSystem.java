@@ -25,7 +25,7 @@ import com.punchline.javalib.utils.Convert;
  */
 public final class DebugRenderSystem extends InputSystem {
 
-	private World world;
+	private World physicsWorld;
 	private Camera camera;
 	private Camera debugCamera;
 	private SystemManager systems;
@@ -40,15 +40,15 @@ public final class DebugRenderSystem extends InputSystem {
 	/**
 	 * Constructs a DebugRenderSystem.
 	 * @param input The game's current InputMultiplexer.
-	 * @param world The EntityWorld that is being debugged.
+	 * @param physicsWorld The EntityWorld that is being debugged.
 	 * @param camera The EntityWorld's main camera.
-	 * @param systems The world's SystemManager.
+	 * @param systems The physicsWorld's SystemManager.
 	 */
 	public DebugRenderSystem(InputMultiplexer input, World world, Camera camera, SystemManager systems) {
 		
 		super(input);
 		
-		this.world = world;
+		this.physicsWorld = world;
 		this.camera = camera;
 		
 		this.systems = systems;
@@ -90,7 +90,7 @@ public final class DebugRenderSystem extends InputSystem {
 						Convert.pixelsToMeters(camera.viewportHeight));
 				debugCamera.position.set(Convert.pixelsToMeters(camera.position));
 				
-				physicsDebugRenderer.render(world, debugCamera.combined);
+				physicsDebugRenderer.render(physicsWorld, debugCamera.combined);
 				
 				Map<String, Float> performance = systems.systemPerformance();			
 				
@@ -115,6 +115,7 @@ public final class DebugRenderSystem extends InputSystem {
 				}
 				
 				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i * font.getLineHeight());
+				font.draw(spriteBatch, "Entities: " + this.world.getEntityCount() , 0, (i+1) * font.getLineHeight());
 				
 				spriteBatch.end();
 				

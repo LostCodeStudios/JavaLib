@@ -52,7 +52,7 @@ public class EntityManager extends Pool<Entity>{
 	 */
 	private List<Entity> removedEntities = new ArrayList<Entity>();
 	
-	
+	int free = 0;
 	
 	
 	/**
@@ -217,6 +217,5 @@ public class EntityManager extends Pool<Entity>{
 	 */
 	public List<Entity> getByType(String type) {
 		return entitiesByType.get(type);
-	}
-	
+	}	
 }
