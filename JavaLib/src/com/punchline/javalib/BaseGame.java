@@ -128,9 +128,36 @@ public abstract class BaseGame extends Game {
 		super.render();
 		
 		if (useCursor) {
+			//Clamp cursor
+			int cursorX = Gdx.input.getX();
+			int cursorY = Gdx.input.getY();
+			
+			boolean cursorChanged = false;
+			
+			if (cursorX < 0) {
+				cursorX = 0;
+				cursorChanged = true;
+			} else if (cursorX > Gdx.graphics.getWidth() - cursorTexture.getWidth()) {
+				cursorX = Gdx.graphics.getWidth() - cursorTexture.getWidth();
+				cursorChanged = true;
+			}
+			
+			if (cursorY < cursorTexture.getHeight()) {
+				cursorY = cursorTexture.getHeight();
+				cursorChanged = true;
+			} else if (cursorY > Gdx.graphics.getHeight()) {
+				cursorY = Gdx.graphics.getHeight();
+				cursorChanged = true;
+			}
+			
 			spriteBatch.begin();
-			spriteBatch.draw(cursorTexture, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+			spriteBatch.draw(cursorTexture, cursorX, Gdx.graphics.getHeight() - cursorY);
 			spriteBatch.end();
+			
+			if (cursorChanged) {
+				Gdx.input.setCursorPosition(cursorX, Gdx.graphics.getHeight() - cursorY);
+			}
+			
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
