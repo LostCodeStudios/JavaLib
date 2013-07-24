@@ -81,7 +81,7 @@ public abstract class EntityWorld implements Disposable {
 	public EntityWorld(Camera camera, Vector2 gravity, boolean doSleeping) {
 		entities = new EntityManager();
 		
-		systems = new SystemManager();
+		systems = new SystemManager(this);
 		
 		templates = new HashMap<String, EntityTemplate>();
 		groupTemplates = new HashMap<String, EntityGroupTemplate>();
