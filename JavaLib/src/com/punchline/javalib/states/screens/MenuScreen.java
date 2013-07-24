@@ -46,7 +46,7 @@ public abstract class MenuScreen extends GameScreen {
 	 * @param game The game containing this screen.
 	 * @param skinHandle A FileHandle pointing to the UI skin.
 	 * @param title The title of the menu.
-	 * @param textHandle A FileHandle pointing to the background texture.
+	 * @param textHandle A FileHandle pointing to the background texture. Null if no background is needed.
 	 */
 	public MenuScreen(BaseGame game, FileHandle skinHandle, String title, FileHandle textureHandle) {
 		super(game);
@@ -56,9 +56,11 @@ public abstract class MenuScreen extends GameScreen {
 		
 		this.title = title;
 		
-		Texture backgroundTexture = new Texture(textureHandle);
-		TextureRegion source = new TextureRegion(backgroundTexture);
-		background = new TextureRegionDrawable(source);
+		if (textureHandle != null) {
+			Texture backgroundTexture = new Texture(textureHandle);
+			TextureRegion source = new TextureRegion(backgroundTexture);
+			background = new TextureRegionDrawable(source);
+		}
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -70,9 +72,11 @@ public abstract class MenuScreen extends GameScreen {
 	 */
 	protected void initialize() { 
 		window = new Window(title, skin);
-		window.setBackground(background);
 		window.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		window.setPosition(0, 0);
+		
+		if (background != null)
+			window.setBackground(background);
 		
 		stage.addActor(window);
 	}
