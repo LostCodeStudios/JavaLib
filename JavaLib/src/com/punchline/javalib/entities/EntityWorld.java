@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -20,8 +21,10 @@ public abstract class EntityWorld implements Disposable {
 	private final int VELOCITY_ITERATIONS = 6;
 	private final int POSITION_ITERATIONS = 2;
 	
-	
-	
+	/**
+	 * The InputMultiplexer managing this world's game.
+	 */
+	protected InputMultiplexer input;
 	
 	/**
 	 * This world's {@link EntityManager}.
@@ -74,11 +77,12 @@ public abstract class EntityWorld implements Disposable {
 	
 	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
+	 * @param input The InputMultiplexer of the game containing this EntityWorld.
 	 * @param camera The camera that will be used for rendering this world.
 	 * @param gravity The gravity vector2.
 	 * @param doSleeping Whether the world allows sleeping.
 	 */
-	public EntityWorld(Camera camera, Vector2 gravity, boolean doSleeping) {
+	public EntityWorld(InputMultiplexer input, Camera camera, Vector2 gravity, boolean doSleeping) {
 		entities = new EntityManager();
 		
 		systems = new SystemManager();
@@ -86,6 +90,7 @@ public abstract class EntityWorld implements Disposable {
 		templates = new HashMap<String, EntityTemplate>();
 		groupTemplates = new HashMap<String, EntityGroupTemplate>();
 		
+		this.input = input;
 		this.camera = camera;
 		positionCamera();
 		
@@ -104,6 +109,8 @@ public abstract class EntityWorld implements Disposable {
 		//RENDER
 		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
 		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(getPhysicsWorld(), camera, systems));
+		
+		input.addProcessor(debugView);
 		
 		//PHYSICAL
 		systems.addSystem(new ParticleSystem());
@@ -130,6 +137,7 @@ public abstract class EntityWorld implements Disposable {
 	@Override
 	public void dispose() {
 		
+		input.removeProcessor(debugView);
 		systems.dispose();
 		physicsWorld.dispose();
 		

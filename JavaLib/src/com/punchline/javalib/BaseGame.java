@@ -2,6 +2,7 @@ package com.punchline.javalib;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.punchline.javalib.utils.SoundManager;
@@ -54,6 +55,11 @@ public abstract class BaseGame extends Game {
 	protected float backgroundBlue = 0f;
 	
 	/**
+	 * The game's {@link com.badlogic.gdx.InputMultiplexer InputMultiplexer}.
+	 */
+	protected InputMultiplexer input;
+	
+	/**
 	 * Initializes the game's window.
 	 */
 	@Override
@@ -66,8 +72,15 @@ public abstract class BaseGame extends Game {
 		
 		Gdx.graphics.setDisplayMode(w, h, fullScreen);
 		
+		input = new InputMultiplexer();
+		Gdx.input.setInputProcessor(input);
+		
 		loadSounds();
 		
+	}
+	
+	public InputMultiplexer getInput() {
+		return input;
 	}
 	
 	/**
