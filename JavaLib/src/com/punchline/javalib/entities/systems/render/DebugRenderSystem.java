@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.EntitySystem;
 import com.punchline.javalib.entities.SystemManager;
+import com.punchline.javalib.entities.systems.InputSystem;
 import com.punchline.javalib.utils.Convert;
 
 /**
@@ -23,7 +23,7 @@ import com.punchline.javalib.utils.Convert;
  * @author Nathaniel
  *
  */
-public final class DebugRenderSystem extends EntitySystem implements InputProcessor {
+public final class DebugRenderSystem extends InputSystem {
 
 	private World world;
 	private Camera camera;
@@ -39,11 +39,14 @@ public final class DebugRenderSystem extends EntitySystem implements InputProces
 	
 	/**
 	 * Constructs a DebugRenderSystem.
+	 * @param input The game's current InputMultiplexer.
 	 * @param world The EntityWorld that is being debugged.
 	 * @param camera The EntityWorld's main camera.
 	 * @param systems The world's SystemManager.
 	 */
-	public DebugRenderSystem(World world, Camera camera, SystemManager systems) {
+	public DebugRenderSystem(InputMultiplexer input, World world, Camera camera, SystemManager systems) {
+		
+		super(input);
 		
 		this.world = world;
 		this.camera = camera;
@@ -62,9 +65,9 @@ public final class DebugRenderSystem extends EntitySystem implements InputProces
 		spriteBatch.dispose();
 		font.dispose();
 		physicsDebugRenderer.dispose();
+		super.dispose();
 	}
 	
-
 	@Override
 	public boolean canProcess(Entity e) {
 		return false;
@@ -133,46 +136,4 @@ public final class DebugRenderSystem extends EntitySystem implements InputProces
 		return false;
 	}
 
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 }

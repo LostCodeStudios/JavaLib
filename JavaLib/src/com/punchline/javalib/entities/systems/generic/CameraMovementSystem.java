@@ -1,36 +1,40 @@
 package com.punchline.javalib.entities.systems.generic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.EntitySystem;
+import com.punchline.javalib.entities.systems.InputSystem;
 
 /**
  * System for moving the camera based on keyboard input from the arrow keys.
  * @author Nathaniel
  * @created Jul 23, 2013
  */
-public class CameraMovementSystem extends EntitySystem {
+public class CameraMovementSystem extends InputSystem  {
 
 	private static final float CAMERA_SPEED = 200f;
 	
 	private Camera camera;
 	private Rectangle bounds;
 	
+	private boolean movingLeft = false;
+	private boolean movingRight = false;
+	private boolean movingUp = false;
+	private boolean movingDown = false;
+	
 	/**
 	 * Makes a CameraMovementSystem
+	 * @param input the game's current InputMultiplexer.
 	 * @param camera The camera that this system will control.
 	 */
-	public CameraMovementSystem(Camera camera, Rectangle bounds) {
+	public CameraMovementSystem(InputMultiplexer input, Camera camera, Rectangle bounds) {
+		super(input);
 		this.camera = camera;
 		this.bounds = bounds;
 	}
-	
-	@Override
-	public void dispose() { }
 
 	@Override
 	public boolean canProcess(Entity e) {
@@ -43,15 +47,15 @@ public class CameraMovementSystem extends EntitySystem {
 		
 		Vector3 movement = new Vector3(0, 0, 0);
 		
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		if (movingLeft) {
 			movement.x = - 1;
-		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		} else if (movingRight) {
 			movement.x = 1;
 		}
 		
-		if (Gdx.input.isKeyPressed(Keys.UP)){
+		if (movingUp){
 			movement.y = 1;
-		} else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		} else if (movingDown) {
 			movement.y = -1;
 		}
 		
@@ -85,6 +89,45 @@ public class CameraMovementSystem extends EntitySystem {
 	}
 
 	@Override
-	protected void process(Entity e) { }
+	public boolean keyDown(int keycode) {
+		if (keycode == Keys.LEFT) {
+			movingLeft = true;
+			return true;
+		} else if (keycode == Keys.RIGHT){
+			movingRight = true;
+			return true;
+		}
+		
+		if (keycode == Keys.UP) {
+			movingUp = true;
+			return true;
+		} else if (keycode == Keys.DOWN) {
+			movingDown = true;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean keyUp(int keycode) {
+		if (keycode == Keys.LEFT) {
+			movingLeft = false;
+			return true;
+		} else if (keycode == Keys.RIGHT){
+			movingRight = false;
+			return true;
+		}
+		
+		if (keycode == Keys.UP) {
+			movingUp = false;
+			return true;
+		} else if (keycode == Keys.DOWN) {
+			movingDown = false;
+			return true;
+		}
+		
+		return false;
+	}
 	
 }
