@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities.systems.generic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
@@ -16,6 +17,7 @@ import com.punchline.javalib.entities.systems.InputSystem;
 public class CameraMovementSystem extends InputSystem  {
 
 	private static final float CAMERA_SPEED = 200f;
+	private static final float MOVEMENT_BORDER = .125f;
 	
 	private Camera camera;
 	private Rectangle bounds;
@@ -32,6 +34,7 @@ public class CameraMovementSystem extends InputSystem  {
 	 */
 	public CameraMovementSystem(InputMultiplexer input, Camera camera, Rectangle bounds) {
 		super(input);
+		
 		this.camera = camera;
 		this.bounds = bounds;
 	}
@@ -125,6 +128,38 @@ public class CameraMovementSystem extends InputSystem  {
 		} else if (keycode == Keys.DOWN) {
 			movingDown = false;
 			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		
+		int windowWidth = Gdx.graphics.getWidth();
+		int windowHeight = Gdx.graphics.getHeight();
+		
+		int leftThreshold = (int)(windowWidth * MOVEMENT_BORDER);
+		int downThreshold = (int)(windowHeight * MOVEMENT_BORDER);
+		int rightThreshold = windowWidth - leftThreshold;
+		int upThreshold = windowHeight - downThreshold;
+		
+		if (screenX < leftThreshold) {
+			movingLeft = true;
+		} else if (screenX > rightThreshold) {
+			movingRight = true;
+		} else {
+			movingLeft = false;
+			movingRight = false;
+		}
+		
+		if (screenY < downThreshold) {
+			movingDown = true;
+		} else if (screenY > upThreshold) {
+			movingUp = true;
+		} else {
+			movingDown = false;
+			movingUp = false;
 		}
 		
 		return false;
