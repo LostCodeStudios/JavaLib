@@ -1,7 +1,7 @@
 package com.punchline.javalib.states;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.punchline.javalib.BaseGame;
 
 /**
  * Base class for all game screens.
@@ -13,13 +13,13 @@ public abstract class GameScreen implements Screen {
 	/**
 	 * This screen's parent game.
 	 */
-	protected Game game;
+	protected BaseGame game;
 	
 	/**
 	 * Constructs a GameScreen.
 	 * @param game This screen's parent Game.
 	 */
-	public GameScreen(Game game) {
+	public GameScreen(BaseGame game) {
 		this.game = game;
 	}
 

@@ -63,9 +63,11 @@ public class EntityManager extends Pool<Entity>{
 		//Clears the information/post-processing lists.
 		newEntities.clear();
 		changedEntities.clear();
+		
 		for(Entity e : removedEntities){
 			this.free(e); //Frees the entity from the entity pool. See pooling.
 		}
+		
 		removedEntities.clear();
 		
 		

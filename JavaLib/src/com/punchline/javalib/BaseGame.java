@@ -143,16 +143,16 @@ public abstract class BaseGame extends Game {
 				cursorChanged = true;
 			}
 			
-			if (cursorY < cursorTexture.getHeight()) {
-				cursorY = cursorTexture.getHeight();
+			if (cursorY < 0) {
+				cursorY = 0;
 				cursorChanged = true;
-			} else if (cursorY > Gdx.graphics.getHeight()) {
-				cursorY = Gdx.graphics.getHeight();
+			} else if (cursorY > Gdx.graphics.getHeight() - cursorTexture.getHeight()) {
+				cursorY = Gdx.graphics.getHeight() - cursorTexture.getHeight();
 				cursorChanged = true;
 			}
 			
 			spriteBatch.begin();
-			spriteBatch.draw(cursorTexture, cursorX, Gdx.graphics.getHeight() - cursorY);
+			spriteBatch.draw(cursorTexture, cursorX, Gdx.graphics.getHeight() - cursorY - cursorTexture.getHeight());
 			spriteBatch.end();
 			
 			if (cursorChanged) {

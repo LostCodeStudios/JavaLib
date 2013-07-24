@@ -1,6 +1,5 @@
 package com.punchline.javalib.states.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -8,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.punchline.javalib.BaseGame;
 import com.punchline.javalib.states.GameScreen;
 
 /**
@@ -49,7 +49,7 @@ public final class SplashScreen extends GameScreen {
 	 * @param onScreenTime The amount of seconds this screen will remain fully visible on the screen.
 	 * @param fadeOutTime The amount of seconds it will take this screen to fade off.
 	 */
-	public SplashScreen(Game game, FileHandle textureHandle, Screen nextScreen, float fadeInTime, float onScreenTime, float fadeOutTime) {
+	public SplashScreen(BaseGame game, FileHandle textureHandle, Screen nextScreen, float fadeInTime, float onScreenTime, float fadeOutTime) {
 		super(game);
 		
 		spriteBatch = new SpriteBatch();
