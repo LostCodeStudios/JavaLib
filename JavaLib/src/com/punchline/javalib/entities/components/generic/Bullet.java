@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.punchline.javalib.entities.components;
+package com.punchline.javalib.entities.components.generic;
 
 import com.punchline.javalib.entities.Component;
 import com.punchline.javalib.entities.ComponentManager;

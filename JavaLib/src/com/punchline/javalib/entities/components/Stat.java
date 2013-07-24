@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.Component;
  * @author Nathaniel
  *
  */
-public abstract class StatBar implements Component {
+public abstract class Stat implements Component {
 	
 	protected double current;
 	protected double max;
@@ -16,7 +16,7 @@ public abstract class StatBar implements Component {
 	 * Constructs a StatBar.
 	 * @param max The StatBar's maximum value.
 	 */
-	public StatBar(double max) {
+	public Stat(double max) {
 		this.max = max;
 		this.current = max;
 	}
@@ -88,7 +88,7 @@ public abstract class StatBar implements Component {
 	 * Sets the StatBar's current value to 0.
 	 */
 	public void drainEmpty() {
-		setCurrentValue(0);
+		drain(current);
 	}
 	
 	/**

@@ -115,6 +115,7 @@ public abstract class BaseGame extends Game {
 		
 		getScreen().dispose();
 		SoundManager.dispose();
+		spriteBatch.dispose();
 	}
 	
 	/**
