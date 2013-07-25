@@ -2,7 +2,6 @@ package com.punchline.javalib;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -161,9 +160,6 @@ public abstract class BaseGame extends Game {
 			
 		}
 		
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
 	}
 	
 	/**
@@ -172,9 +168,18 @@ public abstract class BaseGame extends Game {
 	 */
 	@Override
 	public void setScreen(Screen screen) {
+		setScreen(screen, true);
+	}
+	
+	/**
+	 * Sets the current screen. Screen.hide() is called on any old screen, and Screen.show() is called on the new screen, if any.
+	 * @param screen The new screen.
+	 * @param disposeOld Whether the old screen should be automatically disposed.
+	 */
+	public void setScreen(Screen screen, boolean disposeOld) {
 		Screen oldScreen = getScreen();
 		super.setScreen(screen);
-		if (oldScreen != null) oldScreen.dispose();
+		if (disposeOld && oldScreen != null) oldScreen.dispose();
 	}
 	
 }

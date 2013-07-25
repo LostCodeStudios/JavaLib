@@ -62,8 +62,6 @@ public abstract class MenuScreen extends GameScreen {
 			background = new TextureRegionDrawable(source);
 		}
 		
-		Gdx.input.setInputProcessor(stage);
-		
 		initialize();
 	}
 	
@@ -94,12 +92,12 @@ public abstract class MenuScreen extends GameScreen {
 
 	@Override
 	public void show() {
-		
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
 	public void hide() {
-		
+		Gdx.input.setInputProcessor(game.getInput());
 	}
 
 	@Override
@@ -116,7 +114,6 @@ public abstract class MenuScreen extends GameScreen {
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
-		Gdx.input.setInputProcessor(game.getInput());
 	}
 
 }
