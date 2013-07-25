@@ -6,6 +6,7 @@ package com.punchline.javalib.entities.systems.physical;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.utils.Logger;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Particle;
@@ -62,7 +63,8 @@ public class ParticleSystem extends ComponentSystem {
 						Vector2 normal, float fraction) {
 					//If collision occurs
 					Collidable col = e.getComponent();
-					
+					com.badlogic.gdx.utils.Logger l = new Logger("particle collision logger");
+					l.debug("collision occured");
 					//Get the victim
 					Entity victim = (Entity)fixture.getBody().getUserData();
 					
