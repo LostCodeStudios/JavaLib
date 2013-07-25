@@ -19,22 +19,6 @@ public class EntityManager extends Pool<Entity>{
 	 */
 	private List<Entity> entities = new ArrayList<Entity>();
 	
-	/**
-	 * Contains all tagged entities mapped to their tags.
-	 */
-	private Map<String, Entity> entitiesByTag = new HashMap<String, Entity>();
-	
-	/**
-	 * Contains all entity groups mapped to their names.
-	 */
-	private Map<String, List<Entity>> entitiesByGroup = new HashMap<String, List<Entity>>();
-	
-	/**
-	 * Contains all entities of each type, mapped to the type name.
-	 */
-	private Map<String, List<Entity>> entitiesByType = new HashMap<String, List<Entity>>();
-	
-	
 	
 	
 	/**
@@ -91,39 +75,7 @@ public class EntityManager extends Pool<Entity>{
 		entities.add(e);
 		
 		//Mark for pre-processing
-		newEntities.add(e);
-		
-		//Map to tag
-		if (!e.getTag().isEmpty()) {
-			entitiesByTag.put(e.getTag(), e); 
-		}
-		
-		//Map to group
-		if (!e.getGroup().isEmpty()) {
-			if(entitiesByGroup.containsKey(e.getGroup())) {
-				//Add to group list
-				entitiesByGroup.get(e.getGroup()).add(e);
-			} else {
-				//Create group list, and add entity
-				ArrayList<Entity> newGroup = new ArrayList<Entity>();
-				newGroup.add(e);
-				entitiesByGroup.put(e.getGroup(), newGroup);
-			}
-		}
-		
-		//Map to type
-		if (!e.getType().isEmpty()) {
-			if (entitiesByType.containsKey(e.getGroup())) {
-				//Add to type list
-				entitiesByType.get(e.getType()).add(e);
-			} else {
-				//Create type list, and add entity
-				ArrayList<Entity> newType = new ArrayList<Entity>();
-				newType.add(e);
-				entitiesByType.put(e.getType(), newType);
-			}
-		}
-		
+		newEntities.add(e);	
 	}
 	
 	/**
@@ -137,25 +89,6 @@ public class EntityManager extends Pool<Entity>{
 		
 		//Mark for post-removal processing
 		removedEntities.add(e);
-		
-		
-		//Remove from tag map
-		if (!e.getTag().isEmpty()) {
-			entitiesByTag.remove(e);
-		}
-		
-		//Remove from group map
-		if (!e.getGroup().isEmpty()) {
-			//Assuming e was previously added to the manager, its group list should ALWAYS exist.
-			entitiesByGroup.get(e.getGroup()).remove(e);
-		}
-		
-		//Remove from type map
-		if (!e.getType().isEmpty()) {
-			//Likewise, we can assume the type list exists as well.
-			entitiesByType.get(e.getType()).remove(e);
-		}
-	
 	}
 	
 	/**
@@ -195,28 +128,4 @@ public class EntityManager extends Pool<Entity>{
 	public List<Entity> getRemovedEntities() {
 		return removedEntities;
 	}
-	
-	/**
-	 * @param tag The tag of the desired entity.
-	 * @return The desired entity.
-	 */
-	public Entity getByTag(String tag) {
-		return entitiesByTag.get(tag);
-	}
-	
-	/**
-	 * @param group The name of the desired group.
-	 * @return The desired group.
-	 */
-	public List<Entity> getByGroup(String group) {
-		return entitiesByGroup.get(group);
-	}
-	
-	/**
-	 * @param type The name of the desired type.
-	 * @return All entities of the desired type.
-	 */
-	public List<Entity> getByType(String type) {
-		return entitiesByType.get(type);
-	}	
 }
