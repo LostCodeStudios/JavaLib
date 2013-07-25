@@ -13,16 +13,16 @@ public class Convert {
 	/**
 	 * The ratio between meters and pixels. yPixels = metersToPixels * yMeters;
 	 */
-	static float meterPixelRatio;
+	static float pixelMeterRatio;
 		
 	//INIT
 
 	/**
 	 * Initializes Convert class with a meter to Pixel ratio.
-	 * @param mPRatio The meter to pixel ratio.
+	 * @param mPRatio The pixel to meter ratio.
 	 */
-	public static void init(float mPRatio){
-		meterPixelRatio = mPRatio;
+	public static void init(float pMRatio){
+		pixelMeterRatio = pMRatio;
 	}
 	
 	
@@ -55,7 +55,7 @@ public class Convert {
 	 * @return meters Meters in pixels.
 	 */
 	public static float metersToPixels(float meters){
-		return meters * meterPixelRatio;
+		return meters * pixelMeterRatio;
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class Convert {
 	 * @return The pixels in meters.
 	 */
 	public static float pixelsToMeters(float pixels) {
-		return pixels / meterPixelRatio;
+		return pixels / pixelMeterRatio;
 	}
 	
 	/**
