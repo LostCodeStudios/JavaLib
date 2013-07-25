@@ -61,16 +61,19 @@ public abstract class EntityWorld implements Disposable {
 	//SYSTEMS
 	
 	/**
-	 * This physicsWorld's {@link RenderSystem}.
+	 * This world's {@link RenderSystem}.
 	 */
 	protected RenderSystem renderSystem;
 	
 	/**
-	 * This physicsWorld's {@link DebugRenderSystem}.
+	 * This world's {@link DebugRenderSystem}.
 	 */
 	protected DebugRenderSystem debugView;
 	
-	
+	/**
+	 * The physicsWorld's {@link ContactManager}.
+	 */
+	protected ContactManager contactManager;
 
 	
 	
@@ -96,6 +99,8 @@ public abstract class EntityWorld implements Disposable {
 		positionCamera();
 		
 		physicsWorld = new World(gravity, doSleeping);
+		
+		contactManager = new ContactManager(physicsWorld);
 		
 		buildSystems();
 		buildTemplates();

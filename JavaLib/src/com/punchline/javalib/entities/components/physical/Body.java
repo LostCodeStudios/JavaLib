@@ -116,22 +116,12 @@ public class Body implements Transform, Velocity {
 		body.setAngularVelocity(angularVelocity);
 	}
 
-	
-	
-	
-
 	//COMPONENT
-	/**
-	 * Adds the Transform and Velocity interfaces to the entity.
-	 */
 	@Override
 	public void onAdd(ComponentManager container) {
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void onRemove(ComponentManager container) {
 

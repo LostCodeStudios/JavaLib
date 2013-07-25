@@ -81,6 +81,7 @@ public abstract class Stat implements Component {
 	 * @param amount The amount to drain.
 	 */
 	public void drain(double amount) {
+		amount = Math.abs(amount);
 		setCurrentValue(current - amount);
 	}
 	
@@ -96,6 +97,7 @@ public abstract class Stat implements Component {
 	 * @param amount The amount to fill.
 	 */
 	public void fill(double amount) {
+		amount = Math.abs(amount);
 		setCurrentValue(current + amount);
 	}
 	
