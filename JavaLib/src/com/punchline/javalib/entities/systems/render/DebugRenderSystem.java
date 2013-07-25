@@ -89,6 +89,7 @@ public final class DebugRenderSystem extends InputSystem {
 						Convert.pixelsToMeters(camera.viewportWidth), 
 						Convert.pixelsToMeters(camera.viewportHeight));
 				debugCamera.position.set(Convert.pixelsToMeters(camera.position));
+				debugCamera.update();
 				
 				physicsDebugRenderer.render(physicsWorld, debugCamera.combined);
 				

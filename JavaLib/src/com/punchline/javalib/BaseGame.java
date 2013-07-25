@@ -15,7 +15,7 @@ import com.punchline.javalib.utils.SoundManager;
  * @created Jul 23, 2013
  */
 public abstract class BaseGame extends Game {
-
+	
 	/**
 	 * The title that will appear on the game's active window.
 	 */

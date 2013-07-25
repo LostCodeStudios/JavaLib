@@ -20,14 +20,14 @@ public class Health extends Stat {
 	 * @author Nathaniel
 	 * @created Jul 24, 2013
 	 */
-	public interface OnDeathCallback {
+	public interface HealthEventCallback {
 		
 		/**
 		 * Called when the owner of this component runs out of health.
 		 * @param owner The owner of this component.
 		 * @param world The world that Entity owner belongs to.
 		 */
-		public void onDeath(Entity owner, EntityWorld world);
+		public void invoke(Entity owner, EntityWorld world);
 		
 	}
 	
@@ -54,7 +54,27 @@ public class Health extends Stat {
 		if (isEmpty()) { //Dead
 			
 			if (onDeath != null)
-				onDeath.onDeath(owner, world);
+				onDeath.invoke(owner, world);
+			
+			return;
+		}
+		
+		if (amount > 0) { //Damaged
+			
+			if (onDamage != null)
+				onDamage.invoke(owner, world);
+			
+		}
+	}
+
+	@Override
+	public void fill(double amount) {
+		super.fill(amount);
+		
+		if (amount > 0) { //Healed
+			
+			if (onHeal != null)
+				onHeal.invoke(owner, world);
 			
 		}
 	}
@@ -62,8 +82,18 @@ public class Health extends Stat {
 	/**
 	 * Callback for when the Entity that owns this component dies.
 	 */
-	public OnDeathCallback onDeath;
+	public HealthEventCallback onDeath;
 
+	/**
+	 * Callback for when the Entity that owns this component takes damage.
+	 */
+	public HealthEventCallback onDamage;
+	
+	/**
+	 * Callback for when the Entity that owns this component is healed.
+	 */
+	public HealthEventCallback onHeal;
+	
 	@Override
 	public void onAdd(ComponentManager container) { }
 
