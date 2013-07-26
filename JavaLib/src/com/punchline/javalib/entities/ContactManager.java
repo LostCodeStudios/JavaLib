@@ -32,13 +32,18 @@ public class ContactManager implements ContactListener {
 		Entity e2 = (Entity)f2.getBody().getUserData();
 		
 
-			if (e1.hasComponent(Collidable.class) && e2.hasComponent(Collidable.class)) {
-				Collidable c1 = e1.getComponent();
-				Collidable c2 = e2.getComponent();
-				
-				c1.onCollide(e1, e2);
-				c2.onCollide(e2, e1);
-			}
+		if (e1.hasComponent(Collidable.class) && e2.hasComponent(Collidable.class)) {
+			Collidable c1 = e1.getComponent();
+			Collidable c2 = e2.getComponent();
+			
+			float collide1 =  c1.onCollide(e1, e2);
+			float collide2 = c2.onCollide(e2, e1);
+			
+			if (collide1 == 0f || collide2 == 0f)
+				contact.setEnabled(false);
+		}
+		
+		
 	}
 
 	@Override
