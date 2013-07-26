@@ -1,6 +1,7 @@
 package com.punchline.javalib.entities;
 
 import com.badlogic.gdx.utils.Pool.Poolable;
+import com.punchline.javalib.entities.components.physical.Body;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
@@ -95,6 +96,13 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	@Override
 	public void reset() {
+		
+		//TODO this is an awful quick-fix
+		if (hasComponent(Body.class)){
+			Body b = getComponent();
+			b.onRemove(this);
+		}
+		
 		clearComponents();
 		tag = "";
 		group = "";
