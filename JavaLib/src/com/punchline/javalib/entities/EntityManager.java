@@ -63,6 +63,8 @@ public class EntityManager extends Pool<Entity>{
 				changedEntities.add(e);
 			}
 		}
+		
+
 	}
 	
 	/**
