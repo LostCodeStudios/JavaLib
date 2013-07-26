@@ -45,7 +45,6 @@ public class EntityManager extends Pool<Entity>{
 		//Clears the information/post-processing lists.
 		newEntities.clear();
 		changedEntities.clear();
-		
 		for(Entity e : removedEntities){
 			this.free(e); //Frees the entity from the entity pool. See pooling.
 		}
@@ -59,6 +58,9 @@ public class EntityManager extends Pool<Entity>{
 			
 			if (e.isDeleted()) {
 				remove(e); //This will add e to the removal list
+			}
+			if(e.wasChanged()){
+				changedEntities.add(e);
 			}
 		}
 	}
