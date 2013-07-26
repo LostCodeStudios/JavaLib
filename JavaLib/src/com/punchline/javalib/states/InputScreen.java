@@ -21,7 +21,7 @@ public abstract class InputScreen extends GameScreen implements InputProcessor {
 	}
 
 	@Override
-	public void dispose() {
+	public void hide() {
 		game.getInput().removeProcessor(this);
 	}
 

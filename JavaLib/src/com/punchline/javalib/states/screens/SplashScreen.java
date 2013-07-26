@@ -144,9 +144,6 @@ public final class SplashScreen extends InputScreen {
 	public void show() { }
 
 	@Override
-	public void hide() { }
-
-	@Override
 	public void pause() { }
 
 	@Override
