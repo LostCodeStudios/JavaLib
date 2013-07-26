@@ -28,7 +28,7 @@ public final class GenericCollisionEvents {
 				if (container.hasComponent(Health.class) && victim.hasComponent(Health.class)) {
 					
 					if (victim.getGroup().equals(container.getGroup()))
-						return 1;
+						return 0;
 					
 					Health h1 = container.getComponent();
 					Health h2 = victim.getComponent();
