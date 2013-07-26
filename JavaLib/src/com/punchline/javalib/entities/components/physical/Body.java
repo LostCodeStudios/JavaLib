@@ -3,7 +3,6 @@ package com.punchline.javalib.entities.components.physical;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
@@ -15,7 +14,7 @@ import com.punchline.javalib.entities.EntityWorld;
  */
 public class Body implements Transform, Velocity {
 
-	private World world;
+	private EntityWorld entityWorld;
 	private com.badlogic.gdx.physics.box2d.Body body;
 	
 	/**
@@ -26,10 +25,20 @@ public class Body implements Transform, Velocity {
 	 * @param fixtureDef The definition of the body's fixture.
 	 */
 	public Body(EntityWorld world, Entity e, BodyDef bodyDef, FixtureDef fixtureDef) {
-		this.world = world.getPhysicsWorld();
-		body = world.getPhysicsWorld().createBody(bodyDef);
-		body.setUserData(e);
+		this(world,e,bodyDef);
 		body.createFixture(fixtureDef);
+	}
+	
+	/**
+	 * Constructs a body component without a fixture definition.
+	 * @param world The EntityWorld.
+	 * @param e The entity that will own this body.
+	 * @param bodyDef The definition of the body to be created.
+	 */
+	public Body(EntityWorld world, Entity e, BodyDef bd){
+		entityWorld = world;
+		body = world.getPhysicsWorld().createBody(bd);
+		body.setUserData(e);
 		
 		e.addComponent(Transform.class, this);
 		e.addComponent(Velocity.class, this);
@@ -82,7 +91,7 @@ public class Body implements Transform, Velocity {
 	 */
 	@Override
 	public Vector2 getOrigin() {
-		return body.getWorldCenter();
+			return body.getWorldCenter();
 	}
 	
 	//VELOCITY
@@ -126,6 +135,6 @@ public class Body implements Transform, Velocity {
 
 	@Override
 	public void onRemove(ComponentManager container) {
-		world.destroyBody(body);
+	    entityWorld.safelyRemoveBody(body);
 	}
 }
