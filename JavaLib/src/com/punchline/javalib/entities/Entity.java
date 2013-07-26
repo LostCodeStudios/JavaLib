@@ -96,13 +96,6 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	@Override
 	public void reset() {
-		
-		//TODO this is an awful quick-fix
-		if (hasComponent(Body.class)){
-			Body b = getComponent();
-			b.onRemove(this);
-		}
-		
 		clearComponents();
 		tag = "";
 		group = "";
