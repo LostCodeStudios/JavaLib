@@ -116,6 +116,9 @@ public abstract class EntityWorld implements Disposable {
 		buildEntities();
 	}
 	
+	//TODO this is a bad quick fix
+	boolean cameraInit = false;
+	
 	/**
 	 * Adds necessary systems to the physicsWorld. Called by the constructor.
 	 */
@@ -162,6 +165,11 @@ public abstract class EntityWorld implements Disposable {
 	 * Runs all system processing.
 	 */
 	public void process() {
+		
+		if (!cameraInit) { //TODO THIS IS A HORRIBLE QUICK FIX
+			positionCamera();
+			cameraInit = true;
+		}
 		
 		systems.process(
 				entities.getNewEntities(), 

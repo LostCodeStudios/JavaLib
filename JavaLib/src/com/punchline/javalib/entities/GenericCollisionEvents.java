@@ -26,6 +26,10 @@ public final class GenericCollisionEvents {
 			@Override
 			public float onCollide(Entity container, Entity victim) {
 				if (container.hasComponent(Health.class) && victim.hasComponent(Health.class)) {
+					
+					if (victim.getGroup().equals(container.getGroup()))
+						return 1;
+					
 					Health h1 = container.getComponent();
 					Health h2 = victim.getComponent();
 					h2.drain(h1.getMaxValue());

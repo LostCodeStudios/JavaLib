@@ -115,8 +115,9 @@ public final class DebugRenderSystem extends InputSystem {
 					i++;
 				}
 				
-				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i * font.getLineHeight());
-				font.draw(spriteBatch, "Entities: " + this.world.getEntityCount() , 0, (i+1) * font.getLineHeight());
+				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i++ * font.getLineHeight());
+				font.draw(spriteBatch, "Entities: " + this.world.getEntityCount() , 0, i++ * font.getLineHeight());
+				font.draw(spriteBatch, "Camera pos: " + camera.position.toString(), 0, i++ * font.getLineHeight());
 				
 				spriteBatch.end();
 				
