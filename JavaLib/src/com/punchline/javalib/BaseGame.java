@@ -3,13 +3,10 @@ package com.punchline.javalib;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.punchline.javalib.states.screens.generic.MainMenuScreen;
-import com.punchline.javalib.states.screens.generic.SettingsScreen;
-import com.punchline.javalib.states.screens.generic.SplashScreen;
 import com.punchline.javalib.utils.SoundManager;
 
 /**
@@ -65,30 +62,12 @@ public abstract class BaseGame extends Game {
 	 */
 	protected float backgroundBlue = 0f;
 	
-	/**
-	 * The game's SpriteBatch.
-	 */
 	protected SpriteBatch spriteBatch;
 	
 	/**
 	 * The game's {@link com.badlogic.gdx.InputMultiplexer InputMultiplexer}.
 	 */
 	protected InputMultiplexer input;
-	
-	/**
-	 * The game's opening splash screen.
-	 */
-	protected SplashScreen splash;
-	
-	/**
-	 * The game's main menu.
-	 */
-	protected MainMenuScreen mainMenu;
-	
-	/**
-	 * The game's settings screen.
-	 */
-	protected SettingsScreen settings;
 	
 	/**
 	 * Initializes the game's window.
@@ -115,29 +94,10 @@ public abstract class BaseGame extends Game {
 		
 		loadSounds();
 		
-		setScreen(splash);
-		
 	}
 	
-	/**
-	 * @return The game's InputMultiplexer.
-	 */
 	public InputMultiplexer getInput() {
 		return input;
-	}
-
-	/**
-	 * @return The game's Main Menu.
-	 */
-	public MainMenuScreen getMainMenu() {
-		return mainMenu;
-	}
-	
-	/**
-	 * @return The game's Settings screen.
-	 */
-	public SettingsScreen getSettings() {
-		return settings;
 	}
 	
 	/**
@@ -146,29 +106,13 @@ public abstract class BaseGame extends Game {
 	protected abstract void loadSounds();
 	
 	/**
-	 * Reads and applies all game settings.
-	 */
-	public void readSettings() {
-		Preferences pref = Gdx.app.getPreferences(SettingsScreen.SETTINGS_PREF_NAME);
-		
-		float soundVol = pref.getBoolean("Sound", true) ? 1f : 0f;
-		float musicVol = pref.getBoolean("Music", true) ? 1f : 0f;
-		
-		SoundManager.setSoundVolume(soundVol);
-		SoundManager.setMusicVolume(musicVol);
-	}
-	
-	/**
 	 * Disposes all of this game's assets, including those that are still in the SoundManager's memory.
 	 */
 	@Override
 	public void dispose() {
 		super.dispose();
 		
-		splash.dispose();
-		mainMenu.dispose();
-		settings.dispose();
-		
+		getScreen().dispose();
 		SoundManager.dispose();
 		spriteBatch.dispose();
 	}
@@ -213,7 +157,29 @@ public abstract class BaseGame extends Game {
 			if (cursorChanged) {
 				Gdx.input.setCursorPosition(cursorX, Gdx.graphics.getHeight() - cursorY);
 			}
+			
 		}
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * Disposes of the previous screen.
+	 */
+	@Override
+	public void setScreen(Screen screen) {
+		setScreen(screen, true);
+	}
+	
+	/**
+	 * Sets the current screen. Screen.hide() is called on any old screen, and Screen.show() is called on the new screen, if any.
+	 * @param screen The new screen.
+	 * @param disposeOld Whether the old screen should be automatically disposed.
+	 */
+	public void setScreen(Screen screen, boolean disposeOld) {
+		Screen oldScreen = getScreen();
+		super.setScreen(screen);
+		if (disposeOld && oldScreen != null) oldScreen.dispose();
 	}
 	
 }
