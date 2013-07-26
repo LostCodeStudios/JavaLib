@@ -189,7 +189,6 @@ public abstract class EntityWorld implements Disposable {
 		    // actual remove
 		    physicsWorld.destroyBody(body);
 		}
-
 		bodiesToRemove.clear();
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
