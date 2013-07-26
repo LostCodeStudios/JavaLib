@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Logger;
 import com.punchline.javalib.entities.components.physical.Collidable;
 
 /**
@@ -28,16 +29,17 @@ public class ContactManager implements ContactListener {
 		Fixture f1 = contact.getFixtureA();
 		Fixture f2 = contact.getFixtureB();
 		
-		Entity e1 = (Entity)f1.getUserData();
-		Entity e2 = (Entity)f2.getUserData();
+		Entity e1 = (Entity)f1.getBody().getUserData();
+		Entity e2 = (Entity)f2.getBody().getUserData();
 		
-		if (e1.hasComponent(Collidable.class) && e2.hasComponent(Collidable.class)) {
-			Collidable c1 = e1.getComponent();
-			Collidable c2 = e2.getComponent();
-			
-			c1.onCollide(e1, e2);
-			c2.onCollide(e2, e1);
-		}
+
+			if (e1.hasComponent(Collidable.class) && e2.hasComponent(Collidable.class)) {
+				Collidable c1 = e1.getComponent();
+				Collidable c2 = e2.getComponent();
+				
+				c1.onCollide(e1, e2);
+				c2.onCollide(e2, e1);
+			}
 	}
 
 	@Override
