@@ -18,7 +18,7 @@ public class EntityRemovalSystem extends ComponentSystem {
 	 * How far an entity can be outside of the world. This is necessary because a position describes an entity's center.
 	 * Entities whose sprites have a larger radius than this number will be removed while still visible to the player.
 	 */
-	public static final float REMOVAL_THRESHOLD = 200f;
+	public static final float REMOVAL_THRESHOLD = 400f;
 	
 	private Rectangle bounds;
 	

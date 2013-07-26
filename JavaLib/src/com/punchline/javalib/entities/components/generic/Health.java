@@ -7,6 +7,7 @@ import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.Stat;
+import com.punchline.javalib.entities.components.physical.Body;
 
 /**
  * A component describing an Entity's health. When health becomes 0, the Entity will be deleted.
@@ -55,6 +56,10 @@ public class Health extends Stat {
 			
 			if (onDeath != null)
 				onDeath.invoke(owner, world);
+			
+			if (owner.hasComponent(Body.class)) owner.removeComponent(owner.<Body>getComponent()); //TODO SOOOOOO BAD
+			
+			owner.delete();
 			
 			return;
 		}

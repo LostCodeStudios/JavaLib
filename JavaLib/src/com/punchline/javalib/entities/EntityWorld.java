@@ -102,8 +102,8 @@ public abstract class EntityWorld implements Disposable {
 		
 		contactManager = new ContactManager(physicsWorld);
 		
-		buildSystems();
 		buildTemplates();
+		buildSystems();
 		buildEntities();
 	}
 	
