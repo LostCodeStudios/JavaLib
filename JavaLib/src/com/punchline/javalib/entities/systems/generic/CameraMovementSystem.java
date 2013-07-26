@@ -63,8 +63,8 @@ public class CameraMovementSystem extends InputSystem  {
 		}
 		
 		movement.nor();
-		movement.mul(CAMERA_SPEED);
-		movement.mul(deltaSeconds());
+		movement.scl(CAMERA_SPEED);
+		movement.scl(deltaSeconds());
 		
 		camera.translate(movement);
 		
@@ -140,9 +140,10 @@ public class CameraMovementSystem extends InputSystem  {
 		int windowHeight = Gdx.graphics.getHeight();
 		
 		int leftThreshold = (int)(windowWidth * MOVEMENT_BORDER);
-		int downThreshold = (int)(windowHeight * MOVEMENT_BORDER);
+		int upThreshold = (int)(windowHeight * MOVEMENT_BORDER);
+		int downThreshold = windowHeight - upThreshold; 
 		int rightThreshold = windowWidth - leftThreshold;
-		int upThreshold = windowHeight - downThreshold;
+		
 		
 		if (screenX < leftThreshold) {
 			movingLeft = true;
@@ -153,9 +154,9 @@ public class CameraMovementSystem extends InputSystem  {
 			movingRight = false;
 		}
 		
-		if (screenY < downThreshold) {
+		if (screenY > downThreshold) {
 			movingDown = true;
-		} else if (screenY > upThreshold) {
+		} else if (screenY < upThreshold) {
 			movingUp = true;
 		} else {
 			movingDown = false;
@@ -165,15 +166,14 @@ public class CameraMovementSystem extends InputSystem  {
 		return false; //Let other systems take mouse input.
 	}
 
-//	@Override
-//	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//		
-////		movingLeft = false;
-////		movingRight = false;
-////		movingDown = false;
-////		movingUp = false;
-//		
-//		return false;
-//	}
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		movingLeft = false;
+		movingRight = false;
+		movingDown = false;
+		movingUp = false;
+		
+		return false;
+	}
 	
 }
