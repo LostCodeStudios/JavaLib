@@ -178,8 +178,6 @@ public abstract class EntityWorld implements Disposable {
 		
 		entities.process();
 		
-		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-		
 		//REMOVE BODIES SAFELY
 		for(int i = 0; i < bodiesToRemove.size(); i++){
 			Body body = bodiesToRemove.get(i);
@@ -194,6 +192,7 @@ public abstract class EntityWorld implements Disposable {
 
 		bodiesToRemove.clear();
 		
+		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	}
 	
 	
@@ -240,7 +239,8 @@ public abstract class EntityWorld implements Disposable {
 	 * @param Body The body to be removed.
 	 */
 	public void safelyRemoveBody(com.badlogic.gdx.physics.box2d.Body body){
-		bodiesToRemove.add(body);
+		if(!bodiesToRemove.contains(body))
+			bodiesToRemove.add(body);
 	}
 
 	

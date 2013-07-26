@@ -1,7 +1,9 @@
 package com.punchline.javalib.entities;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Holds a map of {@link Component Components} with their type identifiers, 
@@ -63,6 +65,8 @@ public abstract class ComponentManager {
 	 * Clears all of the components in a component container
 	 */
 	protected void clearComponents(){
+		for(Entry<Class<?>, Component> e : components.entrySet())
+			e.getValue().onRemove(this);
 		components.clear();
 	}
 	
