@@ -67,7 +67,7 @@ public class Sprite implements Renderable {
 	 * @param position The new position.
 	 */
 	public void setPosition(Vector2 position) {		
-		sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
+		sprite.setPosition(position.x - sprite.getOriginX(), position.y - sprite.getOriginY());
 	}
 	
 	/**

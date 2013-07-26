@@ -55,7 +55,7 @@ public final class RenderSystem extends ComponentSystem {
 		
 		if (e.hasComponent(Transform.class)) { 
 			Transform t = e.getComponent();
-		
+			
 			r.setPosition(t.getPosition());
 			r.setRotation((float)Math.toDegrees(t.getRotation()));
 		}
