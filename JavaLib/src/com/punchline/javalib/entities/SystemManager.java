@@ -89,10 +89,12 @@ public class SystemManager implements Disposable {
 				if (system.isProcessing(e)) {
 					if (!system.canProcess(e)) {
 						system.remove(e);
-						continue;
 					}
-					
-					system.onChanged(e);
+				}
+				else{
+					if (system.canProcess(e)) {
+						system.add(e); //The system can process this Entity, so add it
+					}
 				}
 				
 			}

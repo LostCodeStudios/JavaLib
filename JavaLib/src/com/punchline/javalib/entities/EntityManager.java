@@ -59,12 +59,11 @@ public class EntityManager extends Pool<Entity>{
 			if (e.isDeleted()) {
 				remove(e); //This will add e to the removal list
 			}
+			
 			if(e.wasChanged()){
 				changedEntities.add(e);
 			}
 		}
-		
-
 	}
 	
 	/**
