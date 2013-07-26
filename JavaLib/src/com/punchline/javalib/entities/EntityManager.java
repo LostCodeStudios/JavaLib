@@ -1,9 +1,7 @@
 package com.punchline.javalib.entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.badlogic.gdx.utils.Pool;
 
