@@ -1,11 +1,8 @@
 package com.punchline.javalib.entities.components.physical;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
@@ -19,7 +16,6 @@ import com.punchline.javalib.entities.EntityWorld;
 public class Body implements Transform, Velocity {
 
 	private World world;
-	private EntityWorld entityWorld;
 	private com.badlogic.gdx.physics.box2d.Body body;
 	
 	/**
@@ -31,7 +27,6 @@ public class Body implements Transform, Velocity {
 	 */
 	public Body(EntityWorld world, Entity e, BodyDef bodyDef, FixtureDef fixtureDef) {
 		this.world = world.getPhysicsWorld();
-		entityWorld = world;
 		body = world.getPhysicsWorld().createBody(bodyDef);
 		body.setUserData(e);
 		body.createFixture(fixtureDef);
@@ -131,6 +126,6 @@ public class Body implements Transform, Velocity {
 
 	@Override
 	public void onRemove(ComponentManager container) {
-		entityWorld.safelyRemoveBody(body);
+		world.destroyBody(body);
 	}
 }

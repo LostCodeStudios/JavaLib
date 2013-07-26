@@ -9,8 +9,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.systems.physical.EntityRemovalSystem;
@@ -53,12 +51,6 @@ public abstract class EntityWorld implements Disposable {
 	 * This physicsWorld's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
 	protected World physicsWorld;
-	
-	/**
-	 * List for safely removing bodies.
-	 */
-	private ArrayList<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
-	
 	
 	/**
 	 * This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
@@ -107,7 +99,7 @@ public abstract class EntityWorld implements Disposable {
 		positionCamera();
 		
 		physicsWorld = new World(gravity, doSleeping);
-		bodiesToRemove = new ArrayList<com.badlogic.gdx.physics.box2d.Body>();
+		
 		contactManager = new ContactManager(physicsWorld);
 		
 		buildTemplates();
@@ -161,7 +153,7 @@ public abstract class EntityWorld implements Disposable {
 	 * Runs all system processing.
 	 */
 	public void process() {
-				
+		
 		systems.process(
 				entities.getNewEntities(), 
 				entities.getChangedEntities(), 
@@ -170,21 +162,6 @@ public abstract class EntityWorld implements Disposable {
 		entities.process();
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-		
-		
-		//REMOVE BODIES SAFELY
-		for(int i = 0; i < bodiesToRemove.size(); i++){
-			Body body = bodiesToRemove.get(i);
-		    //to prevent some obscure c assertion that happened randomly once in a blue moon
-		    final ArrayList<JointEdge> list = body.getJointList();
-		    while (list.size() > 0) {
-		        physicsWorld.destroyJoint(list.get(0).joint);
-		    }
-		    // actual remove
-		    physicsWorld.destroyBody(body);
-		}
-		
-		bodiesToRemove.clear();
 		
 	}
 	
@@ -226,14 +203,6 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected void positionCamera() { }
 	
-	
-	/**
-	 * Marks a body for safe deletion.
-	 * @param Body The body to be removed.
-	 */
-	public void safelyRemoveBody(com.badlogic.gdx.physics.box2d.Body body){
-		bodiesToRemove.add(body);
-	}
 	
 	
 	//ENTITY/TEMPLATE CREATION
