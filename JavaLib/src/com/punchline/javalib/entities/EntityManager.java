@@ -61,6 +61,8 @@ public class EntityManager extends Pool<Entity>{
 				remove(e); //This will add e to the removal list
 			}
 		}
+		
+
 	}
 	
 	/**

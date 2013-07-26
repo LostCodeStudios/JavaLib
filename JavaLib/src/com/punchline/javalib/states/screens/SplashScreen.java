@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.punchline.javalib.BaseGame;
-import com.punchline.javalib.states.GameScreen;
+import com.punchline.javalib.states.InputScreen;
 
 /**
  * A splash screen that fades in and out.
  * @author Nathaniel
  * @created Jul 23, 2013
  */
-public final class SplashScreen extends GameScreen {
+public final class SplashScreen extends InputScreen {
 
 	/**
 	 * Represents the SplashScreen's current state of transition.
@@ -109,7 +109,7 @@ public final class SplashScreen extends GameScreen {
 			
 		case OffScreen:
 			
-			game.setScreen(nextScreen);
+			dismiss();
 			return;
 		
 		}
@@ -119,6 +119,22 @@ public final class SplashScreen extends GameScreen {
 		spriteBatch.draw(region, 0, 0);
 		spriteBatch.end();
 		
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		dismiss();
+		return true;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		dismiss();
+		return true;
+	}
+	
+	private void dismiss() {
+		game.setScreen(nextScreen);
 	}
 
 	@Override

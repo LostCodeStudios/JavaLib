@@ -164,5 +164,16 @@ public class CameraMovementSystem extends InputSystem  {
 		
 		return false; //Let other systems take mouse input.
 	}
+
+//	@Override
+//	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+//		
+////		movingLeft = false;
+////		movingRight = false;
+////		movingDown = false;
+////		movingUp = false;
+//		
+//		return false;
+//	}
 	
 }
