@@ -3,6 +3,7 @@
  */
 package com.punchline.javalib.entities.components.render;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.ComponentManager;
@@ -23,10 +24,24 @@ public class ParticleEffect implements Renderable {
 	/**
 	 * Creates a particle effect
 	 */
-	public ParticleEffect() {
-		// TODO Auto-generated constructor stub
+	public ParticleEffect(FileHandle effect, FileHandle imageDir ) {
+		this.particleEffect = new com.badlogic.gdx.graphics.g2d.ParticleEffect();
+		particleEffect.load(effect, imageDir);
 	}
 
+	/**
+	 * Starts the particle effect.
+	 */
+	public void start(){
+		particleEffect.start();
+	}
+	
+	
+	
+	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see com.punchline.javalib.entities.Component#onAdd(com.punchline.javalib.entities.ComponentManager)
 	 */
@@ -44,6 +59,7 @@ public class ParticleEffect implements Renderable {
 		// TODO Auto-generated method stub
 
 	}
+	
 
 	@Override
 	public float getWidth() {
@@ -81,7 +97,6 @@ public class ParticleEffect implements Renderable {
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		particleEffect.draw(spriteBatch, deltaSeconds);
-		
 	}
 
 }
