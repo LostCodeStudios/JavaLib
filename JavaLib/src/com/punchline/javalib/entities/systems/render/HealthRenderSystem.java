@@ -18,7 +18,7 @@ import com.punchline.javalib.entities.systems.ComponentSystem;
  */
 public class HealthRenderSystem extends ComponentSystem {
 
-	private static final int VERTICAL_OFFSET = 5;
+	private static final int VERTICAL_OFFSET = 2;
 	
 	private SpriteBatch spriteBatch;
 	private Camera camera;
@@ -53,7 +53,7 @@ public class HealthRenderSystem extends ComponentSystem {
 
 	@Override
 	public void processEntities() {
-		spriteBatch.setTransformMatrix(camera.combined);
+		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		
 		super.processEntities();
@@ -64,6 +64,9 @@ public class HealthRenderSystem extends ComponentSystem {
 	@Override
 	protected void process(Entity e) {
 		Health health = e.getComponent();
+		
+		if (!health.render) return;
+		
 		Transform transform = e.getComponent();
 		Renderable sprite = e.getComponent();
 		
