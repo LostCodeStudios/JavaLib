@@ -27,6 +27,7 @@ public final class RenderSystem extends ComponentSystem {
 		this.camera = camera;
 		
 		spriteBatch = new SpriteBatch();
+		spriteBatch.enableBlending();
 	}
 
 	@Override
