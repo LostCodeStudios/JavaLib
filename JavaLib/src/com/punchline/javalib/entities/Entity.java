@@ -1,7 +1,6 @@
 package com.punchline.javalib.entities;
 
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.punchline.javalib.entities.components.physical.Body;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
