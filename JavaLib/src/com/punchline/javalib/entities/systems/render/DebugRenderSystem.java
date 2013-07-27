@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.Entity;
@@ -33,6 +34,8 @@ public final class DebugRenderSystem extends InputSystem {
 	private SpriteBatch spriteBatch;
 	private BitmapFont font;
 	private Box2DDebugRenderer physicsDebugRenderer;
+	Vector2 mousePosition;
+	
 	
 	public boolean enabled = false;
 	public boolean visible = false;
@@ -57,6 +60,8 @@ public final class DebugRenderSystem extends InputSystem {
 		font = new BitmapFont();
 		font.setColor(1f, 1f, 1f, 0.5f);
 		physicsDebugRenderer = new Box2DDebugRenderer();
+
+		mousePosition = new Vector2();
 		
 	}
 	
@@ -118,6 +123,13 @@ public final class DebugRenderSystem extends InputSystem {
 				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i++ * font.getLineHeight());
 				font.draw(spriteBatch, "Entities: " + this.world.getEntityCount() , 0, i++ * font.getLineHeight());
 				font.draw(spriteBatch, "Camera pos: " + camera.position.toString(), 0, i++ * font.getLineHeight());
+				font.draw(spriteBatch, "Mouse pos: " +mousePosition.toString(), 0, i++ * font.getLineHeight());
+				
+				//real mouse position
+				Vector2 pos = mousePosition.cpy();
+				pos.x = mousePosition.x -Gdx.graphics.getWidth()/2f + world.getCamera().position.x;
+				pos.y= -mousePosition.y +Gdx.graphics.getHeight()/2f + world.getCamera().position.y;
+				font.draw(spriteBatch, "Real mouse pos: " +pos.toString(), 0, i++ * font.getLineHeight());
 				
 				spriteBatch.end();
 				
@@ -136,6 +148,12 @@ public final class DebugRenderSystem extends InputSystem {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	public boolean mouseMoved(int x, int y){
+		mousePosition.x = x;
+		mousePosition.y = y;
 		return false;
 	}
 
