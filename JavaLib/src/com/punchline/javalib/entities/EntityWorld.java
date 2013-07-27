@@ -134,6 +134,9 @@ public abstract class EntityWorld implements Disposable {
 		systems.addSystem(new ParticleSystem());
 		systems.addSystem(new EntityRemovalSystem());
 		
+		//GENERIC
+		systems.addSystem(new EntitySpawnerSystem());
+		
 	}
 	
 	/**
