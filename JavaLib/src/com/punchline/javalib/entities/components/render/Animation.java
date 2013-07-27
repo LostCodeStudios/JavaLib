@@ -164,5 +164,17 @@ public class Animation implements Renderable {
 	public void onRemove(ComponentManager container) {
 
 	}
+
+	@Override
+	public float getWidth() {
+		TextureRegion region = getCurrentFrame(0f);
+		return region.getRegionWidth();
+	}
+
+	@Override
+	public float getHeight() {
+		TextureRegion region = getCurrentFrame(0f);
+		return region.getRegionHeight();
+	}
 	
 }

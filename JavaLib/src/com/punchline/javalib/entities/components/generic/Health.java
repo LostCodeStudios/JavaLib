@@ -35,6 +35,12 @@ public class Health extends Stat {
 	private EntityWorld world;
 	
 	/**
+	 * Whether a health bar should be rendered above this component's owner.
+	 * The health bar will only render if the EntityWorld contains a HealthRenderSystem.
+	 */
+	public boolean render = false;
+	
+	/**
 	 * Constructs a Health component.
 	 * @param owner The Entity that owns this component.
 	 * @param world The EntityWorld that owns Entity owner.

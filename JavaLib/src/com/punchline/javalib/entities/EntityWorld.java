@@ -85,7 +85,17 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected ContactManager contactManager;
 
+	//FIELDS
 	
+	/**
+	 * Whether the game is over.
+	 */
+	private boolean gameOver = false;
+	
+	/**
+	 * GameOverInfo.
+	 */
+	private GameOverInfo gameOverInfo;
 	
 	//INIT
 	
@@ -115,6 +125,31 @@ public abstract class EntityWorld implements Disposable {
 		buildTemplates();
 		buildSystems();
 		buildEntities();
+	}
+	
+	//ACCESSORS/MUTATORS
+	
+	/**
+	 * @return Whether the game is finished.
+	 */
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
+	/**
+	 * @return Info about why the game has ended.
+	 */
+	public GameOverInfo getGameOverInfo() {
+		return gameOverInfo;
+	}
+	
+	/**
+	 * Sets the gameOverInfo field.
+	 * @param info Info about why the game has ended.
+	 */
+	public void setGameOverInfo(GameOverInfo info) {
+		gameOverInfo = info;
+		gameOver = true;
 	}
 	
 	//TODO this is a bad quick fix
