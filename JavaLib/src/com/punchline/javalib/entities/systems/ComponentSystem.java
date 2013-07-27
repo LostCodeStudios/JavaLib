@@ -30,7 +30,7 @@ public abstract class ComponentSystem extends EntitySystem {
 			componentTypes.add(type);
 		}
 	}
-	
+
 	@Override
 	public boolean canProcess(Entity e) {
 		
