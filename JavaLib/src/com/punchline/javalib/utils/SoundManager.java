@@ -37,7 +37,7 @@ public final class SoundManager {
 		while (it.hasNext()) {
 			key = it.next();
 			
-			Sound sound = removeSound(key);
+			Sound sound = getSound(key);
 			sound.dispose();
 		}
 		
@@ -48,9 +48,12 @@ public final class SoundManager {
 		while (it.hasNext()) {
 			key = it.next();
 			
-			Music music = removeSong(key);
+			Music music = getSong(key);
 			music.dispose();
 		}
+		
+		soundEffects.clear();
+		songs.clear();
 	}
 	
 	/**
@@ -114,7 +117,15 @@ public final class SoundManager {
 	 */
 	public static Sound removeSound(String key) {
 		return soundEffects.remove(key);
-	} //Comment lol
+	}
+	
+	/**
+	 * @param key The key of a sound effect.
+	 * @return The sound effect associated with that key.
+	 */
+	private static Sound getSound(String key) {
+		return soundEffects.get(key);
+	}
 	
 	/**
 	 * Plays a sound effect.
@@ -151,6 +162,14 @@ public final class SoundManager {
 	 */
 	public static Music removeSong(String key) {
 		return songs.remove(key);
+	}
+	
+	/**
+	 * @param key The key of a song.
+	 * @return The song associated with that key.
+	 */
+	private static Music getSong(String key) {
+		return songs.get(key);
 	}
 	
 	/**
