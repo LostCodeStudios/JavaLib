@@ -57,8 +57,6 @@ public class Health extends Stat {
 			if (onDeath != null)
 				onDeath.invoke(owner, world);
 			
-			if (owner.hasComponent(Body.class)) owner.removeComponent(owner.<Body>getComponent()); //TODO SOOOOOO BAD
-			
 			owner.delete();
 			
 			return;
