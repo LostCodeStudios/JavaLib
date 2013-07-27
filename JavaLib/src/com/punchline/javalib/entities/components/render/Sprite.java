@@ -105,5 +105,15 @@ public class Sprite implements Renderable {
 	public void onRemove(ComponentManager container) {
 		
 	}
+
+	@Override
+	public float getWidth() {
+		return sprite.getWidth();
+	}
+
+	@Override
+	public float getHeight() {
+		return sprite.getHeight();
+	}
 	
 }
