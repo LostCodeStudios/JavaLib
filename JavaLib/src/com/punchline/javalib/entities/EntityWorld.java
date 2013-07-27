@@ -60,7 +60,7 @@ public abstract class EntityWorld implements Disposable {
 	 * List for safely removing bodies.
 	 */
 	private ArrayList<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
-
+	
 	
 	/**
 	 * This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
@@ -230,6 +230,16 @@ public abstract class EntityWorld implements Disposable {
 		return entities.getEntities().size();
 	}
 	
+	/**
+	 * Tries to get an entity based on its tag and/or its group and/or its type.
+	 * @param tag The tag of the entity. "" for not inclusive search.
+	 * @param group The group of the entity. "" for not inclusive search.
+	 * @param type The type of the entity. "" for not inclusive search
+	 * @return
+	 */
+	public Entity tryGetEntity(String tag, String group, String type){
+		return entities.tryGetEntity(tag, group, type);
+	}
 	
 	/**
 	 * Positions the camera.
@@ -245,7 +255,6 @@ public abstract class EntityWorld implements Disposable {
 		if(!bodiesToRemove.contains(body))
 			bodiesToRemove.add(body);
 	}
-
 	
 	
 	//ENTITY/TEMPLATE CREATION

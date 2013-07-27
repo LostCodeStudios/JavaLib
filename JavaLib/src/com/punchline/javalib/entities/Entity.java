@@ -8,6 +8,25 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  *
  */
 public final class Entity extends ComponentManager implements Poolable {
+	/**
+	 * The call back for onDelete events.
+	 * @author William
+	 * @created Jul 27, 2013
+	 */
+	public interface EntityEventCallback
+	{
+		/**
+		 * Called when an Entity is deleted.
+		 * @param owner The entity who invoekd the call back.
+		 */
+		public void invoke(Entity owner);
+	}
+	
+	/**
+	 * The OnDelete event.
+	 */
+	public EntityEventCallback OnDelete;
+	
 	
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
@@ -101,6 +120,7 @@ public final class Entity extends ComponentManager implements Poolable {
 		type = "";
 		deleted = false;
 		changed = false;
+		OnDelete = null;
 		
 	}	
 	

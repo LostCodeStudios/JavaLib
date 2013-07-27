@@ -3,7 +3,6 @@
  */
 package com.punchline.javalib.entities.systems.generic;
 
-import com.punchline.javalib.entities.Component;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.generic.*;
 import com.punchline.javalib.entities.systems.ComponentSystem;

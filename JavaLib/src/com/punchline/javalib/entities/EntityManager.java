@@ -57,6 +57,8 @@ public class EntityManager extends Pool<Entity>{
 			Entity e = entities.get(i);
 			
 			if (e.isDeleted()) {
+				if(e.OnDelete != null)
+					e.OnDelete.invoke(e);
 				remove(e); //This will add e to the removal list
 			}
 			
@@ -102,6 +104,12 @@ public class EntityManager extends Pool<Entity>{
 	
 	
 	
+	//ACCESSORS
+	
+	
+	
+	
+	
 	/**
 	 * @return The manager's entity list.
 	 */
@@ -128,5 +136,46 @@ public class EntityManager extends Pool<Entity>{
 	 */
 	public List<Entity> getRemovedEntities() {
 		return removedEntities;
+	}
+
+	/**
+	 * Tries to get an entity based on its tag and/or its group and/or its type.
+	 * @param tag The tag of the entity. "" for not inclusive search.
+	 * @param group The group of the entity. "" for not inclusive search.
+	 * @param type The type of the entity. "" for not inclusive search
+	 * @return Null if not found and the entity if found.
+	 */
+	public Entity tryGetEntity(String tag, String group, String type) {
+		int inclusion = 3;
+		
+		//Include only the search results that matter
+		if(tag.isEmpty())
+			inclusion--;
+		if(group.isEmpty())
+			inclusion--;
+		if(type.isEmpty())
+			inclusion--;
+		if(inclusion == 0)
+			return null;
+		
+		for(Entity e : entities)
+		{
+			int searchScore = 0;
+			
+			if(!tag.isEmpty() && e.getTag().equals(tag))
+				searchScore++;
+			if(!group.isEmpty() && e.getGroup().equals(group))
+				searchScore++;
+			if(!type.isEmpty() && e.getType().equals(type))
+				searchScore++;
+			
+			//If the entity matches all of the requirements
+			if(searchScore == inclusion){
+				return e;
+			}
+		}
+		
+		
+		return null;
 	}
 }
