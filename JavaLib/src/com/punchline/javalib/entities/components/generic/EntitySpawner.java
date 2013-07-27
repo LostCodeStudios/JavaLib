@@ -47,6 +47,7 @@ public class EntitySpawner implements Component {
 	 * @param args The arguments for the template.
 	 */
 	public EntitySpawner(String spawnTemplate, boolean group, float spawnDelay, Object... args) {
+		this.args = new ArrayList<Object>();
 		for(Object arg : args)
 			this.args.add(arg);
 		this.group = group;
