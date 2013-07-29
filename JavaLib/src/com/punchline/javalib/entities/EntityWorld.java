@@ -19,85 +19,69 @@ import com.punchline.javalib.entities.systems.physical.ParticleSystem;
 import com.punchline.javalib.entities.systems.render.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.render.RenderSystem;
 
+/**
+ * The EntityWorld is where actual gameplay happens. The world manages game
+ * entities, the templates that create them, game physics, and systems that run
+ * game processing.
+ * @author Nathaniel
+ *
+ */
 public abstract class EntityWorld implements Disposable {
 
+	//region Constants
+	
 	private final float TIME_STEP = 1.0f / 60.0f;
 	private final int VELOCITY_ITERATIONS = 6;
 	private final int POSITION_ITERATIONS = 2;
 	
+	//endregion
+	
+	//region Fields
+	
+	private boolean gameOver = false;
+	private GameOverInfo gameOverInfo;
+	
+	private Map<String, EntityTemplate> templates;
+	private Map<String, EntityGroupTemplate> groupTemplates;
+	
 	/**
-	 * The InputMultiplexer managing this physicsWorld's game.
+	 * The InputMultiplexer managing this world's game.
 	 */
 	protected InputMultiplexer input;
 	
 	/**
-	 * This physicsWorld's {@link EntityManager}.
+	 * This world's {@link EntityManager}.
 	 */
 	protected EntityManager entities;
 	
 	/**
-	 * This physicsWorld's {@link SystemManager}.
+	 * This world's {@link SystemManager}.
 	 */
 	protected SystemManager systems;
-	
-	/**
-	 * Template map.
-	 */
-	private Map<String, EntityTemplate> templates;
-	
-	/**
-	 * Group template map.
-	 */
-	private Map<String, EntityGroupTemplate> groupTemplates;
-	
-	/**
-	 * This physicsWorld's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
-	 */
-	protected World physicsWorld;
-	
-	
-	/**
-	 * List for safely removing bodies.
-	 */
-	private ArrayList<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
-	
 	
 	/**
 	 * This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
 	 */
 	protected Camera camera;
 	
-	
-	//SYSTEMS
-	
 	/**
-	 * This world's {@link RenderSystem}.
+	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
-	protected RenderSystem renderSystem;
-	
-	/**
-	 * This world's {@link DebugRenderSystem}.
-	 */
-	protected DebugRenderSystem debugView;
-	
+	protected World physicsWorld;
+
 	/**
 	 * The physicsWorld's {@link ContactManager}.
 	 */
 	protected ContactManager contactManager;
+	
+	/**
+	 * List of bodies to be removed safely.
+	 */
+	private ArrayList<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
+	
+	//endregion
 
-	//FIELDS
-	
-	/**
-	 * Whether the game is over.
-	 */
-	private boolean gameOver = false;
-	
-	/**
-	 * GameOverInfo.
-	 */
-	private GameOverInfo gameOverInfo;
-	
-	//INIT
+	//region Initialization
 	
 	/**
 	 * Instantiates the EntityWorld's {@link EntityManager}, {@link SystemManager}, and template map.
@@ -127,44 +111,19 @@ public abstract class EntityWorld implements Disposable {
 		buildEntities();
 	}
 	
-	//ACCESSORS/MUTATORS
-	
 	/**
-	 * @return Whether the game is finished.
+	 * Positions the camera. Called by the constructor.
 	 */
-	public boolean isGameOver() {
-		return gameOver;
-	}
+	protected void positionCamera() { }
 	
 	/**
-	 * @return Info about why the game has ended.
-	 */
-	public GameOverInfo getGameOverInfo() {
-		return gameOverInfo;
-	}
-	
-	/**
-	 * Sets the gameOverInfo field.
-	 * @param info Info about why the game has ended.
-	 */
-	public void setGameOverInfo(GameOverInfo info) {
-		gameOverInfo = info;
-		gameOver = true;
-	}
-	
-	//TODO this is a bad quick fix
-	boolean cameraInit = false;
-	
-	/**
-	 * Adds necessary systems to the physicsWorld. Called by the constructor.
+	 * Adds necessary systems to the EntityWorld. Called by the constructor.
 	 */
 	protected void buildSystems() {
 		
 		//RENDER
-		renderSystem = (RenderSystem)systems.addSystem(new RenderSystem(camera));
-		debugView = (DebugRenderSystem)systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
-		
-		input.addProcessor(debugView);
+		systems.addSystem(new RenderSystem(camera));
+		systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
 		
 		//PHYSICAL
 		systems.addSystem(new ParticleSystem());
@@ -176,21 +135,21 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
-	 * Adds necessary templates to the physicsWorld. Called by the constructor.
+	 * Adds necessary templates to the EntityWorld. Called by the constructor.
 	 */
 	protected void buildTemplates() { }
 	
 	/**
-	 * Adds necessary entities to the physicsWorld. Called by the constructor.
+	 * Adds necessary entities to the EntityWorld. Called by the constructor.
 	 */
 	protected void buildEntities() { }
 	
+	//endregion
 	
-	
-	//FUNCTIONING LOOP
+	//region Disposal
 	
 	/**
-	 * Disposes of all EntitySystems, and the physics physicsWorld.
+	 * Disposes of all EntitySystems, and the Box2D world.
 	 */
 	@Override
 	public void dispose() {
@@ -200,43 +159,9 @@ public abstract class EntityWorld implements Disposable {
 		
 	}
 	
-	/**
-	 * Runs all system processing.
-	 */
-	public void process() {
-		
-		if (!cameraInit) { //TODO THIS IS A HORRIBLE QUICK FIX
-			positionCamera();
-			cameraInit = true;
-		}
-		
-		systems.process(
-				entities.getNewEntities(), 
-				entities.getChangedEntities(), 
-				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime());
-		
-		entities.process();
-		
-		//REMOVE BODIES SAFELY
-		for(int i = 0; i < bodiesToRemove.size(); i++){
-			Body body = bodiesToRemove.get(i);
-		    //to prevent some obscure c assertion that happened randomly once in a blue moon
-		    final ArrayList<JointEdge> list = body.getJointList();
-		    while (list.size() > 0) {
-		        physicsWorld.destroyJoint(list.get(0).joint);
-		    }
-		    // actual remove
-		    physicsWorld.destroyBody(body);
-		}
-		bodiesToRemove.clear();
-		
-		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-	}
+	//endregion
 	
-	
-	
-	
-	//GETTERS/SETTERS
+	//region Accessors/Mutators
 	
 	/**
 	 * @return This physicsWorld's boundaries.
@@ -277,10 +202,63 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
-	 * Positions the camera.
+	 * @return Whether the game is finished.
 	 */
-	protected void positionCamera() { }
+	public boolean isGameOver() {
+		return gameOver;
+	}
 	
+	/**
+	 * @return Info about why the game has ended.
+	 */
+	public GameOverInfo getGameOverInfo() {
+		return gameOverInfo;
+	}
+	
+	/**
+	 * Sets the gameOverInfo field.
+	 * @param info Info about why the game has ended.
+	 */
+	public void setGameOverInfo(GameOverInfo info) {
+		gameOverInfo = info;
+		gameOver = true;
+	}
+	
+	//endregion
+
+	//region Processing
+	
+	/**
+	 * Runs all system processing.
+	 */
+	public void process() {
+		
+		systems.process(
+				entities.getNewEntities(), 
+				entities.getChangedEntities(), 
+				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime());
+		
+		entities.process();
+		
+		//REMOVE BODIES SAFELY
+		for(int i = 0; i < bodiesToRemove.size(); i++){
+			Body body = bodiesToRemove.get(i);
+		    //to prevent some obscure c assertion that happened randomly once in a blue moon
+		    final ArrayList<JointEdge> list = body.getJointList();
+		    while (list.size() > 0) {
+		        physicsWorld.destroyJoint(list.get(0).joint);
+		    }
+		    // actual remove
+		    physicsWorld.destroyBody(body);
+		}
+		bodiesToRemove.clear();
+		
+		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+	}
+	
+	//endregion
+
+	//region Safe Body Removal
 	
 	/**
 	 * Marks a body for safe deletion.
@@ -291,8 +269,10 @@ public abstract class EntityWorld implements Disposable {
 			bodiesToRemove.add(body);
 	}
 	
+	//endregion
 	
-	//ENTITY/TEMPLATE CREATION
+	//region Entities & Templates
+
 	/**
 	 * Creates an {@link Entity} using the {@link EntityTemplate} associated with the given tag.
 	 * @param template The tag of the template.
@@ -320,7 +300,6 @@ public abstract class EntityWorld implements Disposable {
 		
 		return group;
 	}
-	
 
 	/**
 	 * Adds an EntityTemplate to the template map.
@@ -340,4 +319,6 @@ public abstract class EntityWorld implements Disposable {
 		groupTemplates.put(templateKey, template);
 	}
 
+	//endregion
+	
 }
