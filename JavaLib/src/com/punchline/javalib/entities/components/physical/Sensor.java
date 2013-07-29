@@ -94,6 +94,7 @@ public class Sensor implements Component {
 	@Override
 	public void onAdd(ComponentManager container) {
 		body = ((Body) container.getComponent(Body.class)).getBody();
+		refresh();
 	}
 
 	@Override
@@ -152,11 +153,8 @@ public class Sensor implements Component {
 	 */
 	public void setVertices(int vertices) {
 		if (vertices < 3) vertices = 3;
+		if (vertices > 8) vertices = 8;
 		this.vertices = vertices;
-	}
-	
-	public void setRotation(float radians) {
-		fixture.
 	}
 	
 	//endregion
@@ -172,13 +170,12 @@ public class Sensor implements Component {
 		
 		float degrees = 360 * fov;
 		
-		float start = -degrees / 2;
+		float start = (float)Math.toRadians(degrees / 2);
 		
 		for (int i = 1; i < vertices; i++) {
-			float angle = start + (i / vertices - 1) * degrees;
+			float angle = start - ((float)i / (vertices - 1)) * (float)Math.toRadians(degrees);
 			
-			verts[i + 1] = new Vector2((float)Math.cos(angle), (float)Math.sin(angle));
-			verts[i + 1].scl(viewRange);
+			verts[i] = new Vector2(viewRange * (float)Math.cos(angle), viewRange * (float)Math.sin(angle));
 		}
 		
 		PolygonShape shape = new PolygonShape();

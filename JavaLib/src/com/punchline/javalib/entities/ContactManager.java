@@ -73,6 +73,9 @@ public class ContactManager implements ContactListener {
 		Fixture f1 = contact.getFixtureA();
 		Fixture f2 = contact.getFixtureB();
 		
+		if (f1.getBody() == null || f2.getBody() == null)
+			return;
+		
 		Entity e1 = (Entity)f1.getBody().getUserData();
 		Entity e2 = (Entity)f2.getBody().getUserData();
 		
