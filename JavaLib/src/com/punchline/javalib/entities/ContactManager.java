@@ -33,8 +33,8 @@ public class ContactManager implements ContactListener {
 		
 
 		if (e1.hasComponent(Collidable.class) && e2.hasComponent(Collidable.class)) {
-			Collidable c1 = e1.getComponent();
-			Collidable c2 = e2.getComponent();
+			Collidable c1 = (Collidable)e1.getComponent(Collidable.class);
+			Collidable c2 = (Collidable)e2.getComponent(Collidable.class);
 			
 			float collide1 =  c1.onCollide(e1, e2);
 			float collide2 = c2.onCollide(e2, e1);

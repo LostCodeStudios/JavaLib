@@ -30,7 +30,7 @@ public class TrackingCameraSystem extends TagSystem {
 
 	@Override
 	protected void process(Entity e) {
-		Transform t = e.getComponent();
+		Transform t = (Transform)e.getComponent(Transform.class);
 		
 		Vector2 pos = t.getPosition();
 		

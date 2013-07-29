@@ -30,8 +30,8 @@ public final class GenericCollisionEvents {
 					if (victim.getGroup().equals(container.getGroup()))
 						return 0;
 					
-					Health h1 = container.getComponent();
-					Health h2 = victim.getComponent();
+					Health h1 = (Health)container.getComponent(Health.class);
+					Health h2 = (Health)victim.getComponent(Health.class);
 					h2.drain(h1.getMaxValue());
 				}
 				

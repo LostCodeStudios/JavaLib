@@ -39,9 +39,6 @@ public class Body implements Transform, Velocity {
 		entityWorld = world;
 		body = world.getPhysicsWorld().createBody(bd);
 		body.setUserData(e);
-		
-		e.addComponent(Transform.class, this);
-		e.addComponent(Velocity.class, this);
 	}
 	
 	/**

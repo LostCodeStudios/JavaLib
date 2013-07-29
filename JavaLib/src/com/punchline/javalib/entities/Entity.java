@@ -4,29 +4,36 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
- * @author Nathaniel + WIlliam
+ * @author Nathaniel & William
  *
  */
 public final class Entity extends ComponentManager implements Poolable {
+	
+	//region Callbacks
+	
 	/**
-	 * The call back for onDelete events.
+	 * Callback interface for Entity operations.
 	 * @author William
 	 * @created Jul 27, 2013
 	 */
 	public interface EntityEventCallback
 	{
 		/**
-		 * Called when an Entity is deleted.
-		 * @param owner The entity who invoekd the call back.
+		 * Called when this callback is invoked.
+		 * @param owner The entity who invoked the callback.
 		 */
 		public void invoke(Entity owner);
+		
 	}
 	
 	/**
-	 * The OnDelete event.
+	 * Callback called when this Entity is deleted.
 	 */
-	public EntityEventCallback OnDelete;
+	public EntityEventCallback onDelete;
 	
+	//endregion
+	
+	//region Metadata fields
 	
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
@@ -43,7 +50,9 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	private String type = "";
 	
+	//endregion
 	
+	//region Flags
 	
 	/**
 	 * Deletion flag.
@@ -55,12 +64,13 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	private boolean changed = false;
 	
+	//endregion
 	
-	
+	//region Initialization
 	
 	/**
-	 * Creates a default entity object.
-	 * However to really initialize an entity, use a template, and call {@link init init}
+	 * Creates a default entity object. In order to really initialize an 
+	 * entity, use a template, and call {@link #init}
 	 */
 	public Entity() 
 	{
@@ -78,8 +88,34 @@ public final class Entity extends ComponentManager implements Poolable {
 		this.type = type;
 	}
 	
+	//endregion
+
+	//region Disposal
 	
+	/**
+	 * Flags this entity for deletion by the {@link EntityManager}.
+	 */
+	public void delete() {
+		deleted = true;
+	}
+
+	/**
+	 * Resets the entity for reuse in the Entity pool.
+	 */
+	@Override
+	public void reset() {
+		clearComponents();
+		tag = "";
+		group = "";
+		type = "";
+		deleted = false;
+		changed = false;
+		onDelete = null;
+	}	
+
+	//endregion
 	
+	//region Accessors
 	
 	/**
 	 * @return This entity's unique tag.
@@ -103,28 +139,6 @@ public final class Entity extends ComponentManager implements Poolable {
 	}
 	
 	/**
-	 * Flags this entity for deletion by the {@link EntityManager}.
-	 */
-	public void delete() {
-		deleted = true;
-	}
-
-	/**
-	 * Resets the entity for reuse in the Entity pool.
-	 */
-	@Override
-	public void reset() {
-		clearComponents();
-		tag = "";
-		group = "";
-		type = "";
-		deleted = false;
-		changed = false;
-		OnDelete = null;
-		
-	}	
-	
-	/**
 	 * @return Whether this Entity has been flagged for deletion.
 	 */
 	public boolean isDeleted() {
@@ -142,40 +156,29 @@ public final class Entity extends ComponentManager implements Poolable {
 
 		return false;
 	}
+	
+	//endregion
 
+	//region Component Management
 	
-	
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public <T extends Component> T addComponent(Class<? extends Component> type, T value) {
+	public Component addComponent(Component component) {
 		changed = true;
-		return super.<T>addComponent(type, value);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <T extends Component> T addComponent(T value) {
-		changed = true;
-		return super.<T>addComponent(value);
+		return super.addComponent(component);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void removeComponent(Component value) {
-		super.removeComponent(value);
+	public void removeComponent(Component component) {
 		changed = true;
+		super.removeComponent(component);
 	}
 
 	@Override
 	public void clearComponents(){
-		super.clearComponents();
 		changed = true;
+		super.clearComponents();
 	}
+	
+	//endregion
+
 }

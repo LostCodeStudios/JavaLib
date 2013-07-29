@@ -57,8 +57,9 @@ public class EntityManager extends Pool<Entity>{
 			Entity e = entities.get(i);
 			
 			if (e.isDeleted()) {
-				if(e.OnDelete != null)
-					e.OnDelete.invoke(e);
+				if(e.onDelete != null)
+					e.onDelete.invoke(e);
+				
 				remove(e); //This will add e to the removal list
 			}
 			
