@@ -1,7 +1,9 @@
 package com.punchline.javalib.entities.components;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -13,6 +15,7 @@ import java.util.List;
 public abstract class ComponentManager {
 
 	private List<Component> components = new ArrayList<Component>();
+	private Map<Class<? extends Component>, Component> componentMap = new HashMap<Class<? extends Component>, Component>();
 	
 	/**
 	 * Adds the given component to this container.
@@ -38,9 +41,15 @@ public abstract class ComponentManager {
 	 * @return This container's component of that type, or null if there is none.
 	 */
 	public Component getComponent(Class<? extends Component> type) {
+		if (componentMap.containsKey(type)) {
+			return componentMap.get(type);
+		}
+		
 		for (Component c : components) {
-			if (type.isInstance(c))
+			if (type.isInstance(c)) {
+				componentMap.put(type, c);
 				return c;
+			}
 		}
 		
 		return null;
