@@ -33,7 +33,7 @@ import com.punchline.javalib.entities.templates.EntityTemplate;
  */
 public abstract class EntityWorld implements Disposable {
 	
-	//region Constants
+	//region Physics Constants
 	
 	private final float TIME_STEP = 1.0f / 60.0f;
 	private final int VELOCITY_ITERATIONS = 6;
@@ -48,6 +48,8 @@ public abstract class EntityWorld implements Disposable {
 	
 	private Map<String, EntityTemplate> templates;
 	private Map<String, EntityGroupTemplate> groupTemplates;
+	
+	private List<EntityCreationArgs> entitiesToCreate = new ArrayList<EntityCreationArgs>();
 	
 	/**
 	 * The InputMultiplexer managing this world's game.
@@ -253,6 +255,9 @@ public abstract class EntityWorld implements Disposable {
 		//REMOVE BODIES SAFELY
 		safelyRemoveBodies();
 		
+		//CREATE NEW ENTITIES SAFELY
+		safelyCreateEntities();
+		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	}
 	
@@ -285,7 +290,7 @@ public abstract class EntityWorld implements Disposable {
 	
 	//endregion
 	
-	//region Entities & Templates
+	//region Entity Creation
 
 	/**
 	 * Creates an {@link Entity} using the {@link EntityTemplate} associated with the given tag.
@@ -316,16 +321,28 @@ public abstract class EntityWorld implements Disposable {
 	}
 
 	/**
-	 * Creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
+	 * Safely creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
 	 * @param args
 	 */
-	public void createEntity(EntityCreationArgs args) {
-		if (args.useGroupTemplate()) {
-			createEntityGroup(args.getTemplateTag(), args.getArgs());
-		} else {
-			createEntity(args.getTemplateTag(), args.getArgs());
-		}
+	public void safeCreate(EntityCreationArgs args) {
+		entitiesToCreate.add(args);
 	}
+	
+	private void safelyCreateEntities() {
+		for (EntityCreationArgs args : entitiesToCreate) {
+			if (args.useGroupTemplate()) {
+				createEntityGroup(args.getTemplateTag(), args.getArgs());
+			} else {
+				createEntity(args.getTemplateTag(), args.getArgs());
+			}
+		}
+		
+		entitiesToCreate.clear();
+	}
+	
+	//endregion
+	
+	//region Template Management
 	
 	/**
 	 * Adds an EntityTemplate to the template map.
