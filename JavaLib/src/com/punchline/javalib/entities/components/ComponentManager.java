@@ -70,6 +70,8 @@ public abstract class ComponentManager {
 		for(Component c : components)
 			c.onRemove(this);
 		
+		componentMap.clear();
+		
 		components.clear();
 	}
 	
