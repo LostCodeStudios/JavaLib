@@ -26,7 +26,7 @@ public class TrackingCameraSystem extends TagSystem {
 		super(tag);
 		
 		this.camera = camera;
-		this.bounds = bounds;
+		this.bounds = Convert.metersToPixels(bounds);
 	}
 
 	@Override
@@ -37,25 +37,25 @@ public class TrackingCameraSystem extends TagSystem {
 		
 		camera.position.set(pos.x, pos.y, 0f);
 		
-		float left = camera.position.x - Convert.pixelsToMeters(camera.viewportWidth / 2);
-		float bottom = camera.position.y - Convert.pixelsToMeters(camera.viewportHeight / 2);
-		float right = left + Convert.pixelsToMeters(camera.viewportWidth);
-		float top = bottom + Convert.pixelsToMeters(camera.viewportHeight);
+		float left = camera.position.x - camera.viewportWidth / 2;
+		float bottom = camera.position.y - camera.viewportHeight / 2;
+		float right = left + camera.viewportWidth;
+		float top = bottom + camera.viewportHeight;
 		
 		if (left < bounds.x) {
-			camera.position.x = bounds.x + Convert.pixelsToMeters(camera.viewportWidth / 2);
+			camera.position.x = bounds.x + camera.viewportWidth / 2;
 		}
 		
 		if (top > bounds.y + bounds.height) {
-			camera.position.y = bounds.y + bounds.height -  Convert.pixelsToMeters(camera.viewportHeight / 2);
+			camera.position.y = bounds.y + bounds.height - camera.viewportHeight / 2;
 		}
 		
 		if (right > bounds.x + bounds.width) {
-			camera.position.x = bounds.x + bounds.width - Convert.pixelsToMeters(camera.viewportWidth / 2);
+			camera.position.x = bounds.x + bounds.width - camera.viewportWidth / 2;
 		}
 		
 		if (bottom < bounds.y) {
-			camera.position.y = bounds.y + Convert.pixelsToMeters(camera.viewportHeight / 2);
+			camera.position.y = bounds.y + camera.viewportHeight / 2;
 		}
 	}
 
