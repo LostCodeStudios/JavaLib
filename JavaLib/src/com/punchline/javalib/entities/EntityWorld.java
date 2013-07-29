@@ -173,6 +173,24 @@ public abstract class EntityWorld implements Disposable {
 	
 	//endregion
 	
+	//region Events
+	
+	/**
+	 * Pauses the EntityWorld.
+	 */
+	public void pause() {
+		systems.pause();
+	}
+	
+	/**
+	 * Resumes the EntityWorld.
+	 */
+	public void resume() {
+		systems.resume();
+	}
+	
+	//endregion
+	
 	//region Accessors/Mutators
 	
 	/**

@@ -129,6 +129,20 @@ public abstract class EntitySystem implements Disposable {
 	
 	//endregion
 	
+	//region Events
+	
+	/**
+	 * Called when the game application is paused.
+	 */
+	public void pause() { }
+	
+	/**
+	 * Called when the game application is resumed.
+	 */
+	public void resume() { }
+	
+	//endregion
+	
 	//region Time Values
 	
 	/**
