@@ -14,6 +14,8 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public class Body implements Transform, Velocity {
 
+	//region Fields/Initialization
+	
 	private EntityWorld entityWorld;
 	private com.badlogic.gdx.physics.box2d.Body body;
 	
@@ -25,7 +27,7 @@ public class Body implements Transform, Velocity {
 	 * @param fixtureDef The definition of the body's fixture.
 	 */
 	public Body(EntityWorld world, Entity e, BodyDef bodyDef, FixtureDef fixtureDef) {
-		this(world,e,bodyDef);
+		this(world, e, bodyDef);
 		body.createFixture(fixtureDef);
 	}
 	
@@ -41,6 +43,10 @@ public class Body implements Transform, Velocity {
 		body.setUserData(e);
 	}
 	
+	//endregion
+	
+	//region Accessors
+	
 	/**
 	 * @return The Box2D body.
 	 */
@@ -48,83 +54,65 @@ public class Body implements Transform, Velocity {
 		return body;
 	}
 	
-	//TRANSFORM
-	/**
-	 * {@inheritDoc}
-	 */
+	//endregion
+	
+	//region Transform Implementation
+	
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Vector2 setPosition(Vector2 position) {
 		body.setTransform(position, body.getAngle());
 		return body.getPosition();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public float getRotation() {
 		return body.getAngle();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public float setRotation(float rotation){
 		body.setTransform(getPosition(), rotation);
 		return getRotation();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Vector2 getOrigin() {
-			return body.getWorldCenter();
+		return body.getWorldCenter();
 	}
 	
-	//VELOCITY
-	/**
-	 * {@inheritDoc}
-	 */
+	//endregion
+	
+	//region Velocity Implementation
+	
 	@Override
 	public Vector2 getLinearVelocity() {
 		return body.getLinearVelocity();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setLinearVelocity(Vector2 linearVelocity) {
 		body.setLinearVelocity(linearVelocity);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public float getAngularVelocity() {
 		return body.getAngularVelocity();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setAngularVelocity(float angularVelocity) {
 		body.setAngularVelocity(angularVelocity);
 	}
 
-	//COMPONENT
+	//endregion
+	
+	//region Events
+	
 	@Override
 	public void onAdd(ComponentManager container) {
 
@@ -134,4 +122,7 @@ public class Body implements Transform, Velocity {
 	public void onRemove(ComponentManager container) {
 	    entityWorld.safelyRemoveBody(body);
 	}
+	
+	//endregion
+	
 }
