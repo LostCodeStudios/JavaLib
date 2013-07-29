@@ -321,6 +321,36 @@ public abstract class EntityWorld implements Disposable {
 	}
 
 	/**
+	 * Creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
+	 * @param args
+	 */
+	public void create(EntityCreationArgs args) {
+		if (args.useGroupTemplate()) {
+			createEntityGroup(args.getTemplateTag(), args.getArgs());
+		} else {
+			createEntity(args.getTemplateTag(), args.getArgs());
+		}
+	}
+	
+	/**
+	 * Safely creates an Entity using the {@link EntityTemplate} associated with the given tag.
+	 * @param template The tag of the template to use.
+	 * @param args Arguments for creating the entity.
+	 */
+	public void safelyCreateEntity(String template, Object... args) {
+		entitiesToCreate.add(new EntityCreationArgs(template, false, args));
+	}
+	
+	/**
+	 * Safely creates a group of Entities using the {@link EntityGroupTemplate} associated with the given tag.
+	 * @param template The tag of the template to use.
+	 * @param args Arguments for creating the entity group.
+	 */
+	public void safelyCreateEntityGroup(String template, Object... args) {
+		entitiesToCreate.add(new EntityCreationArgs(template, true, args));
+	}
+	
+	/**
 	 * Safely creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
 	 * Use this method when creating Entities that have Body components, or you may cause a crash.
 	 * @param args
