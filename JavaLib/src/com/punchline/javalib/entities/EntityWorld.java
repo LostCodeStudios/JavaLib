@@ -2,6 +2,7 @@ package com.punchline.javalib.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -27,7 +28,7 @@ import com.punchline.javalib.entities.systems.render.RenderSystem;
  *
  */
 public abstract class EntityWorld implements Disposable {
-
+	
 	//region Constants
 	
 	private final float TIME_STEP = 1.0f / 60.0f;
@@ -82,7 +83,7 @@ public abstract class EntityWorld implements Disposable {
 	/**
 	 * List of bodies to be removed safely.
 	 */
-	private ArrayList<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
+	private List<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
 	
 	//endregion
 
@@ -246,17 +247,7 @@ public abstract class EntityWorld implements Disposable {
 		entities.process();
 		
 		//REMOVE BODIES SAFELY
-		for(int i = 0; i < bodiesToRemove.size(); i++){
-			Body body = bodiesToRemove.get(i);
-		    //to prevent some obscure c assertion that happened randomly once in a blue moon
-		    final ArrayList<JointEdge> list = body.getJointList();
-		    while (list.size() > 0) {
-		        physicsWorld.destroyJoint(list.get(0).joint);
-		    }
-		    // actual remove
-		    physicsWorld.destroyBody(body);
-		}
-		bodiesToRemove.clear();
+		safelyRemoveBodies();
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	}
@@ -272,6 +263,20 @@ public abstract class EntityWorld implements Disposable {
 	public void safelyRemoveBody(com.badlogic.gdx.physics.box2d.Body body){
 		if(!bodiesToRemove.contains(body))
 			bodiesToRemove.add(body);
+	}
+	
+	private void safelyRemoveBodies() {
+		for(int i = 0; i < bodiesToRemove.size(); i++){
+			Body body = bodiesToRemove.get(i);
+		    //to prevent some obscure c assertion that happened randomly once in a blue moon
+		    final ArrayList<JointEdge> list = body.getJointList();
+		    while (list.size() > 0) {
+		        physicsWorld.destroyJoint(list.get(0).joint);
+		    }
+		    // actual remove
+		    physicsWorld.destroyBody(body);
+		}
+		bodiesToRemove.clear();
 	}
 	
 	//endregion
@@ -306,6 +311,18 @@ public abstract class EntityWorld implements Disposable {
 		return group;
 	}
 
+	/**
+	 * Creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
+	 * @param args
+	 */
+	public void createEntity(EntityCreationArgs args) {
+		if (args.useGroupTemplate()) {
+			createEntityGroup(args.getTemplateTag(), args.getArgs());
+		} else {
+			createEntity(args.getTemplateTag(), args.getArgs());
+		}
+	}
+	
 	/**
 	 * Adds an EntityTemplate to the template map.
 	 * @param templateKey The template's key.

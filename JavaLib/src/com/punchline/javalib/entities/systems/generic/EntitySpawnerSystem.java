@@ -41,10 +41,7 @@ public class EntitySpawnerSystem extends ComponentSystem {
 		//if spawn delay has passed.
 		if(es.spawn(deltaSeconds()))
 		{
-			if(es.isGroupTemplate()) //If the spawner spawns a group template.
-				world.createEntityGroup(es.getSpawnTemplate(), es.getArgs().toArray());
-			else //If the spawner spawns a single entity.
-				world.createEntity(es.getSpawnTemplate(), es.getArgs().toArray());	
+			world.createEntity(es.getCreationArgs());
 		}
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.punchline.javalib.entities.Component;
 import com.punchline.javalib.entities.ComponentManager;
+import com.punchline.javalib.entities.EntityCreationArgs;
 
 /**
  * A component for {@link Entity Entities} that spawn other Entities.
@@ -15,9 +16,7 @@ public class EntitySpawner implements Component {
 	
 	//region Fields
 	
-	private boolean group;
-	private String spawnTemplate;
-	private List<Object> args = new ArrayList<Object>();
+	private EntityCreationArgs creationArgs;
 	
 	private float spawnDelay;
 	private float elapsed;
@@ -36,11 +35,8 @@ public class EntitySpawner implements Component {
 	 * @param args The arguments for the template.
 	 */
 	public EntitySpawner(String spawnTemplate, boolean group, float spawnDelay, Object... args) {		
-		for(Object arg : args)
-			this.args.add(arg);
+		this.creationArgs = new EntityCreationArgs(spawnTemplate, group, args);
 		
-		this.group = group;
-		this.spawnTemplate = spawnTemplate;
 		this.spawnDelay = spawnDelay;
 		this.elapsed = 0f;
 	}
@@ -50,7 +46,6 @@ public class EntitySpawner implements Component {
 	//region Accessors
 	
 	/**
-	 * Gets the spawn delay.
 	 * @return The spawnDelay.
 	 */
 	public float getSpawnDelay(){
@@ -58,27 +53,10 @@ public class EntitySpawner implements Component {
 	}
 	
 	/**
-	 * Gets the args for the spawnTemplate
-	 * @return The args for the spawnTemplate.
+	 * @return The creation args used to make entities.
 	 */
-	public List<Object> getArgs(){
-		return args;
-	}
-	
-	/**
-	 * Gets whether or not the spawnTemplate is a group template.
-	 * @return Whether or not the spawnTemplate is a group template.
-	 */
-	public boolean isGroupTemplate(){
-		return group;
-	}
-	
-	/**
-	 * Gets the spawnTemplate string.
-	 * @return The spawnTemplate string.
-	 */
-	public String getSpawnTemplate(){
-		return spawnTemplate;
+	public EntityCreationArgs getCreationArgs() {
+		return creationArgs;
 	}
 	
 	//endregion
@@ -86,17 +64,11 @@ public class EntitySpawner implements Component {
 	//region Mutators
 	
 	/**
-	 * Sets a new spawnTemplate.
-	 * @param spawnTemplate The spawnTemplate string.
-	 * @param group Whether or not the template is a group template.
-	 * @param args The arguments for the template.
+	 * Sets the EntityCreationArgs used when spawning entities.
+	 * @param creationArgs The new creation args.
 	 */
-	public void setSpawnTemplate(String spawnTemplate, boolean group, Object... args){
-		this.spawnTemplate = spawnTemplate;
-		this.group = group;
-		this.args.clear();
-		for(Object arg : args)
-			this.args.add(arg);
+	public void setCreationArgs(EntityCreationArgs creationArgs) {
+		this.creationArgs = creationArgs;
 	}
 	
 	/**
