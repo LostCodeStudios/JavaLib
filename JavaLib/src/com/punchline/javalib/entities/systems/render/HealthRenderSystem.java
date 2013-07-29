@@ -63,12 +63,12 @@ public class HealthRenderSystem extends ComponentSystem {
 
 	@Override
 	protected void process(Entity e) {
-		Health health = e.getComponent();
+		Health health = (Health)e.getComponent(Health.class);
 		
 		if (!health.render) return;
 		
-		Transform transform = e.getComponent();
-		Renderable sprite = e.getComponent();
+		Transform transform = (Transform)e.getComponent(Transform.class);
+		Renderable sprite = (Renderable)e.getComponent(Renderable.class);
 		
 		Vector2 pos = transform.getPosition().cpy();
 		pos.add(new Vector2(-sprite.getWidth() / 2, sprite.getHeight() / 2 + VERTICAL_OFFSET));

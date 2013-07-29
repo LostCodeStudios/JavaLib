@@ -54,9 +54,6 @@ public class Particle implements Velocity, Transform {
 		this.origin = origin;
 		this.rotation = rotation;
 		this.position = position;
-		
-		e.addComponent(Transform.class, this);
-		e.addComponent(Velocity.class, this);
 	}
 	
 	/**

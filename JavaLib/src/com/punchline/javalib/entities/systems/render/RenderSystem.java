@@ -58,10 +58,10 @@ public final class RenderSystem extends ComponentSystem {
 	@Override
 	protected void process(Entity e) {
 		
-		Renderable r = e.getComponent();
+		Renderable r = (Renderable)e.getComponent(Renderable.class);
 		
 		if (e.hasComponent(Transform.class)) { 
-			Transform t = e.getComponent();
+			Transform t = (Transform)e.getComponent(Transform.class);
 			
 			r.setPosition(t.getPosition());
 			r.setRotation((float)Math.toDegrees(t.getRotation()));

@@ -12,12 +12,12 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class EntityManager extends Pool<Entity>{
 	
+	//region Fields
+	
 	/**
 	 * Contains all entities.
 	 */
 	private List<Entity> entities = new ArrayList<Entity>();
-	
-	
 	
 	/**
 	 * Contains all entities that have been added in this iteration of the game loop.
@@ -36,6 +36,9 @@ public class EntityManager extends Pool<Entity>{
 	
 	int free = 0;
 	
+	//endregion
+	
+	//region Processing
 	
 	/**
 	 * Checks for {@link Entity Entities} that have been marked for removal, and adds them to the removal list.
@@ -57,8 +60,9 @@ public class EntityManager extends Pool<Entity>{
 			Entity e = entities.get(i);
 			
 			if (e.isDeleted()) {
-				if(e.OnDelete != null)
-					e.OnDelete.invoke(e);
+				if(e.onDelete != null)
+					e.onDelete.invoke(e);
+				
 				remove(e); //This will add e to the removal list
 			}
 			
@@ -94,6 +98,10 @@ public class EntityManager extends Pool<Entity>{
 		removedEntities.add(e);
 	}
 	
+	//endregion
+	
+	//region Overrides
+	
 	/**
 	 * Adds a new Entity to the entity pool for re-use,etc.
 	 */
@@ -102,13 +110,9 @@ public class EntityManager extends Pool<Entity>{
 		return new Entity();
 	}
 	
+	//endregion
 	
-	
-	//ACCESSORS
-	
-	
-	
-	
+	//region Accessors
 	
 	/**
 	 * @return The manager's entity list.
@@ -138,6 +142,10 @@ public class EntityManager extends Pool<Entity>{
 		return removedEntities;
 	}
 
+	//endregion
+	
+	//region Entity Retrieval
+	
 	/**
 	 * Tries to get an entity based on its tag and/or its group and/or its type.
 	 * @param tag The tag of the entity. "" for not inclusive search.
@@ -175,7 +183,9 @@ public class EntityManager extends Pool<Entity>{
 			}
 		}
 		
-		
-		return null;
+		return null; //The entity was not found.
 	}
+	
+	//endregion
+	
 }

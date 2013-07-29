@@ -47,7 +47,7 @@ public class EntityRemovalSystem extends ComponentSystem {
 
 	@Override
 	protected void process(Entity e) {
-		Transform t = e.getComponent();
+		Transform t = (Transform)e.getComponent(Transform.class);
 		
 		if (!bounds.contains(t.getPosition().x, t.getPosition().y))
 			e.delete();

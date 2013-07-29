@@ -39,7 +39,7 @@ public class ParticleSystem extends ComponentSystem {
 	 */
 	@Override
 	protected void process(Entity e) {
-		Particle p = e.getComponent();
+		Particle p = (Particle)e.getComponent(Particle.class);
 		
 		//Move the particle
 		Vector2 pos = p.getPosition().cpy();
@@ -62,7 +62,7 @@ public class ParticleSystem extends ComponentSystem {
 				public float reportRayFixture(Fixture fixture, Vector2 point,
 						Vector2 normal, float fraction) {
 					//If collision occurs
-					Collidable col = e.getComponent();
+					Collidable col = (Collidable)e.getComponent(Collidable.class);
 					com.badlogic.gdx.utils.Logger l = new Logger("particle collision logger", 3);
 					l.debug("collision occured");
 					//Get the victim

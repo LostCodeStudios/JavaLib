@@ -7,57 +7,45 @@ import java.util.Map;
 
 import com.badlogic.gdx.utils.Disposable;
 
+/**
+ * Manages all of the {@link EntityWorld}'s systems.
+ * @author Nathaniel
+ *
+ */
 public class SystemManager implements Disposable {
 
+	private EntityWorld world;
 	private List<EntitySystem> systems = new ArrayList<EntitySystem>();
 	
-	/**
-	 * The world in which all systems are contained
-	 */
-	EntityWorld world;
-	
+	//region Initialization/Disposal
 	
 	/**
 	 * Initializes the SystemManager
-	 * @param world Gives all sub components a world call-back/accessor. 
+	 * @param world The world in which all systems are contained.
 	 */
-	public SystemManager(EntityWorld world){
+	public SystemManager(EntityWorld world) {
 		this.world = world;
 	}
-	
 	
 	/**
 	 * Disposes of all systems.
 	 */
 	@Override
 	public void dispose() {
-		
 		for (int i = systems.size() - 1; i >= 0; i--) {
 			systems.get(i).dispose();
 			systems.remove(i);
 		}
-		
 	}
 	
-	/**
-	 * Adds a system to the SystemManager.
-	 * @param system The system to be added.
-	 * @param entities List of all active game entities, for 
-	 * determining which should be added to the system's processing list.
-	 */
-	public void addSystem(EntitySystem system, List<Entity> entities) {
-		system.setWorld(world);
-		systems.add(system);
-		for (Entity e : entities) {
-			if (system.canProcess(e)) {
-				system.add(e);
-			}
-		}
-	}
+	//endregion
+	
+	//region System Management
 	
 	/**
-	 * Adds a system to the SystemManager. NOTE: Do not call this after entities have been created.
-	 * They will not be added to the system's processing list.
+	 * Adds a system to the SystemManager. {@link Entity Entities}
+	 * that have already been created will not be added to the system's processing list, so
+	 * do not call addSystem() from anywhere except {@link EntityWorld#buildSystems}.
 	 * @param system The system to be added.
 	 */
 	public EntitySystem addSystem(EntitySystem system) {
@@ -65,6 +53,10 @@ public class SystemManager implements Disposable {
 		systems.add(system);
 		return system;
 	}
+	
+	//endregion
+	
+	//region Processing
 	
 	/**
 	 * Processes all incoming, outgoing, and modified {@link Entity Entities} to determine 
@@ -121,6 +113,10 @@ public class SystemManager implements Disposable {
 		
 	}
 	
+	//endregion
+	
+	//region System Performance
+	
 	/**
 	 * @return A map of system names with their respective delta times, for measuring performance.
 	 */
@@ -133,5 +129,7 @@ public class SystemManager implements Disposable {
 		
 		return performance;
 	}
+	
+	//endregion
 	
 }

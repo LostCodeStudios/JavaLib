@@ -1,55 +1,48 @@
 package com.punchline.javalib.entities;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Holds a map of {@link Component Components} with their type identifiers, 
  * and helpful methods for accessing and manipulating them.
- * @author Nathaniel + William
+ * @author Nathaniel & William
  *
  */
 public abstract class ComponentManager {
 
-	private Map<Class<?>, Component> components = new HashMap<Class<?>, Component>();
+	private List<Component> components = new ArrayList<Component>();
 	
 	/**
 	 * Adds the given component to this container.
-	 * @param value The component to be added.
+	 * @param component The component to be added.
 	 */
-	public <T extends Component> T addComponent(Class<? extends Component> type, T value) {
-		components.put(type, value);
-		value.onAdd(this);
-		return (T)value;
-	}
-	
-	/**
-	 * Adds the given component to this container.
-	 * @param value The component to be added.
-	 */
-	public <T extends Component> T addComponent(T value) {
-		components.put(value.getClass(), value);
-		value.onAdd(this);
-		return (T)value;
+	public Component addComponent(Component component) {
+		components.add(component);
+		component.onAdd(this);
+		return component;
 	}
 	
 	/**
 	 * Removes the given component from this container.
 	 * @param value The component to be removed.
 	 */
-	public void removeComponent(Component value) {
-		value.onRemove(this);
-		components.remove(value.getClass());
+	public void removeComponent(Component component) {
+		component.onRemove(this);
+		components.remove(component);
 	}
 	
 	/**
 	 * @param type The desired type.
-	 * @return This container's component of that type.
+	 * @return This container's component of that type, or null if there is none.
 	 */
-	@SuppressWarnings("unchecked")
-	public <T extends Component> T getComponent(T... type) {
-		return (T)components.get((Class<T>) type.getClass().getComponentType());
+	public Component getComponent(Class<? extends Component> type) {
+		for (Component c : components) {
+			if (type.isInstance(c))
+				return c;
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -57,15 +50,16 @@ public abstract class ComponentManager {
 	 * @return Whether this container has a component of that type.
 	 */
 	public boolean hasComponent(Class<? extends Component> type){
-		return components.containsKey(type);
+		return getComponent(type) != null;
 	}
 	
 	/**
-	 * Clears all of the components in a component container
+	 * Clears all of this manager's components.
 	 */
 	protected void clearComponents(){
-		for(Entry<Class<?>, Component> e : components.entrySet())
-			e.getValue().onRemove(this);
+		for(Component c : components)
+			c.onRemove(this);
+		
 		components.clear();
 	}
 	

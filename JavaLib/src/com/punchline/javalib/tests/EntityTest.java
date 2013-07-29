@@ -19,9 +19,9 @@ public class EntityTest {
 	public void addgetComponentTest() {
 			Entity e = new Entity();
 			e.init("tag", "group", "type");
-			
-			Renderable x = e.addComponent(Renderable.class, new Sprite());
-			Renderable p = e.getComponent();
+			//ha
+			Renderable x = (Renderable)e.addComponent(new Sprite());
+			Renderable p = (Renderable)e.getComponent(Renderable.class);
 		
 			assertEquals("x != p; getComponent failure", x, p);
 
@@ -32,9 +32,9 @@ public class EntityTest {
 		Entity e = new Entity();
 		e.init("tag", "group", "type");
 		
-		Particle p = e.addComponent(new Particle(e, new Vector2(0,0), 0f, new Vector2(0,0)));
-		Velocity v = e.getComponent();
-		Transform t = e.getComponent();
+		Particle p = (Particle)e.addComponent(new Particle(e, new Vector2(0,0), 0f, new Vector2(0,0)));
+		Velocity v = (Velocity)e.getComponent(Velocity.class);
+		Transform t = (Transform)e.getComponent(Transform.class);
 		p.setAngularVelocity(22);
 		v.setAngularVelocity(43);
 		

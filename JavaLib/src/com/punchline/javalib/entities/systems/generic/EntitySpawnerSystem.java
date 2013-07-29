@@ -36,7 +36,7 @@ public class EntitySpawnerSystem extends ComponentSystem {
 	 */
 	@Override
 	protected void process(Entity e) {
-		EntitySpawner es = e.getComponent();
+		EntitySpawner es = (EntitySpawner)e.getComponent(EntitySpawner.class);
 		
 		//if spawn delay has passed.
 		if(es.spawn(deltaSeconds()))

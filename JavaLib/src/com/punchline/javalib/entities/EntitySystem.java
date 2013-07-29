@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public abstract class EntitySystem implements Disposable {
 	
+	//region Fields
+	
 	private List<Entity> entities = new ArrayList<Entity>();
 	
 	private long previousTime;
@@ -23,34 +25,32 @@ public abstract class EntitySystem implements Disposable {
 	private float elapsed = 0f;
 	
 	/**
+	 * The {@link EntityWorld} in which this system is contained.
+	 */
+	protected EntityWorld world;
+	
+	//endregion
+	
+	//region Initialization
+	
+	/**
 	 * Constructs an EntitySystem.
 	 */
-	public EntitySystem() {
+	public EntitySystem() { 
 	}
 	
 	/**
 	 * Constructs an EntitySystem with a required interval between calls of its processEntities() method.
+	 * @param world The {@link EntityWorld} in which this system is contained.
 	 * @param interval The seconds required between calls.
 	 */
 	public EntitySystem(float interval) {
 		this.interval = interval;
 	}
 	
-	/**
-	 * Checks if an Entity is part of this system's processing list.
-	 * @param e The Entity to check for.
-	 * @return  Whether it's in this system's processing list.
-	 */
-	public boolean isProcessing(Entity e) {
-		return entities.contains(e);
-	}
+	//endregion
 	
-	/**
-	 * Predicate for determining if an {@link Entity} needs to be sent to this system for processing.
-	 * @param e The {@link Entity} to be checked.
-	 * @return Whether this system needs to process the given {@link Entity}.
-	 */
-	public abstract boolean canProcess(Entity e);
+	//region Accessors
 	
 	/**
 	 * @return The amount of seconds that need to pass between calls of processEntities().
@@ -66,6 +66,22 @@ public abstract class EntitySystem implements Disposable {
 		return elapsed;
 	}
 	
+	//endregion
+	
+	//region Mutators
+	
+	/**
+	 * Sets this system's EntityWorld.
+	 * @param world The EntityWorld containing this system.
+	 */
+	public void setWorld(EntityWorld world) {
+		this.world = world;
+	}
+	
+	//endregion
+	
+	//region Interval Processing
+	
 	/**
 	 * Adds to the time elapsed since the last call of processEntities().
 	 * @param elapsed The seconds elapsed.
@@ -78,8 +94,12 @@ public abstract class EntitySystem implements Disposable {
 	 * Resets the timer for this system's interval.
 	 */
 	public void resetElapsedInterval() {
-		elapsed -= interval;
+		elapsed -= interval; //Subtract interval to account for extra time.
 	}
+	
+	//endregion
+	
+	//region Entity Processing
 	
 	/**
 	 * Processes the given list of entities.
@@ -105,6 +125,10 @@ public abstract class EntitySystem implements Disposable {
 	 */
 	protected abstract void process(Entity e);
 	
+	//endregion
+	
+	//region Time Values
+	
 	/**
 	 * @return The amount of seconds between this call of processEntities() and the previous call of processEntities().
 	 */
@@ -119,6 +143,26 @@ public abstract class EntitySystem implements Disposable {
 		return processTime;
 	}
 	
+	//endregion
+
+	//region Entity Management
+	
+	/**
+	 * Checks if an Entity is part of this system's processing list.
+	 * @param e The Entity to check for.
+	 * @return  Whether it's in this system's processing list.
+	 */
+	public boolean isProcessing(Entity e) {
+		return entities.contains(e);
+	}
+	
+	/**
+	 * Predicate for determining if an {@link Entity} needs to be sent to this system for processing.
+	 * @param e The {@link Entity} to be checked.
+	 * @return Whether this system needs to process the given {@link Entity}.
+	 */
+	public abstract boolean canProcess(Entity e);
+	
 	/**
 	 * Adds the given entity to the processing list.
 	 * @param e The entity to add.
@@ -126,6 +170,15 @@ public abstract class EntitySystem implements Disposable {
 	public void add(Entity e) {
 		entities.add(e);
 		onAdded(e);
+	}
+	
+	/**
+	 * Removes the given entity from the processing list.
+	 * @param e The entity to remove.
+	 */
+	public void remove(Entity e) {
+		entities.remove(e);
+		onRemoved(e);
 	}
 	
 	/**
@@ -141,30 +194,11 @@ public abstract class EntitySystem implements Disposable {
 	public void onChanged(Entity e) { }
 	
 	/**
-	 * Removes the given entity from the processing list.
-	 * @param e The entity to remove.
-	 */
-	public void remove(Entity e) {
-		entities.remove(e);
-		onRemoved(e);
-	}
-	
-	/**
-	 * Sets this system's EntityWorld.
-	 * @param world The EntityWorld containing this system.
-	 */
-	public void setWorld(EntityWorld world) {
-		this.world = world;
-	}
-	
-	/**
 	 * Called when an Entity is removed from the system's processing list.
 	 * @param e The removed entity.
 	 */
 	protected void onRemoved(Entity e) { }
 	
-	/**
-	 * The entity world in which this system is contained.
-	 */
-	protected EntityWorld world;
+	//endregion
+
 }
