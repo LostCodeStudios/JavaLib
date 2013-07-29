@@ -17,6 +17,8 @@ public final class RenderSystem extends ComponentSystem {
 	private Camera camera;
 	private SpriteBatch spriteBatch;
 
+	//region Initialization/Disposal
+	
 	/**
 	 * Constructs a RenderSystem.
 	 * @param camera The camera for rendering.
@@ -34,6 +36,10 @@ public final class RenderSystem extends ComponentSystem {
 	public void dispose() {
 		spriteBatch.dispose();
 	}
+	
+	//endregion
+	
+	//region Processing
 	
 	@Override
 	public void processEntities() {
@@ -64,5 +70,7 @@ public final class RenderSystem extends ComponentSystem {
 		r.draw(spriteBatch, deltaSeconds());
 		
 	}	
+	
+	//endregion
 	
 }
