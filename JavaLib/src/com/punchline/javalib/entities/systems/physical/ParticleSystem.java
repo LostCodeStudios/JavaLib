@@ -63,8 +63,7 @@ public class ParticleSystem extends ComponentSystem {
 						Vector2 normal, float fraction) {
 					//If collision occurs
 					Collidable col = (Collidable)e.getComponent(Collidable.class);
-					com.badlogic.gdx.utils.Logger l = new Logger("particle collision logger", 3);
-					l.debug("collision occured");
+					
 					//Get the victim
 					Entity victim = (Entity)fixture.getBody().getUserData();
 					
