@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.Vector3;
  * @author William & Nathaniel
  * @created Jul 23, 2013
  */
-public class Convert {
-	//RATIOS
+public final class Convert {
+	
+	//region Fields/Initialization
+	
 	/**
-	 * The ratio between meters and pixels. yPixels = metersToPixels * yMeters;
+	 * The ratio between meters and pixels.
 	 */
 	static float pixelMeterRatio;
-		
-	//INIT
 
 	/**
 	 * Initializes Convert class with a meter to Pixel ratio.
@@ -25,29 +25,20 @@ public class Convert {
 		pixelMeterRatio = pMRatio;
 	}
 	
+	//endregion
 	
-	
-	//RADIANDEGREE
-	/**
-	 * Converts radians to degrees.
-	 * @param radians The angle in radians to be converted to degrees.
-	 * @return The angle converted to degrees.
-	 */
-	public static float radiansToDegrees(float radians){
-		return (radians/(float)Math.PI)*180;
-	}
+	//region Ratios
 	
 	/**
-	 * Converts degrees to radians.
-	 * @param radians The angle in degrees to be converted to radians.
-	 * @return The angle converted to radians.
+	 * @return The pixel-meter ratio being used to convert.
 	 */
-	public static float degreesToRadians(float degrees){
-		return (degrees/180f)*(float)Math.PI;
+	public static float getPixelMeterRatio() {
+		return pixelMeterRatio;
 	}
 	
+	//endregion
 	
-	//PIXELMETER
+	//region Conversions
 	
 	/**
 	 * Converts meters to pixels.
@@ -102,5 +93,7 @@ public class Convert {
 	public static Vector3 pixelsToMeters(Vector3 pixels) {
 		return new Vector3(pixelsToMeters(pixels.x), pixelsToMeters(pixels.y), pixelsToMeters(pixels.z));
 	}
+	
+	//endregion
 	
 }
