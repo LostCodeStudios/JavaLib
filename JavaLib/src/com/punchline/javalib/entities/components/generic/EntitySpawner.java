@@ -1,8 +1,5 @@
 package com.punchline.javalib.entities.components.generic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.punchline.javalib.entities.Component;
 import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.EntityCreationArgs;
