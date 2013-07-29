@@ -9,30 +9,6 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  */
 public final class Entity extends ComponentManager implements Poolable {
 	
-	//region Callbacks
-	
-	/**
-	 * Callback interface for Entity operations.
-	 * @author William
-	 * @created Jul 27, 2013
-	 */
-	public interface EntityEventCallback
-	{
-		/**
-		 * Called when this callback is invoked.
-		 * @param owner The entity who invoked the callback.
-		 */
-		public void invoke(Entity owner);
-		
-	}
-	
-	/**
-	 * Callback called when this Entity is deleted.
-	 */
-	public EntityEventCallback onDelete;
-	
-	//endregion
-	
 	//region Metadata fields
 	
 	/**
@@ -110,7 +86,6 @@ public final class Entity extends ComponentManager implements Poolable {
 		type = "";
 		deleted = false;
 		changed = false;
-		onDelete = null;
 	}	
 
 	//endregion

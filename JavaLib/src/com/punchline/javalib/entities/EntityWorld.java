@@ -70,6 +70,11 @@ public abstract class EntityWorld implements Disposable {
 	protected World physicsWorld;
 
 	/**
+	 * This world's {@link DebugRenderSystem}
+	 */
+	protected DebugRenderSystem debugView;
+	
+	/**
 	 * The physicsWorld's {@link ContactManager}.
 	 */
 	protected ContactManager contactManager;
@@ -123,7 +128,7 @@ public abstract class EntityWorld implements Disposable {
 		
 		//RENDER
 		systems.addSystem(new RenderSystem(camera));
-		systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
+		debugView = (DebugRenderSystem) systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
 		
 		//PHYSICAL
 		systems.addSystem(new ParticleSystem());
