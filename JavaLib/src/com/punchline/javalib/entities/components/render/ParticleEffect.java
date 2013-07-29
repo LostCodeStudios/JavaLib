@@ -36,13 +36,14 @@ public class ParticleEffect implements Renderable {
 		particleEffect.start();
 	}
 	
+	@Override
+	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
+		particleEffect.draw(spriteBatch, deltaSeconds);
+	}
 	
+	//region Getters/Setters
 	
-	
-	
-	
-	
-	/* (non-Javadoc)
+	/** {@inheritDoc}
 	 * @see com.punchline.javalib.entities.Component#onAdd(com.punchline.javalib.entities.ComponentManager)
 	 */
 	@Override
@@ -51,7 +52,7 @@ public class ParticleEffect implements Renderable {
 
 	}
 
-	/* (non-Javadoc)
+	/** {@inheritDoc}
 	 * @see com.punchline.javalib.entities.Component#onRemove(com.punchline.javalib.entities.ComponentManager)
 	 */
 	@Override
@@ -94,9 +95,5 @@ public class ParticleEffect implements Renderable {
 		
 	}
 
-	@Override
-	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
-		particleEffect.draw(spriteBatch, deltaSeconds);
-	}
-
+	//endregion
 }
