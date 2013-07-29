@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.punchline.javalib.entities.components.generic;
 
 import com.punchline.javalib.entities.Component;
@@ -8,34 +5,31 @@ import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
 
 /**
- * The bullet component to which all Bullet entities owe their existence.
+ * Generic component for bullet Entities.
  * @author William
  * @created Jul 23, 2013
  */
 public class Bullet implements Component {
 	
-	/**
-	 * The damage which the bullet deals to a receiving party.
-	 */
-	private float damage = 0;
+	//region Fields/Initialization
 	
-	/**
-	 * The firer of the bullet.
-	 */
+	private float damage = 0;
 	private Entity firer;
 	
 	/**
 	 * Initializes a bullet with a firer and a damage amount.
-	 * @param fierer The firer of the bullet.
-	 * @param damage The damage of the bullet.
+	 * @param firer The firer of the bullet.
+	 * @param damage The damage that the bullet will inflict on enemies.
 	 */
 	public Bullet(Entity firer, float damage){
 		this.damage = damage;
 		this.firer = firer;
 	}
 	
+	//endregion
 	
-	//GETTER/SETTER
+	//region Accessors
+	
 	/**
 	 * Gets the damage of the bullet.
 	 * @return The float value of the bullet's damage.
@@ -52,21 +46,16 @@ public class Bullet implements Component {
 		return firer;
 	}
 	
+	//endregion
+
+	//region Events
 	
-
-	//COMPONENT
-	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onAdd(com.punchline.javalib.entities.ComponentManager)
-	 */
 	@Override
-	public void onAdd(ComponentManager container) {
-	}
+	public void onAdd(ComponentManager container) { }
 
-	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onRemove(com.punchline.javalib.entities.ComponentManager)
-	 */
 	@Override
-	public void onRemove(ComponentManager container) {
-	}
+	public void onRemove(ComponentManager container) { }
 
+	//endregion
+	
 }

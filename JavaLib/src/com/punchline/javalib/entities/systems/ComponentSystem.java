@@ -15,6 +15,8 @@ public abstract class ComponentSystem extends EntitySystem {
 
 	private ArrayList<Class<? extends Component>> componentTypes;
 	
+	//region Initialization
+	
 	/**
 	 * Makes a ComponentSystem.
 	 * @param requiredType The first required Component type.
@@ -31,6 +33,10 @@ public abstract class ComponentSystem extends EntitySystem {
 		}
 	}
 
+	//endregion
+	
+	//region Entity Management
+	
 	@Override
 	public boolean canProcess(Entity e) {
 		
@@ -41,5 +47,7 @@ public abstract class ComponentSystem extends EntitySystem {
 		return true;
 		
 	}
+	
+	//endregion
 
 }
