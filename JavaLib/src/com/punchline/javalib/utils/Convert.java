@@ -1,5 +1,6 @@
 package com.punchline.javalib.utils;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -36,9 +37,16 @@ public final class Convert {
 		return pixelMeterRatio;
 	}
 	
+	/**
+	 * @return The meter-pixel ratio being used to convert.
+	 */
+	public static float getMeterPixelRatio() {
+		return 1 / pixelMeterRatio;
+	}
+	
 	//endregion
 	
-	//region Conversions
+	//region Meters to Pixels
 	
 	/**
 	 * Converts meters to pixels.
@@ -68,6 +76,23 @@ public final class Convert {
 	}
 	
 	/**
+	 * Converts meters to pixels.
+	 * @param meters A Rectangle whose location and measurements are expressed in meters.
+	 * @return An equivalent Rectangle whose measurements are expressed in pixels.
+	 */
+	public static Rectangle metersToPixels(Rectangle meters) {
+		return new Rectangle(
+				metersToPixels(meters.x),
+				metersToPixels(meters.y),
+				metersToPixels(meters.width),
+				metersToPixels(meters.height));
+	}
+	
+	//endregion
+	
+	//region Pixels to meters.
+	
+	/**
 	 * Converts pixels to meters.
 	 * @param pixels The pixels to be converted to meters.
 	 * @return The pixels in meters.
@@ -92,6 +117,19 @@ public final class Convert {
 	 */
 	public static Vector3 pixelsToMeters(Vector3 pixels) {
 		return new Vector3(pixelsToMeters(pixels.x), pixelsToMeters(pixels.y), pixelsToMeters(pixels.z));
+	}
+	
+	/**
+	 * Converts pixels to meters.
+	 * @param pixels A rectangle whose location and measurements are expressed in pixels.
+	 * @return An equivalent Rectangle whose measurements are expressed in meters.
+	 */
+	public static Rectangle pixelsToMeters(Rectangle pixels) {
+		return new Rectangle(
+				pixelsToMeters(pixels.x), 
+				pixelsToMeters(pixels.y), 
+				pixelsToMeters(pixels.width), 
+				pixelsToMeters(pixels.height));
 	}
 	
 	//endregion

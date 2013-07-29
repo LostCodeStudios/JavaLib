@@ -10,6 +10,7 @@ import com.punchline.javalib.entities.components.generic.Health;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 import com.punchline.javalib.entities.systems.ComponentSystem;
+import com.punchline.javalib.utils.Convert;
 
 /**
  * Generic system that renders health bars above every entity that has a Health component.
@@ -78,7 +79,7 @@ public class HealthRenderSystem extends ComponentSystem {
 		Transform transform = (Transform)e.getComponent(Transform.class);
 		Renderable sprite = (Renderable)e.getComponent(Renderable.class);
 		
-		Vector2 pos = transform.getPosition().cpy();
+		Vector2 pos = Convert.metersToPixels(transform.getPosition());
 		pos.add(new Vector2(-sprite.getWidth() / 2, sprite.getHeight() / 2 + VERTICAL_OFFSET));
 		
 		float height = backTexture.getHeight();
