@@ -20,11 +20,17 @@ public class HealthRenderSystem extends ComponentSystem {
 
 	private static final int VERTICAL_OFFSET = 2;
 	
+	//region Fields
+	
 	private SpriteBatch spriteBatch;
 	private Camera camera;
 	
 	private Texture backTexture;
 	private Texture frontTexture;
+	
+	//endregion
+	
+	//region Initialization/Disposal
 	
 	/**
 	 * Constructs a HealthRenderSystem.
@@ -49,8 +55,10 @@ public class HealthRenderSystem extends ComponentSystem {
 		frontTexture.dispose();
 	}
 	
-	
+	//endregion
 
+	//region Processing
+	
 	@Override
 	public void processEntities() {
 		spriteBatch.setProjectionMatrix(camera.combined);
@@ -83,5 +91,7 @@ public class HealthRenderSystem extends ComponentSystem {
 		spriteBatch.draw(frontTexture, pos.x, pos.y, width, height);
 		
 	}
+	
+	//endregion
 	
 }
