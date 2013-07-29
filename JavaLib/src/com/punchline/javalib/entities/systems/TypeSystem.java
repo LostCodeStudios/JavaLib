@@ -1,7 +1,6 @@
 package com.punchline.javalib.entities.systems;
 
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.EntitySystem;
 
 /**
  * An {@link EntitySystem} that processes a single type of {@link Entity}.

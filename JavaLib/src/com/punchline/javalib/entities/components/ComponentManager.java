@@ -1,7 +1,8 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.components;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Holds a map of {@link Component Components} with their type identifiers, 

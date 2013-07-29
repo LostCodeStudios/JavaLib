@@ -1,6 +1,9 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.templates;
 
 import java.util.ArrayList;
+
+import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Base class for group templates. A group template will create multiple entities at the same time.

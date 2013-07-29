@@ -1,4 +1,7 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.templates;
+
+import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Base class for entity templates.

@@ -3,10 +3,9 @@
  */
 package com.punchline.javalib.entities.components.generic;
 
-import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
-import com.punchline.javalib.entities.components.Stat;
+import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * A component describing an Entity's health. When health becomes 0, the Entity will be deleted.

@@ -6,7 +6,7 @@ package com.punchline.javalib.entities.components.render;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.punchline.javalib.entities.ComponentManager;
+import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * The particle effect component for instantiating particle effects.

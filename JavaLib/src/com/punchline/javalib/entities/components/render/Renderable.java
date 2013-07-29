@@ -2,7 +2,7 @@ package com.punchline.javalib.entities.components.render;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.punchline.javalib.entities.Component;
+import com.punchline.javalib.entities.components.Component;
 
 /**
  * Base class for all components that can be rendered.

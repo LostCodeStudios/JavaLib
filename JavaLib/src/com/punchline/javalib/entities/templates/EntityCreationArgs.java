@@ -1,7 +1,9 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.templates;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.punchline.javalib.entities.Entity;
 
 /**
  * Data structure containing all of the necessary information to create an {@link Entity}.

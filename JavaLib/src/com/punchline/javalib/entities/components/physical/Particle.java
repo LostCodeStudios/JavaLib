@@ -4,8 +4,8 @@
 package com.punchline.javalib.entities.components.physical;
 
 import com.badlogic.gdx.math.Vector2;
-import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * @author William
@@ -165,7 +165,7 @@ public class Particle implements Velocity, Transform {
 
 	/** 
 	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onRemove(com.punchline.javalib.entities.ComponentManager)
+	 * @see com.punchline.javalib.entities.components.Component#onRemove(com.punchline.javalib.entities.components.ComponentManager)
 	 */
 	@Override
 	public void onRemove(ComponentManager container) {

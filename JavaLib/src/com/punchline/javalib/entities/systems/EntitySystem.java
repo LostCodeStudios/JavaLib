@@ -1,10 +1,12 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.systems;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
+import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Base class for all EntitySystems. An EntitySystem contains a predicate for determining which Entities concern it,

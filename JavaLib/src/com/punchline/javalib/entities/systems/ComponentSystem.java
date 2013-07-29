@@ -2,9 +2,8 @@ package com.punchline.javalib.entities.systems;
 
 import java.util.ArrayList;
 
-import com.punchline.javalib.entities.Component;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.EntitySystem;
+import com.punchline.javalib.entities.components.Component;
 
 /**
  * An {@link EntitySystem} that processes {@link Entity Entities} which have specified {@link Component Components}.

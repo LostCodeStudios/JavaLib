@@ -14,11 +14,15 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.punchline.javalib.entities.systems.SystemManager;
 import com.punchline.javalib.entities.systems.generic.EntitySpawnerSystem;
 import com.punchline.javalib.entities.systems.physical.EntityRemovalSystem;
 import com.punchline.javalib.entities.systems.physical.ParticleSystem;
 import com.punchline.javalib.entities.systems.render.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.render.RenderSystem;
+import com.punchline.javalib.entities.templates.EntityCreationArgs;
+import com.punchline.javalib.entities.templates.EntityGroupTemplate;
+import com.punchline.javalib.entities.templates.EntityTemplate;
 
 /**
  * The EntityWorld is where actual gameplay happens. The world manages game

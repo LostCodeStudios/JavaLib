@@ -1,4 +1,5 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.components;
+
 
 /**
  * Base interface for components.

@@ -3,7 +3,6 @@ package com.punchline.javalib.entities.systems;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.EntitySystem;
 
 /**
  * Base class for any {@link EntitySystem} that can take user input.

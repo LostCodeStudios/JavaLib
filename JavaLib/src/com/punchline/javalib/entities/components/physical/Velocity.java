@@ -4,7 +4,7 @@
 package com.punchline.javalib.entities.components.physical;
 
 import com.badlogic.gdx.math.Vector2;
-import com.punchline.javalib.entities.Component;
+import com.punchline.javalib.entities.components.Component;
 
 /**
  * Velocity interface for velocity

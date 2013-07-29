@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities;
 
+import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.components.generic.Health;
 import com.punchline.javalib.entities.components.physical.Collidable;
 

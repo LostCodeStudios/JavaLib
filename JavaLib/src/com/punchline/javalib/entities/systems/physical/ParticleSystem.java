@@ -35,7 +35,7 @@ public class ParticleSystem extends ComponentSystem {
 	}
 
 	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.EntitySystem#process(com.punchline.javalib.entities.Entity)
+	 * @see com.punchline.javalib.entities.systems.EntitySystem#process(com.punchline.javalib.entities.Entity)
 	 */
 	@Override
 	protected void process(Entity e) {

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.punchline.javalib.entities.ComponentManager;
+import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * A sprite that contains multiple Animations, each mapped to a String showing the state which that animation represents.

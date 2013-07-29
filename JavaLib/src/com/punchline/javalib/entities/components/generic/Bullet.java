@@ -1,8 +1,8 @@
 package com.punchline.javalib.entities.components.generic;
 
-import com.punchline.javalib.entities.Component;
-import com.punchline.javalib.entities.ComponentManager;
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.components.Component;
+import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * Generic component for bullet Entities.

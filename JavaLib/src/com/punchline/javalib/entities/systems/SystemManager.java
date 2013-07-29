@@ -1,4 +1,4 @@
-package com.punchline.javalib.entities;
+package com.punchline.javalib.entities.systems;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.utils.Disposable;
+import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Manages all of the {@link EntityWorld}'s systems.

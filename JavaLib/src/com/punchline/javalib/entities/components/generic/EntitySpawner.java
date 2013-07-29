@@ -1,8 +1,8 @@
 package com.punchline.javalib.entities.components.generic;
 
-import com.punchline.javalib.entities.Component;
-import com.punchline.javalib.entities.ComponentManager;
-import com.punchline.javalib.entities.EntityCreationArgs;
+import com.punchline.javalib.entities.components.Component;
+import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.entities.templates.EntityCreationArgs;
 
 /**
  * A component for {@link Entity Entities} that spawn other Entities.
