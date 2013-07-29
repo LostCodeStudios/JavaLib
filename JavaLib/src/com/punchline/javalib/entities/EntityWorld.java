@@ -322,6 +322,7 @@ public abstract class EntityWorld implements Disposable {
 
 	/**
 	 * Safely creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
+	 * Use this method when creating Entities that have Body components, or you may cause a crash.
 	 * @param args
 	 */
 	public void safeCreate(EntityCreationArgs args) {
