@@ -8,9 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -30,7 +30,6 @@ public final class DebugRenderSystem extends InputSystem {
 	
 	private World physicsWorld;
 	private Camera camera;
-	private Camera debugCamera;
 	private SystemManager systems;
 	
 	private SpriteBatch spriteBatch;
@@ -99,13 +98,10 @@ public final class DebugRenderSystem extends InputSystem {
 			
 			if (visible) {
 				
-				debugCamera = new OrthographicCamera(
-						Convert.pixelsToMeters(camera.viewportWidth), 
-						Convert.pixelsToMeters(camera.viewportHeight));
-				debugCamera.position.set(Convert.pixelsToMeters(camera.position));
-				debugCamera.update();
+				Matrix4 renderMatrix = camera.combined.cpy();
+				renderMatrix.scl(Convert.getPixelMeterRatio());
 				
-				physicsDebugRenderer.render(physicsWorld, debugCamera.combined);
+				physicsDebugRenderer.render(physicsWorld, renderMatrix);
 				
 				Map<String, Float> performance = systems.systemPerformance();			
 				
