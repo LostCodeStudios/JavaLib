@@ -26,6 +26,8 @@ import com.punchline.javalib.utils.Convert;
  */
 public final class DebugRenderSystem extends InputSystem {
 
+	//region Fields
+	
 	private World physicsWorld;
 	private Camera camera;
 	private Camera debugCamera;
@@ -34,11 +36,14 @@ public final class DebugRenderSystem extends InputSystem {
 	private SpriteBatch spriteBatch;
 	private BitmapFont font;
 	private Box2DDebugRenderer physicsDebugRenderer;
-	Vector2 mousePosition;
-	
+	private Vector2 mousePosition;
 	
 	public boolean enabled = false;
 	public boolean visible = false;
+	
+	//endregion
+	
+	//region Initialization/Disposal
 	
 	/**
 	 * Constructs a DebugRenderSystem.
@@ -72,6 +77,10 @@ public final class DebugRenderSystem extends InputSystem {
 		physicsDebugRenderer.dispose();
 		super.dispose();
 	}
+	
+	//endregion
+	
+	//region Processing
 	
 	@Override
 	public boolean canProcess(Entity e) {
@@ -138,9 +147,12 @@ public final class DebugRenderSystem extends InputSystem {
 	}
 
 	@Override
-	protected void process(Entity e) {
-	}
+	protected void process(Entity e) { }
 
+	//endregion
+
+	//region Input
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.F1) {
@@ -157,4 +169,6 @@ public final class DebugRenderSystem extends InputSystem {
 		return false;
 	}
 
+	//endregion
+	
 }
