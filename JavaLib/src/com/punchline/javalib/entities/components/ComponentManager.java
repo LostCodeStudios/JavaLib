@@ -40,15 +40,16 @@ public abstract class ComponentManager {
 	 * @param type The desired type.
 	 * @return This container's component of that type, or null if there is none.
 	 */
-	public Component getComponent(Class<? extends Component> type) {
+	@SuppressWarnings("unchecked")
+	public <T extends Component> T getComponent(Class<? extends Component> type) {
 		if (componentMap.containsKey(type)) {
-			return componentMap.get(type);
+			return (T)componentMap.get(type);
 		}
 		
 		for (Component c : components) {
 			if (type.isInstance(c)) {
 				componentMap.put(type, c);
-				return c;
+				return (T) c;
 			}
 		}
 		
