@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.punchline.javalib.entities.systems.generic;
 
 import com.punchline.javalib.entities.Entity;

@@ -58,6 +58,28 @@ public class SystemManager implements Disposable {
 	
 	//endregion
 	
+	//region Events
+	
+	/**
+	 * Pauses all systems.
+	 */
+	public void pause() {
+		for (EntitySystem system : systems) {
+			system.pause();
+		}
+	}
+	
+	/**
+	 * Resumes all systems.
+	 */
+	public void resume() {
+		for (EntitySystem system : systems) {
+			system.resume();
+		}
+	}
+	
+	//endregion
+	
 	//region Processing
 	
 	/**

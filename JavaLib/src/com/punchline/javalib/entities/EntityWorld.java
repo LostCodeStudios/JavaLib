@@ -29,7 +29,8 @@ import com.punchline.javalib.entities.templates.EntityTemplate;
  * entities, the templates that create them, game physics, and systems that run
  * game processing.
  * @author Nathaniel
- *
+ * @author William
+ * 
  */
 public abstract class EntityWorld implements Disposable {
 	
@@ -169,6 +170,24 @@ public abstract class EntityWorld implements Disposable {
 		systems.dispose();
 		physicsWorld.dispose();
 		
+	}
+	
+	//endregion
+	
+	//region Events
+	
+	/**
+	 * Pauses the EntityWorld.
+	 */
+	public void pause() {
+		systems.pause();
+	}
+	
+	/**
+	 * Resumes the EntityWorld.
+	 */
+	public void resume() {
+		systems.resume();
 	}
 	
 	//endregion

@@ -40,10 +40,30 @@ public abstract class InputSystem extends EntitySystem implements InputProcessor
 		//Empty so all InputSystems don't have to define it
 	}
 
+	//region Events
+	
+	@Override
+	public void pause() {
+		input.removeProcessor(this);
+	}
+
+	@Override
+	public void resume() {
+		input.addProcessor(this);
+	}
+	
+	//endregion
+	
 	//region Input Events
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean canProcess(Entity e) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

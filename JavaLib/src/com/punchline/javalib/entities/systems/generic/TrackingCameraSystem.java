@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.systems.TagSystem;
+import com.punchline.javalib.utils.Convert;
 
 /**
  * System for moving the camera to follow a given entity.
@@ -25,14 +26,14 @@ public class TrackingCameraSystem extends TagSystem {
 		super(tag);
 		
 		this.camera = camera;
-		this.bounds = bounds;
+		this.bounds = Convert.metersToPixels(bounds);
 	}
 
 	@Override
 	protected void process(Entity e) {
 		Transform t = (Transform)e.getComponent(Transform.class);
 		
-		Vector2 pos = t.getPosition();
+		Vector2 pos = Convert.metersToPixels(t.getPosition());
 		
 		camera.position.set(pos.x, pos.y, 0f);
 		
@@ -45,8 +46,8 @@ public class TrackingCameraSystem extends TagSystem {
 			camera.position.x = bounds.x + camera.viewportWidth / 2;
 		}
 		
-		if (top > bounds.y + camera.viewportHeight) {
-			camera.position.y = bounds.y + camera.viewportHeight - camera.viewportHeight / 2;
+		if (top > bounds.y + bounds.height) {
+			camera.position.y = bounds.y + bounds.height - camera.viewportHeight / 2;
 		}
 		
 		if (right > bounds.x + bounds.width) {

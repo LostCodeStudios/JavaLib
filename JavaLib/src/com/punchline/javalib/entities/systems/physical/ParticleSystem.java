@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.punchline.javalib.entities.systems.physical;
 
 import com.badlogic.gdx.math.Vector2;
