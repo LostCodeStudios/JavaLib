@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.components.generic.View;
 import com.punchline.javalib.entities.systems.InputSystem;
 import com.punchline.javalib.entities.systems.SystemManager;
 import com.punchline.javalib.utils.Convert;
@@ -37,8 +36,6 @@ public final class DebugRenderSystem extends InputSystem {
 	private BitmapFont font;
 	private Box2DDebugRenderer physicsDebugRenderer;
 	private Vector2 mousePosition;
-	
-	private int seenEntities = 0;
 	
 	public boolean enabled = false;
 	public boolean visible = false;
@@ -86,7 +83,7 @@ public final class DebugRenderSystem extends InputSystem {
 	
 	@Override
 	public boolean canProcess(Entity e) {
-		return e.getTag().equals("Player");
+		return false;
 	}
 
 	/**
@@ -138,7 +135,6 @@ public final class DebugRenderSystem extends InputSystem {
 				pos.x = mousePosition.x - Gdx.graphics.getWidth()/2f + world.getCamera().position.x;
 				pos.y= -mousePosition.y + Gdx.graphics.getHeight()/2f + world.getCamera().position.y;
 				font.draw(spriteBatch, "World mouse pos: " +pos.toString(), 0, i++ * font.getLineHeight());
-				font.draw(spriteBatch, "Entities in view: " + seenEntities, 0, i++ * font.getLineHeight());
 				
 				spriteBatch.end();
 				
@@ -147,10 +143,7 @@ public final class DebugRenderSystem extends InputSystem {
 	}
 
 	@Override
-	protected void process(Entity e) {
-		View view = (View)e.getComponent(View.class);
-		seenEntities = view.getEntitiesInView().size();
-	}
+	protected void process(Entity e) { }
 
 	//endregion
 
