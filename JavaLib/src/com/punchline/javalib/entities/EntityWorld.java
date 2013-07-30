@@ -29,7 +29,8 @@ import com.punchline.javalib.entities.templates.EntityTemplate;
  * entities, the templates that create them, game physics, and systems that run
  * game processing.
  * @author Nathaniel
- *
+ * @author William
+ * 
  */
 public abstract class EntityWorld implements Disposable {
 	

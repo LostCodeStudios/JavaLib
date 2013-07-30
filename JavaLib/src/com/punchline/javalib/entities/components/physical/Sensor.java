@@ -45,6 +45,7 @@ public class Sensor implements Component {
 	private float viewRange;
 	private float fov;
 	private int vertices;
+	private float offsetDegrees;
 	
 	/**
 	 * Callback for when this sensor detects an Entity.
@@ -125,12 +126,19 @@ public class Sensor implements Component {
 		return vertices;
 	}
 	
+	/**
+	 * @return This sensor's offset from the angle of its body, in degrees.
+	 */
+	public float getOffset() {
+		return offsetDegrees;
+	}
+	
 	//endregion
 	
 	//region Mutators
 	
 	/**
-	 * Sets the range of this sensor's view, in meters.
+	 * Sets the range of this sensor's view, in meters. Takes effect only after {@link #refresh()} is called.
 	 * @param viewRange The new view range.
 	 */
 	public void setViewRange(float viewRange) {
@@ -138,7 +146,7 @@ public class Sensor implements Component {
 	}
 	
 	/**
-	 * Sets this sensor's field of view, from 0 to 1.
+	 * Sets this sensor's field of view, from 0 to 1. Takes effect only after {@link #refresh()} is called.
 	 * @param fov The new field of view.
 	 */
 	public void setFOV(float fov) {
@@ -148,13 +156,22 @@ public class Sensor implements Component {
 	}
 	
 	/**
-	 * Sets the number of vertices in the fixture representing this sensor.
+	 * Sets the number of vertices in the fixture representing this sensor. 
+	 * Takes effect only after {@link #refresh()} is called.
 	 * @param vertices The new amount of vertices.
 	 */
 	public void setVertices(int vertices) {
 		if (vertices < 3) vertices = 3;
 		if (vertices > 8) vertices = 8;
 		this.vertices = vertices;
+	}
+	
+	/**
+	 * Sets this sensor's offset from the angle of its body, in degrees. Takes effect only after {@link #refresh()} is called.
+	 * @param degrees The offset, in degrees.
+	 */
+	public void setOffset(float degrees) {
+		offsetDegrees = degrees;
 	}
 	
 	//endregion
@@ -170,7 +187,7 @@ public class Sensor implements Component {
 		
 		float degrees = 360 * fov;
 		
-		float start = (float)Math.toRadians(degrees / 2);
+		float start = (float)Math.toRadians(offsetDegrees + degrees / 2);
 		
 		for (int i = 1; i < vertices; i++) {
 			float angle = start - ((float)i / (vertices - 1)) * (float)Math.toRadians(degrees);
@@ -185,8 +202,9 @@ public class Sensor implements Component {
 		fd.shape = shape;
 		fd.isSensor = true;
 		
-		fixture = body.createFixture(fd);
-		fixture.setUserData(owner);
+		if (fixture != null) body.destroyFixture(fixture); //Destroy the old fixture, if there is one
+		fixture = body.createFixture(fd); //Create the new fixture
+		fixture.setUserData(owner); //Set the new fixture's user data
 	}
 	
 	//endregion

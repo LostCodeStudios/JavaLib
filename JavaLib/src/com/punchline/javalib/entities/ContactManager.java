@@ -73,11 +73,14 @@ public class ContactManager implements ContactListener {
 		Fixture f1 = contact.getFixtureA();
 		Fixture f2 = contact.getFixtureB();
 		
-		if (f1.getBody() == null || f2.getBody() == null)
+		if (f1 == null || f2 == null || f1.getBody() == null || f2.getBody() == null)
 			return;
 		
 		Entity e1 = (Entity)f1.getBody().getUserData();
 		Entity e2 = (Entity)f2.getBody().getUserData();
+		
+		if (e1 == null || e2 == null) 
+			return;
 		
 		if (f1.isSensor() && !f2.isSensor()) { //e2 escaped e1
 			
