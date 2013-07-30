@@ -12,7 +12,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 /**
  * Helper for playing all game audio, including both sound effects and music.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public final class SoundManager {

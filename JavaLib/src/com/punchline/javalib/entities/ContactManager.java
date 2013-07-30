@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.components.physical.Sensor;
 
 /**
  * Listens for all collisions in the Box2D world, and handles them.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 25, 2013
  */
 public class ContactManager implements ContactListener {

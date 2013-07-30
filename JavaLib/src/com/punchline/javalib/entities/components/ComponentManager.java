@@ -9,7 +9,8 @@ import java.util.Map;
 /**
  * Holds a map of {@link Component Components} with their type identifiers, 
  * and helpful methods for accessing and manipulating them.
- * @author Nathaniel & William
+ * @author Natman64
+ * @author MadcowD
  *
  */
 public abstract class ComponentManager {

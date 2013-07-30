@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.Entity;
 
 /**
  * Base class for any {@link EntitySystem} that can take user input.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 24, 2013
  */
 public abstract class InputSystem extends EntitySystem implements InputProcessor {

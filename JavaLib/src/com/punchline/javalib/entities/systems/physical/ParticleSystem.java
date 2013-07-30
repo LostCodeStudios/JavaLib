@@ -3,7 +3,6 @@ package com.punchline.javalib.entities.systems.physical;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.gdx.utils.Logger;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Particle;
@@ -11,7 +10,7 @@ import com.punchline.javalib.entities.systems.ComponentSystem;
 
 /**
  * The particle system which updates the position of particles
- * @author William
+ * @author MadcowD
  * @created Jul 23, 2013
  */
 public class ParticleSystem extends ComponentSystem {

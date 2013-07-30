@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Base class for group templates. A group template will create multiple entities at the same time.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public interface EntityGroupTemplate {

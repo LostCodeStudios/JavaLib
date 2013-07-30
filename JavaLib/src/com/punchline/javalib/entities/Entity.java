@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
  * @author Natman64
- * @author William
+ * @author MadcowD
  *
  */
 public final class Entity extends ComponentManager implements Poolable {

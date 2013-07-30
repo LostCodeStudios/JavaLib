@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.punchline.javalib.entities.components.render;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -10,7 +7,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * The particle effect component for instantiating particle effects.
- * @author William
+ * @author MadcowD
  * @created Jul 27, 2013
  */
 public class ParticleEffect implements Renderable {

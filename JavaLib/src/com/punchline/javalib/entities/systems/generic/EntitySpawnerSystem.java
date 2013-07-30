@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.systems.ComponentSystem;
 
 /**
  * The entity spawner system for spawning entities with the EntitySpawner component.
- * @author William
+ * @author MadcowD
  * @created Jul 27, 2013
  */
 public class EntitySpawnerSystem extends ComponentSystem {

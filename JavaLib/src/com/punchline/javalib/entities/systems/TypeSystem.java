@@ -4,7 +4,7 @@ import com.punchline.javalib.entities.Entity;
 
 /**
  * An {@link EntitySystem} that processes a single type of {@link Entity}.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public abstract class TypeSystem extends EntitySystem {

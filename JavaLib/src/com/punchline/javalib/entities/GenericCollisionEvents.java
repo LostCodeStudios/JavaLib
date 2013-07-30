@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.components.physical.Collidable;
 
 /**
  * Class containing helpful generic collision events.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 25, 2013
  */
 public final class GenericCollisionEvents {

@@ -11,7 +11,7 @@ import com.punchline.javalib.utils.SoundManager;
 
 /**
  * Base class for JavaLib games.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 23, 2013
  */
 public abstract class BaseGame extends Game {

@@ -10,7 +10,7 @@ import com.punchline.javalib.utils.Convert;
 
 /**
  * System for rendering every {@link Entity} that has a {@link Renderable} component.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public final class RenderSystem extends ComponentSystem {

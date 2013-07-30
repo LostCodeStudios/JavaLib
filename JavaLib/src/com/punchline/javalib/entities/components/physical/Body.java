@@ -9,7 +9,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * Component wrapper for a Box2D {@link com.badlogic.gdx.physics.box2d.Body Body}.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class Body implements Transform, Velocity {

@@ -14,7 +14,7 @@ import com.punchline.javalib.utils.Convert;
 
 /**
  * Generic system that renders health bars above every entity that has a Health component.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 27, 2013
  */
 public class HealthRenderSystem extends ComponentSystem {

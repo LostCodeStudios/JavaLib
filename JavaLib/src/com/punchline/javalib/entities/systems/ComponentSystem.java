@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.components.Component;
 
 /**
  * An {@link EntitySystem} that processes {@link Entity Entities} which have specified {@link Component Components}.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public abstract class ComponentSystem extends EntitySystem {

@@ -9,7 +9,7 @@ import com.punchline.javalib.entities.components.physical.Sensor;
 
 /**
  * Generic Sensor component that tracks a list of entities that are currently within its view.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class View extends Sensor {

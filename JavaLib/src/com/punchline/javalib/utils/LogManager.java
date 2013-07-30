@@ -9,8 +9,8 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.utils.Logger;
 
 /**
- * @author William
- * A logging utility for all java lib projects.
+ * @author MadcowD
+ * A logging utility for all JavaLib projects.
  */
 public final class LogManager {
 	/**

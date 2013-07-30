@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
  * Component wrapper for a Box2D body that Represents an Entity's field of view. Must only be added to Entities
  * that already have {@link Body} components. Contains a callback for 
  * when another Entity is detected.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class Sensor implements Component {

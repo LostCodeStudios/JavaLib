@@ -28,8 +28,8 @@ import com.punchline.javalib.entities.templates.EntityTemplate;
  * The EntityWorld is where actual gameplay happens. The world manages game
  * entities, the templates that create them, game physics, and systems that run
  * game processing.
- * @author Nathaniel
- * @author William
+ * @author Natman64
+ * @author MadcowD
  * 
  */
 public abstract class EntityWorld implements Disposable {

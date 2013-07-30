@@ -10,7 +10,7 @@ import com.punchline.javalib.utils.Convert;
 
 /**
  * System for moving the camera to follow a given entity.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 26, 2013
  */
 public class TrackingCameraSystem extends TagSystem {

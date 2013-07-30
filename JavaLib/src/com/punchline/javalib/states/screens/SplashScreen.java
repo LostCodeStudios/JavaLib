@@ -12,7 +12,7 @@ import com.punchline.javalib.states.InputScreen;
 
 /**
  * A splash screen that fades in and out.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 23, 2013
  */
 public final class SplashScreen extends InputScreen {

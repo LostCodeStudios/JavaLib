@@ -13,9 +13,10 @@ import com.punchline.javalib.BaseGame;
 import com.punchline.javalib.states.GameScreen;
 
 /**
- * A GameScreen containing a menu composed of 
- * @author Nathaniel
+ * A GameScreen containing a Scene2D stage for a menu.
+ * @author Natman64
  * @created Jul 24, 2013
+ * 
  */
 public abstract class MenuScreen extends GameScreen {
 	

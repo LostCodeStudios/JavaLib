@@ -21,7 +21,7 @@ import com.punchline.javalib.utils.Convert;
 
 /**
  * System for rendering debug information.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public final class DebugRenderSystem extends InputSystem {

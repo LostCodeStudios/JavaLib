@@ -4,7 +4,7 @@ import com.punchline.javalib.entities.Entity;
 
 /**
  * An {@link EntitySystem} that processes a single {@link Entity} by its tag.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public abstract class TagSystem extends EntitySystem {

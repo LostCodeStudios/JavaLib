@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.Entity;
 
 /**
  * Data structure containing all of the necessary information to create an {@link Entity}.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public final class EntityCreationArgs {

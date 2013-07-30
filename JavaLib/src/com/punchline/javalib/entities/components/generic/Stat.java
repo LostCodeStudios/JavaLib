@@ -4,7 +4,7 @@ import com.punchline.javalib.entities.components.Component;
 
 /**
  * Base class for Components such as a health bar, magic meter, or any other stat with a max value.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public abstract class Stat implements Component {

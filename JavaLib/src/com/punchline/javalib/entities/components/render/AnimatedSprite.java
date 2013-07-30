@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
 /**
  * A sprite that contains multiple Animations, each mapped to a String showing the state which that animation represents.
  * (Jumping, running, etc.)
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class AnimatedSprite implements Renderable {

@@ -5,7 +5,7 @@ import com.punchline.javalib.BaseGame;
 
 /**
  * Base class for GameScreens that process input.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 24, 2013
  */
 public abstract class InputScreen extends GameScreen implements InputProcessor {

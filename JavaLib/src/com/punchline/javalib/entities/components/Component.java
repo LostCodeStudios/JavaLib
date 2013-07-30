@@ -3,7 +3,7 @@ package com.punchline.javalib.entities.components;
 
 /**
  * Base interface for components.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public interface Component {

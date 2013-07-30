@@ -2,7 +2,7 @@ package com.punchline.javalib.utils;
 
 /**
  * A wrapper of Java's Random class that provides extra functionality for making games.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class Random {

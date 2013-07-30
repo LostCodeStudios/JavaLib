@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Manages all of the {@link EntityWorld}'s systems.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class SystemManager implements Disposable {

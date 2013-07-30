@@ -4,20 +4,20 @@ import com.badlogic.gdx.Screen;
 import com.punchline.javalib.BaseGame;
 
 /**
- * Base class for all game screens.
- * @author Nathaniel
- * @created Jul 23, 2013
+ * Base class for Game
+ * @author Natman64
+ * @created Jul 30, 2013
  */
 public abstract class GameScreen implements Screen {
 
 	/**
-	 * This screen's parent game.
+	 * The game that contains this screen.
 	 */
 	protected BaseGame game;
 	
 	/**
 	 * Constructs a GameScreen.
-	 * @param game This screen's parent Game.
+	 * @param game The game containing the screen.
 	 */
 	public GameScreen(BaseGame game) {
 		this.game = game;

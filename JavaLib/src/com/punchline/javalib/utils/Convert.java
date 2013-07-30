@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * Helper class containing useful conversion methods.
- * @author William & Nathaniel
+ * @author MadcowD
+ * @author Natman64
  * @created Jul 23, 2013
  */
 public final class Convert {

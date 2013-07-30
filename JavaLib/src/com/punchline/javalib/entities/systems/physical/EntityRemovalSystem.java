@@ -10,7 +10,7 @@ import com.punchline.javalib.utils.Convert;
 /**
  * The EntityRemovalSystem processes all Entities that have a position in the EntityWorld.
  * When an entity moves outside of the world's bounding rectangle, it is removed.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 24, 2013
  */
 public class EntityRemovalSystem extends ComponentSystem {

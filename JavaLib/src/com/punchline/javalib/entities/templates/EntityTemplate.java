@@ -5,7 +5,7 @@ import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * Base class for entity templates.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public interface EntityTemplate {

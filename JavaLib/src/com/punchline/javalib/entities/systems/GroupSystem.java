@@ -4,7 +4,7 @@ import com.punchline.javalib.entities.Entity;
 
 /**
  * An {@link EntitySystem} that processes a group of {@link Entity Entities}.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public abstract class GroupSystem extends EntitySystem {

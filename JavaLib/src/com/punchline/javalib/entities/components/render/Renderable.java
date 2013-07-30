@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.components.Component;
 
 /**
  * Base class for all components that can be rendered.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public interface Renderable extends Component {

@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.systems.InputSystem;
 
 /**
  * System for moving the camera based on keyboard input from the arrow keys.
- * @author Nathaniel
+ * @author Natman64
  * @created Jul 23, 2013
  */
 public class CameraMovementSystem extends InputSystem  {

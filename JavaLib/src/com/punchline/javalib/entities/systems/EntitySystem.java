@@ -11,7 +11,7 @@ import com.punchline.javalib.entities.EntityWorld;
 /**
  * Base class for all EntitySystems. An EntitySystem contains a predicate for determining which Entities concern it,
  * as well as a process() method for performing logic on Entities.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public abstract class EntitySystem implements Disposable {

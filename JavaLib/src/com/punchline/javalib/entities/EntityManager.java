@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Pool;
 
 /**
  * Contains and organizes game {@link Entity Entities}, sorting them according to tag, group, and type for easy access.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class EntityManager extends Pool<Entity>{

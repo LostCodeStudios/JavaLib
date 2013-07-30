@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.templates.EntityCreationArgs;
 
 /**
  * A component for {@link Entity Entities} that spawn other Entities.
- * @author William
+ * @author MadcowD
  * @created Jul 27, 2013
  */
 public class EntitySpawner implements Component {

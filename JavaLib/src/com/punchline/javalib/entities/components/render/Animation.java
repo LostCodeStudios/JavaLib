@@ -9,7 +9,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * Component wrapper for a LibGDX {@link com.badlogic.gdx.graphics.g2d.Animation Animation}.
- * @author Nathaniel
+ * @author Natman64
  *
  */
 public class Animation implements Renderable {

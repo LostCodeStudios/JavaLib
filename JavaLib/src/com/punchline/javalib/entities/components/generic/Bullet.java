@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * Generic component for bullet Entities.
- * @author William
+ * @author MadcowD
  * @created Jul 23, 2013
  */
 public class Bullet implements Component {

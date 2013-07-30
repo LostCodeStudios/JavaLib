@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.punchline.javalib.entities.components.physical;
 
 import com.punchline.javalib.entities.Entity;
@@ -8,7 +5,7 @@ import com.punchline.javalib.entities.components.Component;
 
 /**
  * Interface for any physical component type that can collide with other Collidable components.
- * @author William
+ * @author MadcowD
  * @created Jul 24, 2013
  */
 public interface Collidable extends Component {
