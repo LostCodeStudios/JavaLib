@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.punchline.javalib.entities.components.generic.View;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Sensor;
 
@@ -79,7 +80,7 @@ public class ContactManager implements ContactListener {
 		Entity e1 = (Entity)f1.getBody().getUserData();
 		Entity e2 = (Entity)f2.getBody().getUserData();
 		
-		if (e1 == null || e2 == null) 
+		if (e1 == null || e2 == null)
 			return;
 		
 		if (f1.isSensor() && !f2.isSensor()) { //e2 escaped e1
