@@ -6,13 +6,28 @@ import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
- * @author Nathaniel
+ * @author Natman64
  * @author William
  *
  */
 public final class Entity extends ComponentManager implements Poolable {
 	
-	//region Metadata fields
+	/**
+	 * Callback interface for when an Entity is deleted.
+	 * @author Natman64
+	 *
+	 */
+	public interface EntityDeletionCallback {
+		
+		/**
+		 * Called when this Entity is deleted.
+		 * @param owner The entity being deleted.
+		 */
+		public void invoke(Entity owner);
+		
+	}
+	
+	//region Fields
 	
 	/**
 	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
@@ -28,6 +43,11 @@ public final class Entity extends ComponentManager implements Poolable {
 	 * This entity's type. This must be set only once, by a template.
 	 */
 	private String type = "";
+	
+	/**
+	 * Callback for when this Entity is deleted.
+	 */
+	public EntityDeletionCallback onDeleted;
 	
 	//endregion
 	
@@ -76,6 +96,9 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	public void delete() {
 		deleted = true;
+		
+		if (onDeleted != null)
+			onDeleted.invoke(this);
 	}
 
 	/**
@@ -89,6 +112,7 @@ public final class Entity extends ComponentManager implements Poolable {
 		type = "";
 		deleted = false;
 		changed = false;
+		onDeleted = null;
 	}	
 
 	//endregion

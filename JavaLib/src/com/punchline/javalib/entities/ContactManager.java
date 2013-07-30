@@ -79,7 +79,7 @@ public class ContactManager implements ContactListener {
 		Entity e1 = (Entity)f1.getBody().getUserData();
 		Entity e2 = (Entity)f2.getBody().getUserData();
 		
-		if (e1 == null || e2 == null) 
+		if (e1 == null || e2 == null)
 			return;
 		
 		if (f1.isSensor() && !f2.isSensor()) { //e2 escaped e1

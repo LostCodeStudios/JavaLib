@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.Entity.EntityDeletionCallback;
 import com.punchline.javalib.entities.components.physical.Sensor;
 
 /**
@@ -29,6 +30,15 @@ public class View extends Sensor {
 			@Override
 			public void invoke(Entity e) {
 				entitiesInView.add(e);
+				
+				e.onDeleted = new EntityDeletionCallback() {
+
+					@Override
+					public void invoke(Entity owner) {
+						onEscape.invoke(owner);
+					}
+					
+				};
 			}
 			
 		};
@@ -38,6 +48,8 @@ public class View extends Sensor {
 			@Override
 			public void invoke(Entity e) {
 				entitiesInView.remove(e);
+				
+				e.onDeleted = null;
 			}
 			
 		};
@@ -48,6 +60,21 @@ public class View extends Sensor {
 	 */
 	public List<Entity> getEntitiesInView() {
 		return entitiesInView;
+	}
+	
+	/**
+	 * Processes the list of Entities in view, and removes nullified references.
+	 */
+	public void removeDeadEntities() {
+		
+		for (int i = entitiesInView.size(); i >= 0; i--) {
+			Entity e = entitiesInView.get(i);
+			if (e.hasComponent(Health.class)) {
+				
+					entitiesInView.remove(i); //Remove the reference if the entity died
+			}
+		}
+		
 	}
 	
 }
