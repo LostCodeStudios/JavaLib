@@ -35,9 +35,10 @@ public interface Renderable extends Component {
 	
 	/**
 	 * Sets the scale that should be applied when this component is drawn.
-	 * @param scale
+	 * @param scaleX The horizontal scale.
+	 * @param scaleY the vertical scale.
 	 */
-	public void setScale(float scale);
+	public void setScale(float scaleX, float scaleY);
 	
 	/**
 	 * Sets the origin that should be used when rotating this component, in relation to its bottom left corner.

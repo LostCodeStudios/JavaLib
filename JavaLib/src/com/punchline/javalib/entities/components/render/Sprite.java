@@ -79,8 +79,8 @@ public class Sprite implements Renderable {
 	}
 	
 	@Override
-	public void setScale(float scale) {
-		sprite.setScale(scale);
+	public void setScale(float scaleX, float scaleY) {
+		sprite.setScale(scaleX, scaleY);
 	}
 	
 	@Override

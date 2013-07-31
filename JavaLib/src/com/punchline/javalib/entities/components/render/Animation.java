@@ -20,7 +20,8 @@ public class Animation implements Renderable {
 	
 	private Vector2 position;
 	private float rotation = 0f;
-	private float scale = 1f;
+	private float scaleX = 1f;
+	private float scaleY = 1f;
 	private Vector2 origin;
 	
 	/**
@@ -139,8 +140,9 @@ public class Animation implements Renderable {
 	}
 	
 	@Override
-	public void setScale(float scale) {
-		this.scale = scale;
+	public void setScale(float scaleX, float scaleY) {
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
 	}
 
 	@Override
@@ -152,7 +154,7 @@ public class Animation implements Renderable {
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
-				region.getRegionWidth(), region.getRegionHeight(), scale, scale, rotation);
+				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, rotation);
 	}
 
 	@Override

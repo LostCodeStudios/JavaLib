@@ -12,11 +12,7 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public class ParticleEffect implements Renderable {
 
-	/**
-	 * The particle effect from which the
-	 */
-	com.badlogic.gdx.graphics.g2d.ParticleEffect particleEffect;
-	
+	private com.badlogic.gdx.graphics.g2d.ParticleEffect particleEffect;
 	
 	/**
 	 * Creates a particle effect
@@ -29,7 +25,7 @@ public class ParticleEffect implements Renderable {
 	/**
 	 * Starts the particle effect.
 	 */
-	public void start(){
+	public void start() {
 		particleEffect.start();
 	}
 	
@@ -39,24 +35,12 @@ public class ParticleEffect implements Renderable {
 	}
 	
 	//region Getters/Setters
-	
-	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onAdd(com.punchline.javalib.entities.ComponentManager)
-	 */
+
 	@Override
-	public void onAdd(ComponentManager container) {
-		// TODO Auto-generated method stub
+	public void onAdd(ComponentManager container) { }
 
-	}
-
-	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.Component#onRemove(com.punchline.javalib.entities.ComponentManager)
-	 */
 	@Override
-	public void onRemove(ComponentManager container) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onRemove(ComponentManager container) { }
 	
 
 	@Override
@@ -75,22 +59,13 @@ public class ParticleEffect implements Renderable {
 	}
 
 	@Override
-	public void setRotation(float degrees) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setRotation(float degrees) { }
 
 	@Override
-	public void setScale(float scale) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setScale(float scaleX, float scaleY) { }
 
 	@Override
-	public void setOrigin(Vector2 origin) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setOrigin(Vector2 origin) { }
 
 	//endregion
 }

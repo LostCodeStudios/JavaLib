@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.punchline.javalib.utils.Display;
 import com.punchline.javalib.utils.SoundManager;
 
 /**
@@ -15,6 +16,8 @@ import com.punchline.javalib.utils.SoundManager;
  * @created Jul 23, 2013
  */
 public abstract class BaseGame extends Game {
+	
+	//region Game Specifications
 	
 	/**
 	 * The title that will appear on the game's active window.
@@ -27,7 +30,8 @@ public abstract class BaseGame extends Game {
 	protected boolean fullScreen = false;
 	
 	/**
-	 * The texture that will be drawn as the game's cursor. If null, the default system mouse will be drawn.
+	 * The texture that will be drawn as the game's cursor. The sprite must take up the entire texture.
+	 * If null, the default system mouse will be drawn.
 	 */
 	protected Texture cursorTexture;
 	private boolean useCursor = false;
@@ -62,12 +66,23 @@ public abstract class BaseGame extends Game {
 	 */
 	protected float backgroundBlue = 0f;
 	
+	//endregion
+	
+	//region Fields
+	
+	/**
+	 * The game's {@link SpriteBatch}.
+	 */
 	protected SpriteBatch spriteBatch;
 	
 	/**
-	 * The game's {@link com.badlogic.gdx.InputMultiplexer InputMultiplexer}.
+	 * The game's {@link InputMultiplexer}.
 	 */
 	protected InputMultiplexer input;
+	
+	//endregion
+	
+	//region Initialization
 	
 	/**
 	 * Initializes the game's window.
@@ -79,16 +94,18 @@ public abstract class BaseGame extends Game {
 		
 		int w = landscapeMode ? height : width;
 		int h = landscapeMode ? width : height;
-		
+		 
 		Gdx.graphics.setDisplayMode(w, h, fullScreen);
+		Display.init(w, h); //Initialize the display helper
 		
-		if (cursorTexture != null) {
+		if (cursorTexture != null) { //If we have a cursor texture, use it.
 			useCursor = true;
 			Gdx.input.setCursorCatched(true);
 		}
 		
 		input = new InputMultiplexer();
 		Gdx.input.setInputProcessor(input);
+		Gdx.input.setCatchBackKey(true);
 		
 		spriteBatch = new SpriteBatch();
 		
@@ -96,15 +113,24 @@ public abstract class BaseGame extends Game {
 		
 	}
 	
-	public InputMultiplexer getInput() {
-		return input;
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		
+		Gdx.gl.glViewport(0, 0, width, height);
 	}
-	
+
+
+
 	/**
 	 * Loads all game sounds into the SoundManager's memory.
 	 */
 	protected abstract void loadSounds();
 	
+	//endregion
+	
+	//region Disposal
+
 	/**
 	 * Disposes all of this game's assets, including those that are still in the SoundManager's memory.
 	 */
@@ -117,6 +143,45 @@ public abstract class BaseGame extends Game {
 		spriteBatch.dispose();
 	}
 	
+	//endregion
+	
+	//region Accessors
+	
+	/**
+	 * @return The game's {@link InputMultiplexer}.
+	 */
+	public InputMultiplexer getInput() {
+		return input;
+	}
+	
+	//endregion
+	
+	//region Mutators
+	
+	/**
+	 * {@inheritDoc}
+	 * Disposes of the previous screen.
+	 */
+	@Override
+	public void setScreen(Screen screen) {
+		setScreen(screen, true);
+	}
+	
+	/**
+	 * Sets the current screen. Screen.hide() is called on any old screen, and Screen.show() is called on the new screen, if any.
+	 * @param screen The new screen.
+	 * @param disposeOld Whether the old screen should be automatically disposed.
+	 */
+	public void setScreen(Screen screen, boolean disposeOld) {
+		Screen oldScreen = getScreen();
+		super.setScreen(screen);
+		if (disposeOld && oldScreen != null) oldScreen.dispose();
+	}
+	
+	//endregion
+	
+	//region Rendering
+	
 	/**
 	 * Renders a solid background, and the current screen above it.
 	 */
@@ -128,6 +193,7 @@ public abstract class BaseGame extends Game {
 		super.render();
 		
 		if (useCursor) {
+			
 			//Clamp cursor
 			int cursorX = Gdx.input.getX();
 			int cursorY = Gdx.input.getY();
@@ -150,10 +216,19 @@ public abstract class BaseGame extends Game {
 				cursorChanged = true;
 			}
 			
+			//Draw cursor
 			spriteBatch.begin();
-			spriteBatch.draw(cursorTexture, cursorX, Gdx.graphics.getHeight() - cursorY - cursorTexture.getHeight());
+			
+			spriteBatch.draw(
+					cursorTexture, 
+					cursorX, 
+					Gdx.graphics.getHeight() - cursorY - cursorTexture.getHeight(),
+					cursorTexture.getWidth() * Display.scaleX(), //Scaled for high-res mobile devices
+					cursorTexture.getHeight() * Display.scaleY());
+			
 			spriteBatch.end();
 			
+			//Set to clamped position
 			if (cursorChanged) {
 				Gdx.input.setCursorPosition(cursorX, Gdx.graphics.getHeight() - cursorY);
 			}
@@ -162,24 +237,6 @@ public abstract class BaseGame extends Game {
 		
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * Disposes of the previous screen.
-	 */
-	@Override
-	public void setScreen(Screen screen) {
-		setScreen(screen, true);
-	}
-	
-	/**
-	 * Sets the current screen. Screen.hide() is called on any old screen, and Screen.show() is called on the new screen, if any.
-	 * @param screen The new screen.
-	 * @param disposeOld Whether the old screen should be automatically disposed.
-	 */
-	public void setScreen(Screen screen, boolean disposeOld) {
-		Screen oldScreen = getScreen();
-		super.setScreen(screen);
-		if (disposeOld && oldScreen != null) oldScreen.dispose();
-	}
-	
+	//endregion
+
 }

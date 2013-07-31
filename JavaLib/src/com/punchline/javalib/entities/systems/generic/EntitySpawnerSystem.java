@@ -16,21 +16,11 @@ public class EntitySpawnerSystem extends ComponentSystem {
 	 */
 	public EntitySpawnerSystem() {
 		super(EntitySpawner.class);
-		// TODO Auto-generated constructor stub
 	}
 
-	/** {@inheritDoc}
-	 * @see com.badlogic.gdx.utils.Disposable#dispose()
-	 */
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
+	public void dispose() { }
 
-	}
-
-	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.systems.EntitySystem#process(com.punchline.javalib.entities.Entity)
-	 */
 	@Override
 	protected void process(Entity e) {
 		EntitySpawner es = (EntitySpawner)e.getComponent(EntitySpawner.class);

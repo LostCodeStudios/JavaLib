@@ -1,6 +1,5 @@
 package com.punchline.javalib.states.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.punchline.javalib.BaseGame;
 import com.punchline.javalib.states.InputScreen;
+import com.punchline.javalib.utils.Display;
 
 /**
  * A splash screen that fades in and out.
@@ -55,7 +55,7 @@ public final class SplashScreen extends InputScreen {
 		spriteBatch = new SpriteBatch();
 		
 		texture = new Texture(textureHandle);
-		region = new TextureRegion(texture, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		region = new TextureRegion(texture, Display.getPreferredWidth(), Display.getPreferredHeight());
 		
 		this.nextScreen = nextScreen;
 		
@@ -116,7 +116,7 @@ public final class SplashScreen extends InputScreen {
 		
 		spriteBatch.setColor(new Color(1, 1, 1, alpha));
 		spriteBatch.begin();
-		spriteBatch.draw(region, 0, 0);
+		spriteBatch.draw(region, 0, 0, Display.getRealWidth(), Display.getRealHeight());
 		spriteBatch.end();
 		
 	}
@@ -141,18 +141,15 @@ public final class SplashScreen extends InputScreen {
 	public void resize(int width, int height) { }
 
 	@Override
-	public void show() { }
+	public void dispose() {
+		texture.dispose();
+		spriteBatch.dispose();	
+	}
 
 	@Override
 	public void pause() { }
 
 	@Override
 	public void resume() { }
-
-	@Override
-	public void dispose() {
-		texture.dispose();
-		spriteBatch.dispose();	
-	}
 
 }

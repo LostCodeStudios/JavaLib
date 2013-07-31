@@ -7,6 +7,7 @@ import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 import com.punchline.javalib.entities.systems.ComponentSystem;
 import com.punchline.javalib.utils.Convert;
+import com.punchline.javalib.utils.Display;
 
 /**
  * System for rendering every {@link Entity} that has a {@link Renderable} component.
@@ -64,6 +65,7 @@ public final class RenderSystem extends ComponentSystem {
 		if (e.hasComponent(Transform.class)) { 
 			Transform t = (Transform)e.getComponent(Transform.class);
 			
+			//r.setScale(Display.scaleX(), Display.scaleY());
 			r.setPosition(Convert.metersToPixels(t.getPosition()));
 			r.setRotation((float)Math.toDegrees(t.getRotation()));
 		}

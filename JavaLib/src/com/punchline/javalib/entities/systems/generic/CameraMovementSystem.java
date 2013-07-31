@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities.systems.generic;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.systems.InputSystem;
+import com.punchline.javalib.utils.Convert;
 
 /**
  * System for moving the camera based on keyboard input from the arrow keys.
@@ -36,7 +38,7 @@ public class CameraMovementSystem extends InputSystem  {
 		super(input);
 		
 		this.camera = camera;
-		this.bounds = bounds;
+		this.bounds = Convert.metersToPixels(bounds);
 	}
 
 	@Override
@@ -168,10 +170,14 @@ public class CameraMovementSystem extends InputSystem  {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		movingLeft = false;
-		movingRight = false;
-		movingDown = false;
-		movingUp = false;
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			mouseMoved(screenX, screenY);
+		} else {
+			movingLeft = false;
+			movingRight = false;
+			movingDown = false;
+			movingUp = false;
+		}
 		
 		return false;
 	}

@@ -10,7 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.punchline.javalib.BaseGame;
-import com.punchline.javalib.states.GameScreen;
+import com.punchline.javalib.states.InputScreen;
+import com.punchline.javalib.utils.Display;
 
 /**
  * A GameScreen containing a Scene2D stage for a menu.
@@ -18,7 +19,7 @@ import com.punchline.javalib.states.GameScreen;
  * @created Jul 24, 2013
  * 
  */
-public abstract class MenuScreen extends GameScreen {
+public abstract class MenuScreen extends InputScreen {
 	
 	/**
 	 * The menu's skin.
@@ -53,7 +54,7 @@ public abstract class MenuScreen extends GameScreen {
 		super(game);
 		
 		skin = new Skin(skinHandle);
-		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		stage = new Stage(Display.getPreferredWidth(), Display.getPreferredHeight(), false);
 		
 		this.title = title;
 		
@@ -71,7 +72,7 @@ public abstract class MenuScreen extends GameScreen {
 	 */
 	protected void initialize() { 
 		window = new Window(title, skin);
-		window.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		window.setSize(Display.getPreferredWidth(), Display.getPreferredHeight());
 		window.setPosition(0, 0);
 		
 		if (background != null)
@@ -93,12 +94,14 @@ public abstract class MenuScreen extends GameScreen {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		game.getInput().addProcessor(stage);
+		super.show();
 	}
 
 	@Override
 	public void hide() {
-		Gdx.input.setInputProcessor(game.getInput());
+		game.getInput().removeProcessor(stage);
+		super.hide();
 	}
 
 	@Override
