@@ -11,7 +11,10 @@ import com.punchline.javalib.entities.Entity;
  */
 public abstract class InputSystem extends EntitySystem implements InputProcessor {
 
-	private InputMultiplexer input;
+	/**
+	 * The game's {@link InputMultiplexer}.
+	 */
+	protected InputMultiplexer input;
 	
 	//region Initialization/Disposal
 	
