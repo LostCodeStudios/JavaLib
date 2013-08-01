@@ -10,34 +10,19 @@ import com.punchline.javalib.entities.components.ComponentManager;
  * The particle class.
  */
 public class Particle implements Velocity, Transform {
-	//FIELDS
-	/**
-	 * The position of the particle.
-	 */
+
+	//region Fields
+	
 	private Vector2 position;
-	
-	/**
-	 * The rotation of the particle.
-	 */
 	private float rotation;
-	
-	/**
-	 * The origin of the particle.
-	 */
 	private Vector2 origin;
-	
-	/**
-	 * The linear velocity of a particle.
-	 */
 	private Vector2 linearVelocity;
-	
-	/**
-	 * The angular velocity of a particle.
-	 */
 	private float angularVelocity;
 	
+	//endregion
 	
-	//CONSTRUCTOR
+	//region Initialization
+	
 	/**
 	 * Initializes a particle with a given transform.
 	 * @param position The position of the particle.
@@ -62,111 +47,69 @@ public class Particle implements Velocity, Transform {
 		this(e, position, rotation, new Vector2(0,0));
 	}
 
+	//endregion
 	
-	
-	
-	//METHODS
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.components.physical.Transform#getPosition()
-	 */
+	//region Transform Implementation
+
 	@Override
 	public Vector2 getPosition() {
 		return position;
 	}
 
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.components.physical.Transform#setPosition(com.badlogic.gdx.math.Vector2)
-	 */
 	@Override
-	public Vector2 setPosition(Vector2 position) {
+	public void setPosition(Vector2 position) {
 		this.position = position;
-		return getPosition();
 	}
 
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.components.physical.Transform#getRotation()
-	 */
 	@Override
 	public float getRotation() {
 		return rotation;
 	}
 
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.components.physical.Transform#setRotation(float)
-	 */
 	@Override
-	public float setRotation(float rotation) {
+	public void setRotation(float rotation) {
 		this.rotation = rotation;
-		return getRotation();
 	}
-
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.components.physical.Transform#getOrigin()
-	 */
+	
 	@Override
 	public Vector2 getOrigin() {
 		return origin;
 	}
 	
+	//endregion
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	//region Velocity
+
 	@Override
 	public Vector2 getLinearVelocity() {
 		return linearVelocity;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setLinearVelocity(Vector2 linearVelocity) {
 		this.linearVelocity = linearVelocity;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public float getAngularVelocity() {
 		return angularVelocity;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setAngularVelocity(float angularVelocity) {
 		this.angularVelocity = angularVelocity;
 	}
-
 	
+	//endregion
 	
+	//region Events
 	
-	
-	
-	
-	
-	/**
-	 * Adds the Transform and Velocity interfaces to the entity.
-	 */
 	@Override
-	public void onAdd(ComponentManager container) {
-	}
+	public void onAdd(ComponentManager container) { }
 
-	/** 
-	 * {@inheritDoc}
-	 * @see com.punchline.javalib.entities.components.Component#onRemove(com.punchline.javalib.entities.components.ComponentManager)
-	 */
 	@Override
-	public void onRemove(ComponentManager container) {
-	}
+	public void onRemove(ComponentManager container) { }
 
+	//endregion
 	
 }

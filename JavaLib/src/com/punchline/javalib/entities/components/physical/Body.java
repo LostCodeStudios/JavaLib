@@ -64,9 +64,8 @@ public class Body implements Transform, Velocity {
 	}
 	
 	@Override
-	public Vector2 setPosition(Vector2 position) {
+	public void setPosition(Vector2 position) {
 		body.setTransform(position, body.getAngle());
-		return body.getPosition();
 	}
 
 	@Override
@@ -75,9 +74,8 @@ public class Body implements Transform, Velocity {
 	}
 	
 	@Override
-	public float setRotation(float rotation){
+	public void setRotation(float rotation){
 		body.setTransform(getPosition(), rotation);
-		return getRotation();
 	}
 	
 	@Override

@@ -8,38 +8,35 @@ import com.punchline.javalib.entities.components.Component;
  * @created Jul 23, 2013
  */
 public interface Transform extends Component{
+	
 	/**
 	 * @return The position of this Transform.
 	 */
-	Vector2 getPosition();
+	public Vector2 getPosition();
 	
 	/**
 	 * Sets the position of this Transform.
 	 * @param position The new position.
-	 * @return Returns The new position :3
+	 * @return Returns The new position for chaining.
 	 */
-	Vector2 setPosition(Vector2 position);
+	public void setPosition(Vector2 position);
 	
 	/**
 	 * Gets the rotation of this Transform.
 	 * @return The rotation of this Transform.
 	 */
-	float getRotation();
+	public float getRotation();
 	
 	/**
 	 * Sets the rotation  of a transform.
 	 * @param rotation The new rotation.
 	 * @return The new rotation.
 	 */
-	float setRotation(float rotation);
-	
-	
+	public void setRotation(float rotation);
 	
 	/**
 	 * @return The center of this Transform.
 	 */
-	Vector2 getOrigin();
-	
-	
+	public Vector2 getOrigin();
 	
 }
