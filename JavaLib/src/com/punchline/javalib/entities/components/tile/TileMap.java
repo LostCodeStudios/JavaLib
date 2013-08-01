@@ -14,12 +14,15 @@ import com.punchline.javalib.utils.Convert;
 import com.punchline.javalib.utils.Display;
 
 /**
- * Component wrapper for a LibGDX tile map. 
+ * Component wrapper for a map made in Tiled. When added to an Entity, this will automatically add bodies to the
+ * Box2D physics world, as defined by the Tiled map's "physics" object layer and the given materials XML file.
  * @author Natman64
  * @created Aug 1, 2013
  */
 public class TileMap implements Component, Renderable, Transform {
 
+	//region Fields/Initialization
+	
 	private static TmxMapLoader loader = new TmxMapLoader();
 	
 	private TiledMap map;
@@ -40,6 +43,8 @@ public class TileMap implements Component, Renderable, Transform {
 		
 		renderer = new OrthogonalTiledMapRenderer(map);
 	}
+	
+	//endregion
 	
 	//region Transform Implementation
 	
