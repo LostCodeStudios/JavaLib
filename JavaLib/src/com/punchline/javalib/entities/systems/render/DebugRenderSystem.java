@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
@@ -108,6 +109,11 @@ public final class DebugRenderSystem extends InputSystem {
 				spriteBatch.begin();
 				
 				int i = 1;
+				
+				if (Gdx.app.getType() == ApplicationType.Android) {
+					i = 15; //Start drawing text further up to avoid being covered by UI elements.
+				}
+				
 				String systemName = "";
 				Float systemPerformance = 0f;
 				

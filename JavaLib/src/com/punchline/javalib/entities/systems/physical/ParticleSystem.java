@@ -18,6 +18,7 @@ public class ParticleSystem extends ComponentSystem {
 	/**
 	 * Initializes the particle system for particle components.
 	 */
+	@SuppressWarnings("unchecked")
 	public ParticleSystem(){
 		super(Particle.class);
 	}

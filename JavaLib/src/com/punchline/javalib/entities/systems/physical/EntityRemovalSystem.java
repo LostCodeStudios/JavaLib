@@ -26,6 +26,7 @@ public class EntityRemovalSystem extends ComponentSystem {
 	/**
 	 * Constructs the EntityRemovalSystem.
 	 */
+	@SuppressWarnings("unchecked")
 	public EntityRemovalSystem() {
 		super(Transform.class);
 	}

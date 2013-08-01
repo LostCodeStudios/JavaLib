@@ -14,6 +14,7 @@ public class EntitySpawnerSystem extends ComponentSystem {
 	/**
 	 * Creates an entity spawner system.
 	 */
+	@SuppressWarnings("unchecked")
 	public EntitySpawnerSystem() {
 		super(EntitySpawner.class);
 	}

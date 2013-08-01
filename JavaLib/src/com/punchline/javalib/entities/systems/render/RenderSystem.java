@@ -7,7 +7,6 @@ import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 import com.punchline.javalib.entities.systems.ComponentSystem;
 import com.punchline.javalib.utils.Convert;
-import com.punchline.javalib.utils.Display;
 
 /**
  * System for rendering every {@link Entity} that has a {@link Renderable} component.
@@ -25,6 +24,7 @@ public final class RenderSystem extends ComponentSystem {
 	 * Constructs a RenderSystem.
 	 * @param camera The camera for rendering.
 	 */
+	@SuppressWarnings("unchecked")
 	public RenderSystem(Camera camera) {
 		super(Renderable.class);
 		

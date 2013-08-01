@@ -38,6 +38,7 @@ public class HealthRenderSystem extends ComponentSystem {
 	 * @param backTextureHandle A FileHandle pointing to the texture that will be drawn as the back of the health bar.
 	 * @param frontTextureHandle A FileHandle pointing to the texture that will be drawn as the front of the health bar.
 	 */
+	@SuppressWarnings("unchecked")
 	public HealthRenderSystem(Camera camera, FileHandle backTextureHandle, FileHandle frontTextureHandle) {
 		super(Health.class, Transform.class, Renderable.class);
 		
