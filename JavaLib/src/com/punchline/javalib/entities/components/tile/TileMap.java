@@ -1,7 +1,14 @@
 package com.punchline.javalib.entities.components.tile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -25,11 +32,13 @@ public class TileMap implements Component, Renderable, Transform {
 	
 	private static TmxMapLoader loader = new TmxMapLoader();
 	
+	private boolean init = false;
+	
 	private TiledMap map;
 	private MapBodyManager bodyManager;
 	private OrthogonalTiledMapRenderer renderer;
 	
-	private boolean init = false;
+	private Map<String, MapObject> disabledObjects = new HashMap<String, MapObject>();
 	
 	/**
 	 * Constructs a TileMap component.
@@ -42,6 +51,99 @@ public class TileMap implements Component, Renderable, Transform {
 		
 		bodyManager = new MapBodyManager(world.getPhysicsWorld(), 
 				Convert.getMeterPixelRatio(), materialsFilename, 0);
+	}
+	
+	//endregion
+	
+	//region TiledMap Accessors/Mutators
+	
+	/**
+	 * @return The TiledMap.
+	 */
+	public TiledMap getMap() {
+		return map;
+	}
+	
+	/**
+	 * Toggles one of the map's objects.
+	 * @param name The name of the object.
+	 */
+	public void toggleObject(String name) {
+		MapLayer layer = map.getLayers().get("physics"); //get the physics layer.
+		
+		if (disabledObjects.containsKey(name)) { //if disabled
+			layer.getObjects().add(disabledObjects.get(name)); //return it to the layer
+			disabledObjects.remove(name); //remove it from the disabled map
+		} else { //if enabled
+			MapObject object = layer.getObjects().get(name); //get the desired object
+			if (object == null) return; //null check
+			disabledObjects.put(name, object); //add to disabled list
+			layer.getObjects().remove(object); //remove from the layer
+		}
+		
+		refresh(); //commit the changes to the map
+	}
+	
+	/**
+	 * Disables one of the map's objects.
+	 * @param name The name of the object.
+	 */
+	public void disableObject(String name) {
+		MapLayer layer = map.getLayers().get("physics"); //get the physics layer.
+		
+		if (!disabledObjects.containsKey(name)) { //if enabled
+			MapObject object = layer.getObjects().get(name); //get the desired object
+			if (object == null) return; //null check
+			disabledObjects.put(name, object); //add to disabled list
+			layer.getObjects().remove(object); //remove from the layer
+		}
+		
+		refresh(); //commit the changes to the map
+	}
+	
+	/**
+	 * Enables one of the map's objects.
+	 * @param name The name of the object.
+	 */
+	public void enableObject(String name) {
+		MapLayer layer = map.getLayers().get("physics"); //get the physics layer.
+		
+		if (disabledObjects.containsKey(name)) { //if disabled
+			layer.getObjects().add(disabledObjects.get(name)); //return it to the layer
+			disabledObjects.remove(name); //remove it from the disabled map
+		}
+		
+		refresh(); //commit the changes to the map
+	}
+	
+	/**
+	 * Sets a cell of a tile layer to the given cell.
+	 * @param layerName The name of the layer to edit.
+	 * @param x The x coordinate of the tile to edit.
+	 * @param y The y coordinate of the tile to edit.
+	 * @param value The cell to set the tile to.
+	 */
+	public void setTile(String layerName, int x, int y, Cell value) {
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName); //get the desired layer
+		
+		if (layer == null) return; //null check
+		
+		layer.setCell(x, y, value); //set the desired cell
+	}
+	
+	/**
+	 * Gets a cell of a tile layer.
+	 * @param layerName The name of the layer to search.
+	 * @param x The x coordinate of the tile to return.
+	 * @param y The y coordinate of the tile to return.
+	 * @return The desired tile.
+	 */
+	public Cell getTile(String layerName, int x, int y) {
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName); //get the desired layer
+		
+		if (layer == null) return null; //null check
+		
+		return layer.getCell(x, y); //return the desired cell
 	}
 	
 	//endregion
@@ -118,6 +220,14 @@ public class TileMap implements Component, Renderable, Transform {
 		renderer.dispose();
 	}
 
+	/**
+	 * Re-creates the Box2D bodies representing the map's object layer.
+	 */
+	public void refresh() {
+		bodyManager.destroyPhysics();
+		bodyManager.createPhysics(map);
+	}
+	
 	//endregion
 	
 }

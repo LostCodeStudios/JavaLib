@@ -19,7 +19,7 @@ public class TileMapTemplate implements EntityTemplate {
 		String mapFilename = (String)args[0];
 		String materialsFilename = (String)args[1];
 		
-		e.init("Map", "", "TileMap");
+		e.init("", "Maps", "TileMap");
 		
 		TileMap map = new TileMap(world, mapFilename, materialsFilename);
 		e.addComponent(map);
