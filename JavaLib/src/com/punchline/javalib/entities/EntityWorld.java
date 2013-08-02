@@ -23,6 +23,7 @@ import com.punchline.javalib.entities.systems.render.RenderSystem;
 import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
+import com.punchline.javalib.entities.templates.tile.TileMapTemplate;
 
 /**
  * The EntityWorld is where actual gameplay happens. The world manages game
@@ -150,7 +151,9 @@ public abstract class EntityWorld implements Disposable {
 	/**
 	 * Adds necessary templates to the EntityWorld. Called by the constructor.
 	 */
-	protected void buildTemplates() { }
+	protected void buildTemplates() { 
+		addTemplate("TileMap", new TileMapTemplate());
+	}
 	
 	/**
 	 * Adds necessary entities to the EntityWorld. Called by the constructor.
@@ -195,19 +198,19 @@ public abstract class EntityWorld implements Disposable {
 	//region Accessors/Mutators
 	
 	/**
-	 * @return This physicsWorld's boundaries.
+	 * @return This world's boundaries, in meters.
 	 */
 	public abstract Rectangle getBounds();
 	
 	/**
-	 * @return This physicsWorld's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 * @return This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
 	 */
 	public World getPhysicsWorld() {
 		return physicsWorld;
 	}
 	
 	/**
-	 * @return This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 * @return This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
 	 */
 	public Camera getCamera() {
 		return camera;

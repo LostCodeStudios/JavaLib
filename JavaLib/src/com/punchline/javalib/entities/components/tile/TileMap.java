@@ -91,7 +91,7 @@ public class TileMap implements Component, Renderable, Transform {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
-		renderer.setView(spriteBatch.getTransformMatrix(), 0, 0, Display.getRealWidth(), Display.getRealHeight());
+		renderer.setView(spriteBatch.getProjectionMatrix().cpy(), 0, 0, Display.getRealWidth(), Display.getRealHeight());
 		renderer.render();
 	}
 

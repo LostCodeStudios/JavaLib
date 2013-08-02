@@ -21,7 +21,7 @@ public class Bullet implements Component {
 	 * @param firer The firer of the bullet.
 	 * @param damage The damage that the bullet will inflict on enemies.
 	 */
-	public Bullet(Entity firer, float damage){
+	public Bullet(Entity firer, float damage) {
 		this.damage = damage;
 		this.firer = firer;
 	}
