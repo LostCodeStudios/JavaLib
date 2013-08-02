@@ -29,6 +29,8 @@ public class TileMap implements Component, Renderable, Transform {
 	private MapBodyManager bodyManager;
 	private OrthogonalTiledMapRenderer renderer;
 	
+	private boolean init = false;
+	
 	/**
 	 * Constructs a TileMap component.
 	 * @param world The EntityWorld containing this map.
@@ -40,8 +42,6 @@ public class TileMap implements Component, Renderable, Transform {
 		
 		bodyManager = new MapBodyManager(world.getPhysicsWorld(), 
 				Convert.getMeterPixelRatio(), materialsFilename, 0);
-		
-		renderer = new OrthogonalTiledMapRenderer(map);
 	}
 	
 	//endregion
@@ -91,8 +91,15 @@ public class TileMap implements Component, Renderable, Transform {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
+		if (!init) {
+			renderer = new OrthogonalTiledMapRenderer(map, spriteBatch);
+			init = true;
+		}
+		
+		spriteBatch.end();
 		renderer.setView(spriteBatch.getProjectionMatrix().cpy(), 0, 0, Display.getRealWidth(), Display.getRealHeight());
 		renderer.render();
+		spriteBatch.begin();
 	}
 
 	//endregion
