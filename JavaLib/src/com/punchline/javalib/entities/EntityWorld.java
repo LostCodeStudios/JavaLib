@@ -2,7 +2,6 @@ package com.punchline.javalib.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.systems.SystemManager;
 import com.punchline.javalib.entities.systems.generic.EntitySpawnerSystem;
@@ -53,8 +53,8 @@ public abstract class EntityWorld implements Disposable {
 	private Map<String, EntityTemplate> templates;
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
-	private List<EntityCreationArgs> entitiesToCreate = new ArrayList<EntityCreationArgs>();
-	private List<Body> bodiesToRemove;
+	private Array<EntityCreationArgs> entitiesToCreate = new Array<EntityCreationArgs>();
+	private Array<Body> bodiesToRemove;
 	
 	/**
 	 * The InputMultiplexer managing this world's game.
@@ -121,7 +121,7 @@ public abstract class EntityWorld implements Disposable {
 		positionCamera();
 		
 		physicsWorld = new World(gravity, doSleeping);
-		bodiesToRemove = new ArrayList<com.badlogic.gdx.physics.box2d.Body>();
+		bodiesToRemove = new Array<Body>();
 		contactManager = new ContactManager(this);
 		
 		buildTemplates();
@@ -233,7 +233,7 @@ public abstract class EntityWorld implements Disposable {
 	 * @return The count of entities active in the physicsWorld.
 	 */
 	public int getEntityCount(){
-		return entities.getEntities().size();
+		return entities.getEntities().size;
 	}
 	
 	/**
@@ -311,18 +311,21 @@ public abstract class EntityWorld implements Disposable {
 	 * @param Body The body to be removed.
 	 */
 	public void safelyRemoveBody(com.badlogic.gdx.physics.box2d.Body body){
-		if(!bodiesToRemove.contains(body))
+		if(!bodiesToRemove.contains(body, true))
 			bodiesToRemove.add(body);
 	}
 	
 	private void safelyRemoveBodies() {
-		for(int i = 0; i < bodiesToRemove.size(); i++){
+		for(int i = 0; i < bodiesToRemove.size; i++) {
 			Body body = bodiesToRemove.get(i);
+			
 		    //to prevent some obscure c assertion that happened randomly once in a blue moon
 		    final ArrayList<JointEdge> list = body.getJointList();
+		    
 		    while (list.size() > 0) {
 		        physicsWorld.destroyJoint(list.get(0).joint);
 		    }
+		    
 		    // actual remove
 		    physicsWorld.destroyBody(body);
 		}
@@ -351,8 +354,8 @@ public abstract class EntityWorld implements Disposable {
 	 * @param args Arguments for creating the entity group.
 	 * @return The group of entities.
 	 */
-	public ArrayList<Entity> createEntityGroup(String template, Object... args) {
-		ArrayList<Entity> group = groupTemplates.get(template).buildEntities(this, args);
+	public Array<Entity> createEntityGroup(String template, Object... args) {
+		Array<Entity> group = groupTemplates.get(template).buildEntities(this, args);
 		
 		for (Entity e : group) {
 			entities.add(e); //Add the group to the physicsWorld.

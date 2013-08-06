@@ -1,8 +1,6 @@
 package com.punchline.javalib.entities.templates;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.Entity;
 
 /**
@@ -14,7 +12,7 @@ public final class EntityCreationArgs {
 	
 	private String templateTag;
 	private boolean groupTemplate;
-	private List<Object> args = new ArrayList<Object>();
+	private Array<Object> args = new Array<Object>();
 	
 	/**
 	 * Constructs a set of EntityCreationArgs.

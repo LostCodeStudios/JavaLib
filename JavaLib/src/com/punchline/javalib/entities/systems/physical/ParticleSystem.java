@@ -23,17 +23,9 @@ public class ParticleSystem extends ComponentSystem {
 		super(Particle.class);
 	}
 	
-	/** {@inheritDoc}
-	 * @see com.badlogic.gdx.utils.Disposable#dispose()
-	 */
 	@Override
-	public void dispose() {
-		
-	}
+	public void dispose() { }
 
-	/** {@inheritDoc}
-	 * @see com.punchline.javalib.entities.systems.EntitySystem#process(com.punchline.javalib.entities.Entity)
-	 */
 	@Override
 	protected void process(Entity e) {
 		Particle p = (Particle)e.getComponent(Particle.class);

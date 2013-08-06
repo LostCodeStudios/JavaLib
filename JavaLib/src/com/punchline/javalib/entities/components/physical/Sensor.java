@@ -1,8 +1,6 @@
 package com.punchline.javalib.entities.components.physical;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.Entity.EntityDeletionCallback;
@@ -10,8 +8,9 @@ import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
- * Component wrapper for a Box2D sensor fixture. Must only be added to Entities
- * that already have {@link Body} components. Contains event handlers for when Entities are detected and lost.
+ * Component wrapper for a Box2D sensor fixture. Must only be added to Entities that already have {@link Body} components. 
+ * Tracks a list of Entities currently within the sensor fixture. Contains event handlers for when Entities are 
+ * detected and lost.
  * @author Natman64
  *
  */
@@ -19,7 +18,7 @@ public class Sensor implements Component {
 	
 	//region Fields
 	
-	private List<Entity> entitiesInView = new ArrayList<Entity>();
+	private Array<Entity> entitiesInView = new Array<Entity>();
 	
 	/**
 	 * The Entity that owns this component.
@@ -55,7 +54,7 @@ public class Sensor implements Component {
 	/**
 	 * @return A list of all entities inside this sensor.
 	 */
-	public List<Entity> getEntitiesInView() {
+	public Array<Entity> getEntitiesInView() {
 		return entitiesInView;
 	}
 	
@@ -87,7 +86,7 @@ public class Sensor implements Component {
 	 * @param world The world the Entity resides in.
 	 */
 	public void onEscaped(Entity e, final EntityWorld world) {
-		entitiesInView.remove(e);
+		entitiesInView.removeValue(e, true);
 		
 		e.onDeleted = null;
 	}

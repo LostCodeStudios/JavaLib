@@ -1,10 +1,9 @@
 package com.punchline.javalib.entities.systems;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
@@ -17,7 +16,7 @@ import com.punchline.javalib.entities.EntityWorld;
 public class SystemManager implements Disposable {
 
 	private EntityWorld world;
-	private List<EntitySystem> systems = new ArrayList<EntitySystem>();
+	private Array<EntitySystem> systems = new Array<EntitySystem>();
 	
 	//region Initialization/Disposal
 	
@@ -34,9 +33,9 @@ public class SystemManager implements Disposable {
 	 */
 	@Override
 	public void dispose() {
-		for (int i = systems.size() - 1; i >= 0; i--) {
+		for (int i = systems.size - 1; i >= 0; i--) {
 			systems.get(i).dispose();
-			systems.remove(i);
+			systems.removeIndex(i);
 		}
 	}
 	
@@ -89,7 +88,7 @@ public class SystemManager implements Disposable {
 	 * @param changedEntities Modified entities.
 	 * @param removedEntities Outgoing entities.
 	 */
-	public void process(List<Entity> newEntities, List<Entity> changedEntities, List<Entity> removedEntities, float deltaSeconds) {
+	public void process(Array<Entity> newEntities, Array<Entity> changedEntities, Array<Entity> removedEntities, float deltaSeconds) {
 		
 		for (EntitySystem system : systems) {
 			

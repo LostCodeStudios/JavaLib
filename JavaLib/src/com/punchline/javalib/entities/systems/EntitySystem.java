@@ -1,9 +1,7 @@
 package com.punchline.javalib.entities.systems;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
@@ -18,7 +16,7 @@ public abstract class EntitySystem implements Disposable {
 	
 	//region Fields
 	
-	private List<Entity> entities = new ArrayList<Entity>();
+	private Array<Entity> entities = new Array<Entity>();
 	
 	private long previousTime;
 	private float processTime;
@@ -169,7 +167,7 @@ public abstract class EntitySystem implements Disposable {
 	 * @return  Whether it's in this system's processing list.
 	 */
 	public boolean isProcessing(Entity e) {
-		return entities.contains(e);
+		return entities.contains(e, true);
 	}
 	
 	/**
@@ -193,7 +191,7 @@ public abstract class EntitySystem implements Disposable {
 	 * @param e The entity to remove.
 	 */
 	public void remove(Entity e) {
-		entities.remove(e);
+		entities.removeValue(e, true);
 		onRemoved(e);
 	}
 	

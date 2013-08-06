@@ -1,8 +1,6 @@
 package com.punchline.javalib.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -17,22 +15,22 @@ public class EntityManager extends Pool<Entity>{
 	/**
 	 * Contains all entities.
 	 */
-	private List<Entity> entities = new ArrayList<Entity>();
+	private Array<Entity> entities = new Array<Entity>();
 	
 	/**
 	 * Contains all entities that have been added in this iteration of the game loop.
 	 */
-	private List<Entity> newEntities = new ArrayList<Entity>();
+	private Array<Entity> newEntities = new Array<Entity>();
 	
 	/**
 	 * Contains all entities that have been changed in this iteration of the game loop.
 	 */
-	private List<Entity> changedEntities = new ArrayList<Entity>();
+	private Array<Entity> changedEntities = new Array<Entity>();
 	
 	/**
 	 * Contains all entities that have been removed in this iteration of the game loop.
 	 */
-	private List<Entity> removedEntities = new ArrayList<Entity>();
+	private Array<Entity> removedEntities = new Array<Entity>();
 	
 	int free = 0;
 	
@@ -56,14 +54,14 @@ public class EntityManager extends Pool<Entity>{
 		
 		
 		//Processes Entities that may be deleted.
-		for (int i = entities.size() - 1; i >= 0; i--) {
+		for (int i = entities.size - 1; i >= 0; i--) {
 			Entity e = entities.get(i);
 			
 			if (e.isDeleted()) {			
 				remove(e); //This will add e to the removal list
 			}
 			
-			if(e.wasChanged()){
+			if(e.wasChanged()) {
 				changedEntities.add(e);
 			}
 		}
@@ -89,7 +87,7 @@ public class EntityManager extends Pool<Entity>{
 	public void remove(Entity e) {
 		
 		//Remove from entity list
-		entities.remove(e);
+		entities.removeValue(e, true);
 		
 		//Mark for post-removal processing
 		removedEntities.add(e);
@@ -114,28 +112,28 @@ public class EntityManager extends Pool<Entity>{
 	/**
 	 * @return The manager's entity list.
 	 */
-	public List<Entity> getEntities() {
+	public Array<Entity> getEntities() {
 		return entities;
 	}
 	
 	/**
 	 * @return Entities that have been added in this iteration of the game loop.
 	 */
-	public List<Entity> getNewEntities() {
+	public Array<Entity> getNewEntities() {
 		return newEntities;
 	}
 	
 	/**
 	 * @return Entities that have been changed in this iteration of the game loop.
 	 */
-	public List<Entity> getChangedEntities() {
+	public Array<Entity> getChangedEntities() {
 		return changedEntities;
 	}
 	
 	/**
 	 * @return Entities that have been deleted in this iteration of the game loop.
 	 */
-	public List<Entity> getRemovedEntities() {
+	public Array<Entity> getRemovedEntities() {
 		return removedEntities;
 	}
 

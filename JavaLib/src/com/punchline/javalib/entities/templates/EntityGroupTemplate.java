@@ -1,7 +1,6 @@
 package com.punchline.javalib.entities.templates;
 
-import java.util.ArrayList;
-
+import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 
@@ -18,6 +17,6 @@ public interface EntityGroupTemplate {
 	 * @param args Arguments for the creation of the group.
 	 * @return The entity group.
 	 */
-	public ArrayList<Entity> buildEntities(EntityWorld world, Object... args);
+	public Array<Entity> buildEntities(EntityWorld world, Object... args);
 	
 }

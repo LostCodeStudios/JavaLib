@@ -35,12 +35,12 @@ public class DoorZoneTemplate implements EntityTemplate {
 			public void onEscaped(Entity e, EntityWorld world) {
 				super.onEscaped(e, world);
 				
-				//world.getMap().enableObject(door);
+				world.getMap().enableObject(door);
 			}
 			
 		};
 		
-		e.addComponent(new Body(world, e, bd));
+		e.addComponent(new Body(world, e, bd, fd));
 		
 		e.addComponent(zone);
 		

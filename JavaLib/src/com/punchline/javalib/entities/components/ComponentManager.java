@@ -1,9 +1,9 @@
 package com.punchline.javalib.entities.components;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import com.badlogic.gdx.utils.Array;
 
 
 /**
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public abstract class ComponentManager {
 
-	private List<Component> components = new ArrayList<Component>();
+	private Array<Component> components = new Array<Component>();
 	private Map<Class<? extends Component>, Component> componentMap = new HashMap<Class<? extends Component>, Component>();
 	
 	/**
@@ -34,7 +34,7 @@ public abstract class ComponentManager {
 	 */
 	public void removeComponent(Component component) {
 		component.onRemove(this);
-		components.remove(component);
+		components.removeValue(component, true);
 	}
 	
 	/**
