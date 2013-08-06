@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Sensor;
 
@@ -16,12 +15,15 @@ import com.punchline.javalib.entities.components.physical.Sensor;
  */
 public class ContactManager implements ContactListener {
 
+	private EntityWorld world;
+	
 	/**
 	 * Constructs the ContactManager.
 	 * @param world The Box2D world that is being managed.
 	 */
-	public ContactManager(World world) {
-		world.setContactListener(this);
+	public ContactManager(EntityWorld world) {
+		this.world = world;
+		world.getPhysicsWorld().setContactListener(this);
 	}
 	
 	/**
@@ -41,15 +43,13 @@ public class ContactManager implements ContactListener {
 			
 			Sensor sensor = (Sensor) e1.getComponent(Sensor.class);
 			
-			if (sensor.onDetection != null)
-				sensor.onDetection.invoke(e2);
+			sensor.onDetected(e2, world);
 			
 		} else if (f2.isSensor() && !f1.isSensor()) { //e2 saw e1
 			
 			Sensor sensor = (Sensor) e2.getComponent(Sensor.class);
 			
-			if (sensor.onDetection != null)
-				sensor.onDetection.invoke(e1);
+			sensor.onDetected(e1, world);
 			
 		} else { //They are both physical
 			
@@ -88,15 +88,13 @@ public class ContactManager implements ContactListener {
 			
 			Sensor sensor = (Sensor) e1.getComponent(Sensor.class);
 			
-			if (sensor.onEscape != null)
-				sensor.onEscape.invoke(e2);
+			sensor.onEscaped(e2, world);
 			
 		} else if (f2.isSensor() && !f1.isSensor()) { //e1 escaped e2
 			
 			Sensor sensor = (Sensor) e2.getComponent(Sensor.class);
 			
-			if (sensor.onEscape != null)
-				sensor.onEscape.invoke(e1);
+			sensor.onEscaped(e1, world);
 			
 		}
 	}

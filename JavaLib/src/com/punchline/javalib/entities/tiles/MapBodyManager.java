@@ -155,7 +155,12 @@ public class MapBodyManager {
 				
 				String template = (String) properties.get("Entity");
 				
-				m_world.createEntity(template, bodyDef, fixtureDef, properties);
+				Entity e = m_world.createEntity(template, bodyDef, fixtureDef, properties);
+				
+				Body body = ((com.punchline.javalib.entities.components.physical.Body) 
+						e.getComponent(com.punchline.javalib.entities.components.physical.Body.class)).getBody();
+				
+				m_bodies.add(body); //Add the body so that the Entity will be refreshed/deleted when the map is
 				
 			} else {
 				Body body = m_physicsWorld.createBody(bodyDef);

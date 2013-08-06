@@ -1,13 +1,9 @@
 package com.punchline.javalib.entities.components.generic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.Entity.EntityDeletionCallback;
 import com.punchline.javalib.entities.components.physical.Sensor;
 
 /**
@@ -21,8 +17,6 @@ public class View extends Sensor {
 	private float fov;
 	private int vertices;
 	private float offsetDegrees;
-	
-	private List<Entity> entitiesInView = new ArrayList<Entity>();
 
 	//region Initialization
 	
@@ -39,36 +33,6 @@ public class View extends Sensor {
 		this.setViewRange(viewRange);
 		this.setFOV(fov);
 		this.setVertices(vertices);
-		
-		onDetection = new SensorCallback() {
-
-			@Override
-			public void invoke(Entity e) {
-				entitiesInView.add(e);
-				
-				e.onDeleted = new EntityDeletionCallback() {
-
-					@Override
-					public void invoke(Entity owner) {
-						onEscape.invoke(owner);
-					}
-					
-				};
-				
-			}
-			
-		};
-		
-		onEscape = new SensorCallback() {
-
-			@Override
-			public void invoke(Entity e) {
-				entitiesInView.remove(e);
-				
-				e.onDeleted = null;
-			}
-			
-		};
 	}
 	
 	/**
@@ -111,13 +75,6 @@ public class View extends Sensor {
 	 */
 	public float getOffset() {
 		return offsetDegrees;
-	}
-	
-	/**
-	 * @return A list of all Entities that are currently in view.
-	 */
-	public List<Entity> getEntitiesInView() {
-		return entitiesInView;
 	}
 	
 	//endregion
@@ -168,6 +125,8 @@ public class View extends Sensor {
 	
 	@Override
 	public void refresh() {
+		super.refresh();
+		
 		Vector2[] verts = new Vector2[vertices];
 		verts[0] = new Vector2(0, 0);
 		
@@ -188,11 +147,10 @@ public class View extends Sensor {
 		fd.shape = shape;
 		fd.isSensor = true;
 		
-		if (fixture != null) body.destroyFixture(fixture); //Destroy the old fixture, if there is one
 		fixture = body.createFixture(fd); //Create the new fixture
 		fixture.setUserData(owner); //Set the new fixture's user data
 		
-		fd.shape.dispose();
+		shape.dispose();
 	}
 	
 	//endregion

@@ -1,38 +1,25 @@
 package com.punchline.javalib.entities.components.physical;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
+import com.punchline.javalib.entities.Entity.EntityDeletionCallback;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
- * Component wrapper for a Box2D body that Represents an Entity's field of view. Must only be added to Entities
- * that already have {@link Body} components. Contains a callback for 
- * when another Entity is detected.
+ * Component wrapper for a Box2D sensor fixture. Must only be added to Entities
+ * that already have {@link Body} components. Contains event handlers for when Entities are detected and lost.
  * @author Natman64
  *
  */
 public class Sensor implements Component {
-
-	//region Callback
-	
-	/**
-	 * Callback interface for sensor detection events.
-	 * @author Nathaniel
-	 *
-	 */
-	public interface SensorCallback {
-		
-		/**
-		 * Called when a sensor detects an Entity, or an Entity escapes a sensor.
-		 * @param e
-		 */
-		public void invoke(Entity e);
-		
-	}
-	
-	//endregion
 	
 	//region Fields
+	
+	private List<Entity> entitiesInView = new ArrayList<Entity>();
 	
 	/**
 	 * The Entity that owns this component.
@@ -49,16 +36,6 @@ public class Sensor implements Component {
 	 */
 	protected com.badlogic.gdx.physics.box2d.Fixture fixture;
 	
-	/**
-	 * Callback for when this sensor detects an Entity.
-	 */
-	public SensorCallback onDetection;
-	
-	/**
-	 * Called when an Entity leaves this sensor's view.
-	 */
-	public SensorCallback onEscape;
-	
 	//endregion
 	
 	//region Initialization
@@ -73,7 +50,47 @@ public class Sensor implements Component {
 	
 	//endregion
 	
+	//region Accessors
+	
+	/**
+	 * @return A list of all entities inside this sensor.
+	 */
+	public List<Entity> getEntitiesInView() {
+		return entitiesInView;
+	}
+	
+	//endregion
+	
 	//region Events
+	
+	/**
+	 * Called when an Entity enters the sensor.
+	 * @param e The Entity that entered the sensor.
+	 * @param world The world the Entity resides in.
+	 */
+	public void onDetected(Entity e, final EntityWorld world) {
+		entitiesInView.add(e);
+		
+		e.onDeleted = new EntityDeletionCallback() {
+
+			@Override
+			public void invoke(Entity owner) {
+				onEscaped(owner, world);
+			}
+			
+		};
+	}
+	
+	/**
+	 * Called when an Entity escapes the sensor.
+	 * @param e The Entity that escaped.
+	 * @param world The world the Entity resides in.
+	 */
+	public void onEscaped(Entity e, final EntityWorld world) {
+		entitiesInView.remove(e);
+		
+		e.onDeleted = null;
+	}
 	
 	@Override
 	public void onAdd(ComponentManager container) {
@@ -89,9 +106,11 @@ public class Sensor implements Component {
 	//region Helpers
 	
 	/**
-	 * Forces this Sensor to re-calculate its view bounds.
+	 * Forces this Sensor to re-calculate its fixture.
 	 */
-	public void refresh() { }
+	public void refresh() { 
+		if (fixture != null) body.destroyFixture(fixture); //Destroy the old fixture, if there is one
+	}
 	
 	//endregion
 	

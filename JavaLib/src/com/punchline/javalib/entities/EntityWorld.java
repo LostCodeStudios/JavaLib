@@ -121,7 +121,7 @@ public abstract class EntityWorld implements Disposable {
 		
 		physicsWorld = new World(gravity, doSleeping);
 		bodiesToRemove = new ArrayList<com.badlogic.gdx.physics.box2d.Body>();
-		contactManager = new ContactManager(physicsWorld);
+		contactManager = new ContactManager(this);
 		
 		buildTemplates();
 		buildSystems();
