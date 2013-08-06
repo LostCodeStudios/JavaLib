@@ -150,22 +150,23 @@ public class MapBodyManager {
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyDef.BodyType.StaticBody;
 			
-			Body body = m_physicsWorld.createBody(bodyDef);
-			body.createFixture(fixtureDef);
-			
-			m_bodies.add(body);
-			
-			fixtureDef.shape = null;
-			shape.dispose();
-			
 			//Added
 			if (properties.containsKey("Entity")) {
 				
 				String template = (String) properties.get("Entity");
 				
-				m_world.createEntity(template, body, properties);
+				m_world.createEntity(template, bodyDef, fixtureDef, properties);
 				
+			} else {
+				Body body = m_physicsWorld.createBody(bodyDef);
+				body.createFixture(fixtureDef);
+				
+				m_bodies.add(body);
+				
+				fixtureDef.shape = null;
+				shape.dispose();
 			}
+
 		}
 	} 
 	

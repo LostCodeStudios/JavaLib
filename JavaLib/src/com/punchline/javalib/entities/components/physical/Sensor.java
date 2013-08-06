@@ -1,8 +1,5 @@
 package com.punchline.javalib.entities.components.physical;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
@@ -37,15 +34,20 @@ public class Sensor implements Component {
 	
 	//region Fields
 	
-	private Entity owner;
+	/**
+	 * The Entity that owns this component.
+	 */
+	protected Entity owner;
 	
-	private com.badlogic.gdx.physics.box2d.Body body;
-	private com.badlogic.gdx.physics.box2d.Fixture fixture;
+	/**
+	 * The body this Sensor is attached to.
+	 */
+	protected com.badlogic.gdx.physics.box2d.Body body;
 	
-	private float viewRange;
-	private float fov;
-	private int vertices;
-	private float offsetDegrees;
+	/**
+	 * The fixture representing this sensor.
+	 */
+	protected com.badlogic.gdx.physics.box2d.Fixture fixture;
 	
 	/**
 	 * Callback for when this sensor detects an Entity.
@@ -64,28 +66,9 @@ public class Sensor implements Component {
 	/**
 	 * Constructs a Sensor component.
 	 * @param owner The Entity that contains this sensor. Must already have a {@link Body} component.
-	 * @param viewRange The range that this Sensor can see.
-	 * @param fov The field of view for this sensor, from 0 (seeing nothing) to 1 (seeing 360 degrees).
-	 * @param vertices The number of vertices needed in this sensor. There must be at least 3, and any more
-	 * may cause excess lag.
 	 */
-	public Sensor(Entity owner, float viewRange, float fov, int vertices) {
-		//Clamp values to accepted ranges.
-		
+	public Sensor(Entity owner) {
 		this.owner = owner;
-		this.viewRange = viewRange;
-		this.setFOV(fov);
-		this.setVertices(vertices);
-	}
-	
-	/**
-	 * Constructs a Sensor component.
-	 * @param owner The Entity that contains this sensor. Must already have a {@link Body} component.
-	 * @param viewRange The range that this Sensor can see.
-	 * @param fov The field of view for this sensor, from 0 (seeing nothing) to 1 (seeing 360 degrees).
-	 */
-	public Sensor(Entity owner, float viewRange, float fov) {
-		this(owner, viewRange, fov, 8);
 	}
 	
 	//endregion
@@ -103,109 +86,12 @@ public class Sensor implements Component {
 
 	//endregion
 	
-	//region Accessors
-	
-	/**
-	 * @return The range of this Sensor's view, in meters.
-	 */
-	public float getViewRange() {
-		return viewRange;
-	}
-	
-	/**
-	 * @return This Sensor's field of view, from 0 to 1.
-	 */
-	public float getFOV() {
-		return fov;
-	}
-	
-	/**
-	 * @return The number of vertices in the fixture representing this sensor.
-	 */
-	public int getVertices() {
-		return vertices;
-	}
-	
-	/**
-	 * @return This sensor's offset from the angle of its body, in degrees.
-	 */
-	public float getOffset() {
-		return offsetDegrees;
-	}
-	
-	//endregion
-	
-	//region Mutators
-	
-	/**
-	 * Sets the range of this sensor's view, in meters. Takes effect only after {@link #refresh()} is called.
-	 * @param viewRange The new view range.
-	 */
-	public void setViewRange(float viewRange) {
-		this.viewRange = viewRange;
-	}
-	
-	/**
-	 * Sets this sensor's field of view, from 0 to 1. Takes effect only after {@link #refresh()} is called.
-	 * @param fov The new field of view.
-	 */
-	public void setFOV(float fov) {
-		if (fov < 0) fov = 0;
-		if (fov > 1) fov = 1;
-		this.fov = fov;
-	}
-	
-	/**
-	 * Sets the number of vertices in the fixture representing this sensor. 
-	 * Takes effect only after {@link #refresh()} is called.
-	 * @param vertices The new amount of vertices.
-	 */
-	public void setVertices(int vertices) {
-		if (vertices < 3) vertices = 3;
-		if (vertices > 8) vertices = 8;
-		this.vertices = vertices;
-	}
-	
-	/**
-	 * Sets this sensor's offset from the angle of its body, in degrees. Takes effect only after {@link #refresh()} is called.
-	 * @param degrees The offset, in degrees.
-	 */
-	public void setOffset(float degrees) {
-		offsetDegrees = degrees;
-	}
-	
-	//endregion
-	
 	//region Helpers
 	
 	/**
 	 * Forces this Sensor to re-calculate its view bounds.
 	 */
-	public void refresh() {
-		Vector2[] verts = new Vector2[vertices];
-		verts[0] = new Vector2(0, 0);
-		
-		float degrees = 360 * fov;
-		
-		float start = (float)Math.toRadians(offsetDegrees + degrees / 2);
-		
-		for (int i = 1; i < vertices; i++) {
-			float angle = start - ((float)i / (vertices - 1)) * (float)Math.toRadians(degrees);
-			
-			verts[i] = new Vector2(viewRange * (float)Math.cos(angle), viewRange * (float)Math.sin(angle));
-		}
-		
-		PolygonShape shape = new PolygonShape();
-		shape.set(verts);
-		
-		FixtureDef fd = new FixtureDef();
-		fd.shape = shape;
-		fd.isSensor = true;
-		
-		if (fixture != null) body.destroyFixture(fixture); //Destroy the old fixture, if there is one
-		fixture = body.createFixture(fd); //Create the new fixture
-		fixture.setUserData(owner); //Set the new fixture's user data
-	}
+	public void refresh() { }
 	
 	//endregion
 	

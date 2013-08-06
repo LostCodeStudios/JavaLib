@@ -27,8 +27,9 @@ import com.punchline.javalib.utils.Display;
  * Map objects that contain the property "Entity" with a template tag will be used to create an Entity. The args provided
  * to the template will be as follows:
  * 
- * args[0] = The body associated with the entity
- * args[1] = The properties of the MapObject.
+ * args[0] = The BodyDef that can be used to make the Entity's body.
+ * args[1] = The FixtureDef that can be used to make the Entity's body.
+ * args[2] = The properties of the MapObject.
  * 
  * @author Natman64
  * @created Aug 1, 2013
