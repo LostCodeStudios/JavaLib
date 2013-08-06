@@ -1,4 +1,4 @@
-package com.punchline.javalib.entities.components.tile;
+package com.punchline.javalib.entities.tiles;
 
 import java.util.Iterator;
 
@@ -30,6 +30,8 @@ import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.EntityWorld;
 
 /**
  * @author David Saltares Mรกrquez david.saltares at gmail.com
@@ -52,22 +54,24 @@ import com.badlogic.gdx.utils.XmlReader.Element;
  */
 public class MapBodyManager {
 	private Logger m_logger;
-	private World m_world;
+	private EntityWorld m_world; //added
+	private World m_physicsWorld;
 	private float m_units;
 	private Array<Body> m_bodies = new Array<Body>();
 	private ObjectMap<String, FixtureDef> m_materials = new ObjectMap<String, FixtureDef>();
 	
 	/**
-	 * @param world box2D world to work with.
+	 * @param world the EntityWorld to work with
 	 * @param unitsPerPixel conversion ratio from pixel units to box2D metres.
 	 * @param materialsFile xml file with specific physics properties to be assigned to newly created bodies.
 	 * @param loggingLevel verbosity of the embedded logger.
 	 */
-	public MapBodyManager(World world, float unitsPerPixel, String materialsFile, int loggingLevel) {
+	public MapBodyManager(EntityWorld world, float unitsPerPixel, String materialsFile, int loggingLevel) {
 		m_logger = new Logger("MapBodyManager", loggingLevel);
 		m_logger.info("initialising");
 		
 		m_world = world;
+		m_physicsWorld = world.getPhysicsWorld();
 		m_units = unitsPerPixel;
 		
 		FixtureDef defaultFixture = new FixtureDef();
@@ -146,22 +150,36 @@ public class MapBodyManager {
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyDef.BodyType.StaticBody;
 			
-			Body body = m_world.createBody(bodyDef);
+			Body body = m_physicsWorld.createBody(bodyDef);
 			body.createFixture(fixtureDef);
 			
 			m_bodies.add(body);
 			
 			fixtureDef.shape = null;
 			shape.dispose();
+			
+			//Added
+			if (properties.containsKey("Entity")) {
+				
+				String template = (String) properties.get("Entity");
+				
+				m_world.createEntity(template, body, properties);
+				
+			}
 		}
-	}
+	} 
 	
 	/**
 	 * Destroys every static body that has been created using the manager.
 	 */
 	public void destroyPhysics() {
 		for (Body body : m_bodies) {
-			m_world.destroyBody(body);
+			if (body.getUserData() != null) { //Added
+				Entity e = (Entity) body.getUserData();
+				e.delete();
+			} else { //Added
+				m_physicsWorld.destroyBody(body);
+			}
 		}
 		
 		m_bodies.clear();

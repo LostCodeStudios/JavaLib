@@ -1,4 +1,4 @@
-package com.punchline.javalib.entities.components.tile;
+package com.punchline.javalib.entities.tiles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +23,13 @@ import com.punchline.javalib.utils.Display;
 /**
  * Component wrapper for a map made in Tiled. When added to an Entity, this will automatically add bodies to the
  * Box2D physics world, as defined by the Tiled map's "physics" object layer and the given materials XML file.
+ * 
+ * Map objects that contain the property "Entity" with a template tag will be used to create an Entity. The args provided
+ * to the template will be as follows:
+ * 
+ * args[0] = The body associated with the entity
+ * args[1] = The properties of the MapObject.
+ * 
  * @author Natman64
  * @created Aug 1, 2013
  */
@@ -38,6 +45,7 @@ public class TileMap implements Component, Renderable, Transform {
 	private MapBodyManager bodyManager;
 	private OrthogonalTiledMapRenderer renderer;
 	
+	private boolean changed;
 	private Map<String, MapObject> disabledObjects = new HashMap<String, MapObject>();
 	
 	/**
@@ -49,13 +57,19 @@ public class TileMap implements Component, Renderable, Transform {
 	public TileMap(EntityWorld world, String mapFilename, String materialsFilename) {
 		map = loader.load(mapFilename);
 		
-		bodyManager = new MapBodyManager(world.getPhysicsWorld(), 
-				Convert.getMeterPixelRatio(), materialsFilename, 0);
+		bodyManager = new MapBodyManager(world, Convert.getMeterPixelRatio(), materialsFilename, 0);
 	}
 	
 	//endregion
 	
 	//region TiledMap Accessors/Mutators
+	
+	/**
+	 * @return Whether the objects in this TileMap have been changed since the last {@link #refresh()} call.
+	 */
+	public boolean isChanged() {
+		return changed;
+	}
 	
 	/**
 	 * @return The TiledMap.
@@ -81,7 +95,7 @@ public class TileMap implements Component, Renderable, Transform {
 			layer.getObjects().remove(object); //remove from the layer
 		}
 		
-		refresh(); //commit the changes to the map
+		changed = true; //commit the changes to the map
 	}
 	
 	/**
@@ -98,7 +112,7 @@ public class TileMap implements Component, Renderable, Transform {
 			layer.getObjects().remove(object); //remove from the layer
 		}
 		
-		refresh(); //commit the changes to the map
+		changed = true; //commit the changes to the map
 	}
 	
 	/**
@@ -113,7 +127,7 @@ public class TileMap implements Component, Renderable, Transform {
 			disabledObjects.remove(name); //remove it from the disabled map
 		}
 		
-		refresh(); //commit the changes to the map
+		changed = true; //commit the changes to the map
 	}
 	
 	/**
@@ -221,11 +235,14 @@ public class TileMap implements Component, Renderable, Transform {
 	}
 
 	/**
-	 * Re-creates the Box2D bodies representing the map's object layer.
+	 * Re-creates the Box2D bodies representing the map's object layer. 
+	 * Called by the EntityWorld containing this TileMap.
 	 */
 	public void refresh() {
 		bodyManager.destroyPhysics();
 		bodyManager.createPhysics(map);
+		
+		changed = false;
 	}
 	
 	//endregion

@@ -29,6 +29,7 @@ public class Body implements Transform, Velocity {
 	public Body(EntityWorld world, Entity e, BodyDef bodyDef, FixtureDef fixtureDef) {
 		this(world, e, bodyDef);
 		body.createFixture(fixtureDef);
+		fixtureDef.shape.dispose();
 	}
 	
 	/**

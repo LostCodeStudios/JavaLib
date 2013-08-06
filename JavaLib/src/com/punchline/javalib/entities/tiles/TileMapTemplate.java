@@ -1,8 +1,7 @@
-package com.punchline.javalib.entities.templates.tile;
+package com.punchline.javalib.entities.tiles;
 
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
-import com.punchline.javalib.entities.components.tile.TileMap;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 
 /**

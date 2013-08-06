@@ -8,6 +8,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -23,7 +24,8 @@ import com.punchline.javalib.entities.systems.render.RenderSystem;
 import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
-import com.punchline.javalib.entities.templates.tile.TileMapTemplate;
+import com.punchline.javalib.entities.tiles.TileMap;
+import com.punchline.javalib.entities.tiles.TileMapTemplate;
 
 /**
  * The EntityWorld is where actual gameplay happens. The world manages game
@@ -52,6 +54,7 @@ public abstract class EntityWorld implements Disposable {
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
 	private List<EntityCreationArgs> entitiesToCreate = new ArrayList<EntityCreationArgs>();
+	private List<Body> bodiesToRemove;
 	
 	/**
 	 * The InputMultiplexer managing this world's game.
@@ -69,7 +72,7 @@ public abstract class EntityWorld implements Disposable {
 	protected SystemManager systems;
 	
 	/**
-	 * This physicsWorld's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 * This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
 	 */
 	protected Camera camera;
 	
@@ -79,19 +82,20 @@ public abstract class EntityWorld implements Disposable {
 	protected World physicsWorld;
 
 	/**
+	 * The world's {@link ContactManager}.
+	 */
+	protected ContactManager contactManager;
+	
+	/**
 	 * This world's {@link DebugRenderSystem}
 	 */
 	protected DebugRenderSystem debugView;
 	
 	/**
-	 * The physicsWorld's {@link ContactManager}.
+	 * A reference to this world's TileMap entity, for safe refreshing. When adding a TileMap to a world,
+	 * this reference must be set to the new TileMap entity.
 	 */
-	protected ContactManager contactManager;
-	
-	/**
-	 * List of bodies to be removed safely.
-	 */
-	private List<com.badlogic.gdx.physics.box2d.Body> bodiesToRemove;
+	protected Entity map;
 	
 	//endregion
 
@@ -210,6 +214,13 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
+	 * @return This world's TileMap.
+	 */
+	public TileMap getMap() {
+		return map.getComponent(TileMap.class);
+	}
+	
+	/**
 	 * @return This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
 	 */
 	public Camera getCamera() {
@@ -279,6 +290,13 @@ public abstract class EntityWorld implements Disposable {
 		
 		//CREATE NEW ENTITIES SAFELY
 		safelyCreateEntities();
+		
+		//REFRESH THE TILEMAP SAFELY
+		if (map != null) {
+			TileMap tileMap = ((TileMap) map.getComponent(TileMap.class));
+			if (tileMap.isChanged())
+				tileMap.refresh();
+		}
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	}

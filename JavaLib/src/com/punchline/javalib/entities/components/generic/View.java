@@ -39,6 +39,7 @@ public class View extends Sensor {
 					}
 					
 				};
+				
 			}
 			
 		};
