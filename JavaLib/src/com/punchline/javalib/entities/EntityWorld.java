@@ -23,6 +23,7 @@ import com.punchline.javalib.entities.systems.render.RenderSystem;
 import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
+import com.punchline.javalib.entities.templates.generic.DoorZoneTemplate;
 import com.punchline.javalib.entities.tiles.TileMap;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
 
@@ -156,6 +157,7 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected void buildTemplates() { 
 		addTemplate("TileMap", new TileMapTemplate());
+		addTemplate("DoorZone", new DoorZoneTemplate());
 	}
 	
 	/**
