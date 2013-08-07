@@ -1,6 +1,7 @@
 package com.punchline.javalib.entities.templates.generic;
 
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.punchline.javalib.entities.Entity;
@@ -20,22 +21,51 @@ public class DoorZoneTemplate implements EntityTemplate {
 		
 		e.init("", "Zones", "DoorZone");
 		
-		final String door = (String) properties.get("Door");
+		fd.isSensor = true;
+		
+		final String door = (String) properties.get("Object");
+		final String tiles = (String) properties.get("Tiles");
+		
+		final String[] coords = tiles.split(", ");
 		
 		TriggerZone zone = new TriggerZone(e, fd) {
 
+			Cell tile;
+			
 			@Override
 			public void onDetected(Entity e, EntityWorld world) {
 				super.onDetected(e, world);
 				
-				world.getMap().disableObject(door);
+				
+				if (e.getType().equals("Player")) {
+					world.getMap().disableObject(door);
+					
+					for (int i = 0; i < coords.length; i++) {
+						int x = Integer.parseInt(coords[i++]);
+						int y = Integer.parseInt(coords[i]);
+						
+						tile = world.getMap().getTile("Objects", x, y);
+						world.getMap().setTile("Objects", x, y, null);
+					}
+					
+				}
 			}
 
 			@Override
 			public void onEscaped(Entity e, EntityWorld world) {
 				super.onEscaped(e, world);
 				
-				world.getMap().enableObject(door);
+				if (e.getType().equals("Player")) {
+					world.getMap().enableObject(door);
+					
+					for (int i = 0; i < coords.length; i++) {
+						int x = Integer.parseInt(coords[i++]);
+						int y = Integer.parseInt(coords[i]);
+						
+						world.getMap().setTile("Objects", x, y, tile);
+					}
+					
+				}
 			}
 			
 		};
