@@ -16,6 +16,8 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public class AnimatedSprite implements Renderable {
 
+	//region Fields
+	
 	private Map<String, Animation> animations;
 	private String state;
 	
@@ -26,6 +28,10 @@ public class AnimatedSprite implements Renderable {
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
+	
+	//endregion
+	
+	//region Initialization
 	
 	/**
 	 * Constructs an AnimatedSprite.
@@ -49,19 +55,42 @@ public class AnimatedSprite implements Renderable {
 		
 	}
 	
+	//endregion
+
+	//region Events
+	
+	@Override
+	public void onAdd(ComponentManager container) { }
+
+	@Override
+	public void onRemove(ComponentManager container) { }
+	
+	//endregion
+	
+	//region Accessors
+	
+	@Override
+	public float getWidth() {
+		TextureRegion region = getCurrentFrame(0f);
+		return region.getRegionWidth();
+	}
+
+	@Override
+	public float getHeight() {
+		TextureRegion region = getCurrentFrame(0f);
+		return region.getRegionHeight();
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return position.cpy();
+	}
+	
 	/**
-	 * Sets the current state key to the given key, as long as there is a corresponding animation.
-	 * @param state The key to set.
-	 * @param keepStateTime Whether the state time should be reset to 0.
+	 * @return The current animation state key.
 	 */
-	public void setState(String state, boolean keepStateTime) throws IllegalArgumentException {
-		if (animations.containsKey(state)) {
-			this.state = state;
-			
-			if (!keepStateTime) stateTime = 0f;
-		} else {
-			throw new IllegalArgumentException("The animations map does not contain the specified key.");
-		}
+	public String getState() {
+		return state;
 	}
 	
 	/**
@@ -74,6 +103,10 @@ public class AnimatedSprite implements Renderable {
 		currentAnimation.setStateTime(stateTime += deltaSeconds);
 		return currentAnimation.getCurrentFrame(0f); //Delta is already accounted for.
 	}
+	
+	//endregion
+	
+	//region Mutators
 
 	@Override
 	public void setPosition(Vector2 position) {
@@ -96,34 +129,33 @@ public class AnimatedSprite implements Renderable {
 	public void setOrigin(Vector2 origin) {
 		this.origin = origin;
 	}
+	
+	/**
+	 * Sets the current state key to the given key, as long as there is a corresponding animation.
+	 * @param state The key to set.
+	 * @param keepStateTime Whether the state time should be reset to 0.
+	 */
+	public void setState(String state, boolean keepStateTime) throws IllegalArgumentException {
+		if (animations.containsKey(state)) {
+			this.state = state;
+			
+			if (!keepStateTime) stateTime = 0f;
+		} else {
+			throw new IllegalArgumentException("The animations map does not contain the specified key.");
+		}
+	}
 
+	//endregion
+
+	//region Rendering
+	
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
 				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, rotation);
 	}
-
-	@Override
-	public void onAdd(ComponentManager container) {
-		
-	}
-
-	@Override
-	public void onRemove(ComponentManager container) {
-
-	}
-
-	@Override
-	public float getWidth() {
-		TextureRegion region = getCurrentFrame(0f);
-		return region.getRegionWidth();
-	}
-
-	@Override
-	public float getHeight() {
-		TextureRegion region = getCurrentFrame(0f);
-		return region.getRegionHeight();
-	}
+	
+	//endregion
 	
 }

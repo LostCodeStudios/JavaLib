@@ -12,6 +12,8 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public class ParticleEffect implements Renderable {
 
+	//region Fields/Initialization
+	
 	private com.badlogic.gdx.graphics.g2d.ParticleEffect particleEffect;
 	
 	/**
@@ -29,20 +31,20 @@ public class ParticleEffect implements Renderable {
 		particleEffect.start();
 	}
 	
-	@Override
-	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
-		particleEffect.draw(spriteBatch, deltaSeconds);
-	}
+	//endregion
 	
-	//region Getters/Setters
-
+	//region Events
+	
 	@Override
 	public void onAdd(ComponentManager container) { }
 
 	@Override
 	public void onRemove(ComponentManager container) { }
 	
+	//endregion
 
+	//region Accessors
+	
 	@Override
 	public float getWidth() {
 		return 0;
@@ -52,7 +54,16 @@ public class ParticleEffect implements Renderable {
 	public float getHeight() {
 		return 0;
 	}
+	
+	@Override
+	public Vector2 getPosition() {
+		return new Vector2();
+	}
+	
+	//endregion
 
+	//region Mutators
+	
 	@Override
 	public void setPosition(Vector2 position) {
 		particleEffect.setPosition(position.x, position.y);
@@ -68,4 +79,14 @@ public class ParticleEffect implements Renderable {
 	public void setOrigin(Vector2 origin) { }
 
 	//endregion
+	
+	//region Rendering
+	
+	@Override
+	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
+		particleEffect.draw(spriteBatch, deltaSeconds);
+	}
+	
+	//endregion
+	
 }

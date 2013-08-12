@@ -11,6 +11,8 @@ import com.punchline.javalib.entities.components.Component;
  */
 public interface Renderable extends Component {
 	
+	//region Accessors
+	
 	/**
 	 * @return The width of this Renderable component.
 	 */
@@ -20,6 +22,15 @@ public interface Renderable extends Component {
 	 * @return The height of this Renderable component.
 	 */
 	public float getHeight();
+	
+	/**
+	 * @return A copy of this Renderable component's position.
+	 */
+	public Vector2 getPosition();
+	
+	//endregion
+	
+	//region Mutators
 	
 	/**
 	 * Sets the position where this component should be rendered.
@@ -46,11 +57,17 @@ public interface Renderable extends Component {
 	 */
 	public void setOrigin(Vector2 origin);
 	
+	//endregion
+	
+	//region Rendering
+	
 	/**
 	 * Draws this component.
 	 * @param spriteBatch The SpriteBatch which will be used.
 	 * @param deltaSeconds The amount of seconds since the last time this component was drawn.
 	 */
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds);
+	
+	//endregion
 	
 }

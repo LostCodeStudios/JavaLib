@@ -14,6 +14,8 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public class Sprite implements Renderable {
 
+	//region Fields/Initialization
+	
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	
 	/**
@@ -58,9 +60,41 @@ public class Sprite implements Renderable {
 	
 	/**
 	 * Default constructor for blank/null sprite.
-	 * @throws Exception 
 	 */
 	public Sprite() { }
+	
+	//endregion
+
+	//region Events
+	
+	@Override
+	public void onAdd(ComponentManager container){ }
+
+	@Override
+	public void onRemove(ComponentManager container) { }
+	
+	//endregion
+	
+	//region Accessors
+	
+	@Override
+	public float getWidth() {
+		return sprite.getWidth();
+	}
+
+	@Override
+	public float getHeight() {
+		return sprite.getHeight();
+	}
+	
+	@Override
+	public Vector2 getPosition() {
+		return new Vector2(sprite.getX(), sprite.getY());
+	}
+	
+	//endregion
+	
+	//region Mutators
 	
 	/**
 	 * Sets the Sprite's center position.
@@ -88,32 +122,15 @@ public class Sprite implements Renderable {
 		sprite.setOrigin(origin.x, origin.y);
 	}
 	
-	/**
-	 * Draws the Sprite.
-	 * @param spriteBatch The SpriteBatch for drawing.
-	 */
+	//endregion
+	
+	//region Rendering
+	
+	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		sprite.draw(spriteBatch);
 	}
-
-	@Override
-	public void onAdd(ComponentManager container){
 	
-	}
-
-	@Override
-	public void onRemove(ComponentManager container) {
-		
-	}
-
-	@Override
-	public float getWidth() {
-		return sprite.getWidth();
-	}
-
-	@Override
-	public float getHeight() {
-		return sprite.getHeight();
-	}
+	//endregion
 	
 }

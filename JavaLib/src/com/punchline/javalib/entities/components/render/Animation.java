@@ -14,6 +14,8 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public class Animation implements Renderable {
 
+	//region Fields
+	
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
 	private float stateTime = 0f;
 	private boolean looping = true;
@@ -23,6 +25,10 @@ public class Animation implements Renderable {
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
+	
+	//endregion
+	
+	//region Initialization
 	
 	/**
 	 * Constructs an Animation.
@@ -104,20 +110,35 @@ public class Animation implements Renderable {
 		this(new Texture(textureHandle), frameCols, frameRows, frameDuration);
 	}
 	
-	/**
-	 * Sets how long this Animation has been running.
-	 * @param stateTime How long this Animation has been running.
-	 */
-	public void setStateTime(float stateTime) {
-		this.stateTime = stateTime;
-	}
+	//endregion
 	
-	/**
-	 * Sets whether or not this Animation is looping.
-	 * @param looping Whether this Animation is looping.
-	 */
-	public void setLooping(boolean looping) {
-		this.looping = looping;
+	//region Events
+	
+	@Override
+	public void onAdd(ComponentManager container) { }
+
+	@Override
+	public void onRemove(ComponentManager container) { }
+	
+	//endregion
+	
+	//region Accessors
+	
+	@Override
+	public float getWidth() {
+		TextureRegion region = getCurrentFrame(0f);
+		return region.getRegionWidth();
+	}
+
+	@Override
+	public float getHeight() {
+		TextureRegion region = getCurrentFrame(0f);
+		return region.getRegionHeight();
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return position.cpy();
 	}
 	
 	/**
@@ -127,6 +148,10 @@ public class Animation implements Renderable {
 	public TextureRegion getCurrentFrame(float deltaSeconds) {
 		return animation.getKeyFrame(stateTime += deltaSeconds, looping);
 	}
+	
+	//endregion
+
+	//region Mutators
 
 	@Override
 	public void setPosition(Vector2 position) {
@@ -150,33 +175,33 @@ public class Animation implements Renderable {
 		this.origin = origin;
 	}
 	
+	/**
+	 * Sets how long this Animation has been running.
+	 * @param stateTime How long this Animation has been running.
+	 */
+	public void setStateTime(float stateTime) {
+		this.stateTime = stateTime;
+	}
+	
+	/**
+	 * Sets whether or not this Animation is looping.
+	 * @param looping Whether this Animation is looping.
+	 */
+	public void setLooping(boolean looping) {
+		this.looping = looping;
+	}
+	
+	//endregion
+	
+	//region Rendering
+	
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
 				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, rotation);
 	}
-
-	@Override
-	public void onAdd(ComponentManager container) {
-
-	}
-
-	@Override
-	public void onRemove(ComponentManager container) {
-
-	}
-
-	@Override
-	public float getWidth() {
-		TextureRegion region = getCurrentFrame(0f);
-		return region.getRegionWidth();
-	}
-
-	@Override
-	public float getHeight() {
-		TextureRegion region = getCurrentFrame(0f);
-		return region.getRegionHeight();
-	}
+	
+	//endregion
 	
 }
