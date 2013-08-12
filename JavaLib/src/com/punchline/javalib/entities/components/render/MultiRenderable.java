@@ -73,6 +73,21 @@ public class MultiRenderable implements Renderable {
 		return base.getPosition();
 	}
 	
+	/**
+	 * @return The base Renderable of this component.
+	 */
+	public Renderable getBase() {
+		return base;
+	}
+	
+	/**
+	 * @param index The index of the desired child.
+	 * @return The desired child.
+	 */
+	public Renderable getChild(int index) {
+		return children.get(index);
+	}
+	
 	//endregion
 	
 	//region Mutators
