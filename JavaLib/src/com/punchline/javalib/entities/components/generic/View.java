@@ -130,14 +130,14 @@ public class View extends Sensor {
 		Vector2[] verts = new Vector2[vertices];
 		verts[0] = new Vector2(0, 0);
 		
-		float degrees = 360 * fov;
+		float degrees = 360f * fov;
 		
 		float start = (float)Math.toRadians(offsetDegrees + degrees / 2);
 		
 		for (int i = 1; i < vertices; i++) {
-			float angle = start - ((float)i / (vertices - 1)) * (float)Math.toRadians(degrees);
+			float angle = start - ((float) i / (vertices - 1)) * (float)Math.toRadians(degrees);
 			
-			verts[i] = new Vector2(viewRange * (float)Math.cos(angle), viewRange * (float)Math.sin(angle));
+			verts[i] = new Vector2(viewRange * (float) Math.cos(angle), viewRange * (float) Math.sin(angle));
 		}
 		
 		PolygonShape shape = new PolygonShape();
