@@ -54,6 +54,9 @@ public class ParticleSystem extends ComponentSystem {
 					Collidable col = (Collidable)e.getComponent(Collidable.class);
 					
 					//Get the victim
+					
+					if (fixture.isSensor()) return 0;
+					
 					Entity victim = (Entity)fixture.getBody().getUserData();
 					
 					//Call the on collide event for the entity and terminate if appropriate.

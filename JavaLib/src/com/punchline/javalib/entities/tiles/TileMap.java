@@ -1,11 +1,6 @@
 package com.punchline.javalib.entities.tiles;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -46,9 +41,6 @@ public class TileMap implements Component, Renderable, Transform {
 	private MapBodyManager bodyManager;
 	private OrthogonalTiledMapRenderer renderer;
 	
-	private boolean changed;
-	private Map<String, MapObject> disabledObjects = new HashMap<String, MapObject>();
-	
 	/**
 	 * Constructs a TileMap component.
 	 * @param world The EntityWorld containing this map.
@@ -66,69 +58,10 @@ public class TileMap implements Component, Renderable, Transform {
 	//region TiledMap Accessors/Mutators
 	
 	/**
-	 * @return Whether the objects in this TileMap have been changed since the last {@link #refresh()} call.
-	 */
-	public boolean isChanged() {
-		return changed;
-	}
-	
-	/**
 	 * @return The TiledMap.
 	 */
 	public TiledMap getMap() {
 		return map;
-	}
-	
-	/**
-	 * Toggles one of the map's objects.
-	 * @param name The name of the object.
-	 */
-	public void toggleObject(String name) {
-		MapLayer layer = map.getLayers().get("physics"); //get the physics layer.
-		
-		if (disabledObjects.containsKey(name)) { //if disabled
-			layer.getObjects().add(disabledObjects.get(name)); //return it to the layer
-			disabledObjects.remove(name); //remove it from the disabled map
-		} else { //if enabled
-			MapObject object = layer.getObjects().get(name); //get the desired object
-			if (object == null) return; //null check
-			disabledObjects.put(name, object); //add to disabled list
-			layer.getObjects().remove(object); //remove from the layer
-		}
-		
-		changed = true; //commit the changes to the map
-	}
-	
-	/**
-	 * Disables one of the map's objects.
-	 * @param name The name of the object.
-	 */
-	public void disableObject(String name) {
-		MapLayer layer = map.getLayers().get("physics"); //get the physics layer.
-		
-		if (!disabledObjects.containsKey(name)) { //if enabled
-			MapObject object = layer.getObjects().get(name); //get the desired object
-			if (object == null) return; //null check
-			disabledObjects.put(name, object); //add to disabled list
-			layer.getObjects().remove(object); //remove from the layer
-		}
-		
-		changed = true; //commit the changes to the map
-	}
-	
-	/**
-	 * Enables one of the map's objects.
-	 * @param name The name of the object.
-	 */
-	public void enableObject(String name) {
-		MapLayer layer = map.getLayers().get("physics"); //get the physics layer.
-		
-		if (disabledObjects.containsKey(name)) { //if disabled
-			layer.getObjects().add(disabledObjects.get(name)); //return it to the layer
-			disabledObjects.remove(name); //remove it from the disabled map
-		}
-		
-		changed = true; //commit the changes to the map
 	}
 	
 	/**
@@ -233,17 +166,6 @@ public class TileMap implements Component, Renderable, Transform {
 		bodyManager.destroyPhysics();
 		map.dispose();
 		renderer.dispose();
-	}
-
-	/**
-	 * Re-creates the Box2D bodies representing the map's object layer. 
-	 * Called by the EntityWorld containing this TileMap.
-	 */
-	public void refresh() {
-		bodyManager.destroyPhysics();
-		bodyManager.createPhysics(map);
-		
-		changed = false;
 	}
 	
 	//endregion

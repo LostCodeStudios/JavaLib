@@ -23,8 +23,6 @@ import com.punchline.javalib.entities.systems.render.RenderSystem;
 import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
-import com.punchline.javalib.entities.templates.generic.DoorZoneTemplate;
-import com.punchline.javalib.entities.tiles.TileMap;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
 
 /**
@@ -91,12 +89,6 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected DebugRenderSystem debugView;
 	
-	/**
-	 * A reference to this world's TileMap entity, for safe refreshing. When adding a TileMap to a world,
-	 * this reference must be set to the new TileMap entity.
-	 */
-	protected Entity map;
-	
 	//endregion
 
 	//region Initialization
@@ -157,7 +149,6 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected void buildTemplates() { 
 		addTemplate("TileMap", new TileMapTemplate());
-		addTemplate("DoorZone", new DoorZoneTemplate());
 	}
 	
 	/**
@@ -212,13 +203,6 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	public World getPhysicsWorld() {
 		return physicsWorld;
-	}
-	
-	/**
-	 * @return This world's TileMap.
-	 */
-	public TileMap getMap() {
-		return map.getComponent(TileMap.class);
 	}
 	
 	/**
@@ -291,13 +275,6 @@ public abstract class EntityWorld implements Disposable {
 		
 		//CREATE NEW ENTITIES SAFELY
 		safelyCreateEntities();
-		
-		//REFRESH THE TILEMAP SAFELY
-		if (map != null) {
-			TileMap tileMap = ((TileMap) map.getComponent(TileMap.class));
-			if (tileMap.isChanged())
-				tileMap.refresh();
-		}
 		
 		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	}

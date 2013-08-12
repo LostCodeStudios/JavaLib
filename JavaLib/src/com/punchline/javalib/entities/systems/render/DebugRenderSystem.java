@@ -165,6 +165,7 @@ public final class DebugRenderSystem extends InputSystem {
 		return false;
 	}
 	
+	@Override
 	public boolean mouseMoved(int x, int y){
 		mousePosition.x = x;
 		mousePosition.y = y;

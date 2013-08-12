@@ -176,7 +176,7 @@ public class MapBodyManager {
 	} 
 	
 	/**
-	 * Destroys every static body that has been created using the manager.
+	 * Destroys every static body that has been created using the manager, and deletes associated entities..
 	 */
 	public void destroyPhysics() {
 		for (Body body : m_bodies) {
