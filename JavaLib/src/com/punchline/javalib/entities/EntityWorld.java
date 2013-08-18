@@ -125,7 +125,8 @@ public abstract class EntityWorld implements Disposable {
 		
 		//RENDER
 		systems.addSystem(new RenderSystem(camera));
-		debugView = (DebugRenderSystem) systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
+		debugView = (DebugRenderSystem) systems.addSystem(
+				new DebugRenderSystem(input, getBox2DWorld(), camera, systems));
 		
 		//PHYSICAL
 		systems.addSystem(new ParticleSystem());
@@ -191,9 +192,16 @@ public abstract class EntityWorld implements Disposable {
 	public abstract Rectangle getBounds();
 	
 	/**
-	 * @return This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 * @return This world's {@link PhysicsWorld}.
 	 */
-	public World getPhysicsWorld() {
+	public PhysicsWorld getPhysicsWorld() {
+		return physicsWorld;
+	}
+	
+	/**
+	 * @return This world's Box2D {@link World}
+	 */
+	public World getBox2DWorld() {
 		return physicsWorld.getWorld();
 	}
 	

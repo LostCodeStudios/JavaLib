@@ -64,6 +64,11 @@ public final class DebugRenderSystem extends InputSystem {
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(1f, 1f, 1f, 0.5f);
+		
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			font.scale(3); //draw bigger text for the tiny screen :)
+		}
+		
 		physicsDebugRenderer = new Box2DDebugRenderer();
 
 		mousePosition = new Vector2();
@@ -111,30 +116,31 @@ public final class DebugRenderSystem extends InputSystem {
 				int i = 1;
 				
 				if (Gdx.app.getType() == ApplicationType.Android) {
-					i = 15; //Start drawing text further up to avoid being covered by UI elements.
-				}
+					i = 7; //Start drawing text further up to avoid being covered by UI elements.
+				} else { //don't draw system performance on android.
 				
-				String systemName = "";
-				Float systemPerformance = 0f;
-				
-				Entry<String, Float> next;
-				Iterator<Entry<String, Float>> iter = performance.entrySet().iterator();
-				
-				while (iter.hasNext()) {
+					String systemName = "";
+					Float systemPerformance = 0f;
 					
-					next = iter.next();
-					systemName = next.getKey();
-					systemPerformance = next.getValue();
+					Entry<String, Float> next;
+					Iterator<Entry<String, Float>> iter = performance.entrySet().iterator();
 					
-					font.draw(spriteBatch, systemName + ": " + systemPerformance.toString(), 0, i * font.getLineHeight());
-					
-					i++;
+					while (iter.hasNext()) {
+						
+						next = iter.next();
+						systemName = next.getKey();
+						systemPerformance = next.getValue();
+						
+						font.draw(spriteBatch, systemName + ": " + systemPerformance.toString(), 0, i * font.getLineHeight());
+						
+						i++;
+					}
 				}
 				
 				font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, i++ * font.getLineHeight());
 				font.draw(spriteBatch, "Entities: " + this.world.getEntityCount() , 0, i++ * font.getLineHeight());
 				font.draw(spriteBatch, "Camera pos: " + camera.position.toString(), 0, i++ * font.getLineHeight());
-				font.draw(spriteBatch, "Mouse pos: " +mousePosition.toString(), 0, i++ * font.getLineHeight());
+				font.draw(spriteBatch, "Mouse pos: " + mousePosition.toString(), 0, i++ * font.getLineHeight());
 				
 				//real mouse position
 				Vector2 pos = mousePosition.cpy();

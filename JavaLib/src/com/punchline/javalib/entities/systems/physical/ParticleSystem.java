@@ -3,6 +3,7 @@ package com.punchline.javalib.entities.systems.physical;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Particle;
@@ -36,7 +37,7 @@ public class ParticleSystem extends ComponentSystem {
 		
 		//DO RAY CASTING FOR COLLIDABLE CHECK
 		if(e.hasComponent(Collidable.class)){
-			com.badlogic.gdx.physics.box2d.World c = world.getPhysicsWorld();
+			World c = world.getBox2DWorld();
 			
 			//Perform the raycast
 			c.rayCast(new RayCastCallback(){

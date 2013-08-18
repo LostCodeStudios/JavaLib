@@ -39,7 +39,7 @@ public class Body implements Transform, Velocity {
 	 */
 	public Body(EntityWorld world, Entity e, BodyDef bd){
 		entityWorld = world;
-		body = world.getPhysicsWorld().createBody(bd);
+		body = world.getBox2DWorld().createBody(bd);
 		body.setUserData(e);
 	}
 	
