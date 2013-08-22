@@ -23,7 +23,7 @@ public class ContactManager implements ContactListener {
 	 */
 	public ContactManager(EntityWorld world) {
 		this.world = world;
-		world.getPhysicsWorld().setContactListener(this);
+		world.getBox2DWorld().setContactListener(this);
 	}
 	
 	/**

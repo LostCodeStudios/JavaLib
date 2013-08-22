@@ -35,14 +35,6 @@ import com.punchline.javalib.entities.tiles.TileMapTemplate;
  */
 public abstract class EntityWorld implements Disposable {
 	
-	//region Physics Constants
-	
-	private final float TIME_STEP = 1.0f / 60.0f;
-	private final int VELOCITY_ITERATIONS = 6;
-	private final int POSITION_ITERATIONS = 2;
-	
-	//endregion
-	
 	//region Fields
 	
 	private boolean gameOver = false;
@@ -75,9 +67,9 @@ public abstract class EntityWorld implements Disposable {
 	protected Camera camera;
 	
 	/**
-	 * This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 * This world's {@link PhysicsWorld}
 	 */
-	protected World physicsWorld;
+	protected PhysicsWorld physicsWorld;
 
 	/**
 	 * The world's {@link ContactManager}.
@@ -100,7 +92,7 @@ public abstract class EntityWorld implements Disposable {
 	 * @param gravity The gravity vector2.
 	 * @param doSleeping Whether the physicsWorld allows sleeping.
 	 */
-	public EntityWorld(InputMultiplexer input, Camera camera, Vector2 gravity, boolean doSleeping) {
+	public EntityWorld(InputMultiplexer input, Camera camera, Vector2 gravity) {
 		entities = new EntityManager();
 		
 		systems = new SystemManager(this);
@@ -112,7 +104,7 @@ public abstract class EntityWorld implements Disposable {
 		this.camera = camera;
 		positionCamera();
 		
-		physicsWorld = new World(gravity, doSleeping);
+		physicsWorld = new PhysicsWorld(gravity);
 		bodiesToRemove = new Array<Body>();
 		contactManager = new ContactManager(this);
 		
@@ -133,7 +125,8 @@ public abstract class EntityWorld implements Disposable {
 		
 		//RENDER
 		systems.addSystem(new RenderSystem(camera));
-		debugView = (DebugRenderSystem) systems.addSystem(new DebugRenderSystem(input, getPhysicsWorld(), camera, systems));
+		debugView = (DebugRenderSystem) systems.addSystem(
+				new DebugRenderSystem(input, getBox2DWorld(), camera, systems));
 		
 		//PHYSICAL
 		systems.addSystem(new ParticleSystem());
@@ -199,10 +192,17 @@ public abstract class EntityWorld implements Disposable {
 	public abstract Rectangle getBounds();
 	
 	/**
-	 * @return This world's Box2D {@link com.badlogic.gdx.physics.box2d.World World}
+	 * @return This world's {@link PhysicsWorld}.
 	 */
-	public World getPhysicsWorld() {
+	public PhysicsWorld getPhysicsWorld() {
 		return physicsWorld;
+	}
+	
+	/**
+	 * @return This world's Box2D {@link World}
+	 */
+	public World getBox2DWorld() {
+		return physicsWorld.getWorld();
 	}
 	
 	/**
@@ -276,7 +276,7 @@ public abstract class EntityWorld implements Disposable {
 		//CREATE NEW ENTITIES SAFELY
 		safelyCreateEntities();
 		
-		physicsWorld.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+		physicsWorld.process(Gdx.graphics.getDeltaTime());
 	}
 	
 	//endregion
@@ -300,11 +300,11 @@ public abstract class EntityWorld implements Disposable {
 		    final ArrayList<JointEdge> list = body.getJointList();
 		    
 		    while (list.size() > 0) {
-		        physicsWorld.destroyJoint(list.get(0).joint);
+		        physicsWorld.getWorld().destroyJoint(list.get(0).joint);
 		    }
 		    
 		    // actual remove
-		    physicsWorld.destroyBody(body);
+		    physicsWorld.getWorld().destroyBody(body);
 		}
 		bodiesToRemove.clear();
 	}

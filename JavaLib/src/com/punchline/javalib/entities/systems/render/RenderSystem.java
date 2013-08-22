@@ -1,8 +1,11 @@
 package com.punchline.javalib.entities.systems.render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.components.physical.Body;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 import com.punchline.javalib.entities.systems.ComponentSystem;
@@ -65,9 +68,27 @@ public final class RenderSystem extends ComponentSystem {
 		if (e.hasComponent(Transform.class)) { 
 			Transform t = (Transform)e.getComponent(Transform.class);
 			
-			//r.setScale(Display.scaleX(), Display.scaleY());
-			r.setPosition(Convert.metersToPixels(t.getPosition()));
-			r.setRotation((float)Math.toDegrees(t.getRotation()));
+			Vector2 pos = t.getPosition().cpy(); //copy position
+			float angle = t.getRotation(); //copy angle
+			
+			if (e.hasComponent(Body.class)) {
+				
+				//Account for temporal aliasing
+				float ratio = world.getPhysicsWorld().getElapsedRatio();
+				
+				Body body = e.getComponent(Body.class);
+				
+				Vector2 linearVelocity = body.getLinearVelocity().cpy(); //copy linear velocity
+				float angularVelocity = body.getAngularVelocity(); //copy angular velocity
+ 				
+				float fps = 1f / deltaSeconds();
+				pos.add(linearVelocity.scl(ratio / fps));
+				angle += angularVelocity * ratio / fps;
+				
+			}
+			
+			r.setPosition(Convert.metersToPixels(pos));
+			r.setRotation((float)Math.toDegrees(angle));
 		}
 		
 		r.draw(spriteBatch, deltaSeconds());

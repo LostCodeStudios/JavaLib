@@ -71,7 +71,7 @@ public class MapBodyManager {
 		m_logger.info("initialising");
 		
 		m_world = world;
-		m_physicsWorld = world.getPhysicsWorld();
+		m_physicsWorld = world.getBox2DWorld();
 		m_units = unitsPerPixel;
 		
 		FixtureDef defaultFixture = new FixtureDef();

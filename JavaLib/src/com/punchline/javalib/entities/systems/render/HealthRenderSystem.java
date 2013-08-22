@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities.systems.render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.generic.Health;
+import com.punchline.javalib.entities.components.physical.Body;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.components.render.Renderable;
 import com.punchline.javalib.entities.systems.ComponentSystem;
@@ -80,7 +82,23 @@ public class HealthRenderSystem extends ComponentSystem {
 		Transform transform = (Transform)e.getComponent(Transform.class);
 		Renderable sprite = (Renderable)e.getComponent(Renderable.class);
 		
-		Vector2 pos = Convert.metersToPixels(transform.getPosition());
+		Vector2 pos = transform.getPosition().cpy();
+		
+		if (e.hasComponent(Body.class)) {
+			
+			//Account for temporal aliasing
+			float ratio = world.getPhysicsWorld().getElapsedRatio();
+			
+			Body body = e.getComponent(Body.class);
+			
+			Vector2 linearVelocity = body.getLinearVelocity().cpy(); //copy linear velocity
+				
+			float fps = 1f / deltaSeconds();
+			pos.add(linearVelocity.scl(ratio / fps));
+
+		}
+		
+		pos = Convert.metersToPixels(pos);
 		pos.add(new Vector2(-sprite.getWidth() / 2, sprite.getHeight() / 2 + VERTICAL_OFFSET));
 		
 		float height = backTexture.getHeight();
