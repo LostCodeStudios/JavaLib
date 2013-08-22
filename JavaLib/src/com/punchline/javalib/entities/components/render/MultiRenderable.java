@@ -1,23 +1,18 @@
 package com.punchline.javalib.entities.components.render;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.entities.components.MultiComponent;
 
 /**
- * Renderable component composed of multiple Renderable components, which are all rendered together, in order.
+ * A Renderable {@link MultiComponent}. The Renderables are drawn in order.
  * @author Natman64
  * @created Aug 12, 2013
  */
-public class MultiRenderable implements Renderable {
+public class MultiRenderable extends MultiComponent<Renderable> implements Renderable {
 
-	//region Fields/Initialization
-	
-	private Renderable base;
-	private List<Renderable> children = new ArrayList<Renderable>();
+	//region Initialization
 	
 	/**
 	 * Makes a MultiRenderable component.
@@ -25,11 +20,7 @@ public class MultiRenderable implements Renderable {
 	 * @param children All Renderable components that will be drawn above the base Renderable.
 	 */
 	public MultiRenderable(Renderable base, Renderable... children) {
-		this.base = base;
-		
-		for (Renderable child : children) {
-			this.children.add(child);
-		}
+		super(base, children);
 	}
 	
 	//endregion
@@ -38,20 +29,12 @@ public class MultiRenderable implements Renderable {
 	
 	@Override
 	public void onAdd(ComponentManager container) { 
-		base.onAdd(container);
-		
-		for (Renderable child : children) {
-			child.onAdd(container);
-		}
+		super.onAdd(container);
 	}
 
 	@Override
 	public void onRemove(ComponentManager container) { 
-		base.onRemove(container);
-		
-		for (Renderable child : children) {
-			child.onRemove(container);
-		}
+		super.onAdd(container);
 	}
 
 	//endregion
@@ -73,21 +56,6 @@ public class MultiRenderable implements Renderable {
 		return base.getPosition();
 	}
 	
-	/**
-	 * @return The base Renderable of this component.
-	 */
-	public Renderable getBase() {
-		return base;
-	}
-	
-	/**
-	 * @param index The index of the desired child.
-	 * @return The desired child.
-	 */
-	public Renderable getChild(int index) {
-		return children.get(index);
-	}
-	
 	//endregion
 	
 	//region Mutators
@@ -96,7 +64,7 @@ public class MultiRenderable implements Renderable {
 	public void setPosition(Vector2 position) {
 		base.setPosition(position);
 		
-		//Move all children to the new position, preserving their offset from the actual position.
+		//Move all children to the new position, preserving their offset from the base's position.
 		for (Renderable child : children) {
 			Vector2 offset = child.getPosition().sub(getPosition());
 			child.setPosition(offset.add(position));
