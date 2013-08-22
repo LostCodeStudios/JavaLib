@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Component wrapper for multiple Components of the same type. For instance, an entity requiring multiple sprites could contain a MultiComponent<Sprite>.
- * MultiComponents contain a LibGDX array of contained componnts, but also a single base Component. Whenever information is needed from the MultiComponent, and each
+ * MultiComponents contain a LibGDX array of contained components, but also a single base Component. Whenever information is needed from the MultiComponent, and each
  * Component's information is different, the accessor from base will be used.
  * @author Natman64
  * @created Aug 21, 2013
