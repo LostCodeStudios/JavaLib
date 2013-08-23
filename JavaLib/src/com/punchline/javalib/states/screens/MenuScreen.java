@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.punchline.javalib.BaseGame;
+import com.punchline.javalib.Game;
 import com.punchline.javalib.states.InputScreen;
 import com.punchline.javalib.utils.Display;
 
@@ -49,7 +49,7 @@ public abstract class MenuScreen extends InputScreen {
 	 * @param title The title of the menu.
 	 * @param textHandle A FileHandle pointing to the background texture. Null if no background is needed.
 	 */
-	public MenuScreen(BaseGame game, FileHandle skinHandle, String title, FileHandle textureHandle) {
+	public MenuScreen(Game game, FileHandle skinHandle, String title, FileHandle textureHandle) {
 		super(game);
 		
 		skin = new Skin(skinHandle);

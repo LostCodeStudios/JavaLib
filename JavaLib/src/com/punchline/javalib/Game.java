@@ -1,6 +1,5 @@
 package com.punchline.javalib;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -15,7 +14,7 @@ import com.punchline.javalib.utils.SoundManager;
  * @author Natman64
  * @created Jul 23, 2013
  */
-public abstract class BaseGame extends Game {
+public abstract class Game extends com.badlogic.gdx.Game {
 	
 	//region Game Specifications
 	

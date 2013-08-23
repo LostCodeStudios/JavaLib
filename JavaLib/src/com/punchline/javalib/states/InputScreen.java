@@ -1,7 +1,7 @@
 package com.punchline.javalib.states;
 
 import com.badlogic.gdx.InputProcessor;
-import com.punchline.javalib.BaseGame;
+import com.punchline.javalib.Game;
 
 /**
  * Base class for GameScreens that process input.
@@ -14,7 +14,7 @@ public abstract class InputScreen extends GameScreen implements InputProcessor {
 	 * Constructs an InputScreen and adds it to the game's input multiplexor.
 	 * @param game The game.
 	 */
-	public InputScreen(BaseGame game) {
+	public InputScreen(Game game) {
 		super(game);
 	}
 
