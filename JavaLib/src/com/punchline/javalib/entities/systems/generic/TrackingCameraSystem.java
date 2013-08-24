@@ -31,12 +31,20 @@ public class TrackingCameraSystem extends TagSystem {
 
 	@Override
 	protected void process(Entity e) {
+		setPosition(e);
+		
+		clampCamera();
+	}
+
+	private void setPosition(Entity e) {
 		Transform t = (Transform)e.getComponent(Transform.class);
 		
 		Vector2 pos = Convert.metersToPixels(t.getPosition());
 		
 		camera.position.set(pos.x, pos.y, 0f);
-		
+	}
+	
+	private void clampCamera() {
 		float left = camera.position.x - camera.viewportWidth / 2;
 		float bottom = camera.position.y - camera.viewportHeight / 2;
 		float right = left + camera.viewportWidth;
@@ -58,7 +66,7 @@ public class TrackingCameraSystem extends TagSystem {
 			camera.position.y = bounds.y + camera.viewportHeight / 2;
 		}
 	}
-
+	
 	@Override
 	public void dispose() { }
 

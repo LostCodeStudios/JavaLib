@@ -1,11 +1,12 @@
 package com.punchline.javalib;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.punchline.javalib.states.ScreenManager;
 import com.punchline.javalib.utils.Display;
 import com.punchline.javalib.utils.SoundManager;
 
@@ -14,7 +15,7 @@ import com.punchline.javalib.utils.SoundManager;
  * @author Natman64
  * @created Jul 23, 2013
  */
-public abstract class Game extends com.badlogic.gdx.Game {
+public abstract class Game implements ApplicationListener {
 	
 	//region Game Specifications
 	
@@ -69,6 +70,8 @@ public abstract class Game extends com.badlogic.gdx.Game {
 	
 	//region Fields
 	
+	private ScreenManager screenManager;
+	
 	/**
 	 * The game's {@link SpriteBatch}.
 	 */
@@ -110,13 +113,16 @@ public abstract class Game extends com.badlogic.gdx.Game {
 		
 		loadSounds();
 		
+		screenManager = new ScreenManager();
+		screenManager.create();
+		
 	}
 	
 	@Override
 	public void resize(int width, int height) {
-		super.resize(width, height);
-		
 		Gdx.gl.glViewport(0, 0, width, height);
+		
+		screenManager.resize(width, height);
 	}
 
 
@@ -135,9 +141,7 @@ public abstract class Game extends com.badlogic.gdx.Game {
 	 */
 	@Override
 	public void dispose() {
-		super.dispose();
-		
-		getScreen().dispose();
+		screenManager.dispose();
 		SoundManager.dispose();
 		spriteBatch.dispose();
 	}
@@ -147,34 +151,17 @@ public abstract class Game extends com.badlogic.gdx.Game {
 	//region Accessors
 	
 	/**
+	 * @return The game's {@link ScreenManager}.
+	 */
+	public ScreenManager getScreenManager() {
+		return screenManager;
+	}
+	
+	/**
 	 * @return The game's {@link InputMultiplexer}.
 	 */
 	public InputMultiplexer getInput() {
 		return input;
-	}
-	
-	//endregion
-	
-	//region Mutators
-	
-	/**
-	 * {@inheritDoc}
-	 * Disposes of the previous screen.
-	 */
-	@Override
-	public void setScreen(Screen screen) {
-		setScreen(screen, true);
-	}
-	
-	/**
-	 * Sets the current screen. Screen.hide() is called on any old screen, and Screen.show() is called on the new screen, if any.
-	 * @param screen The new screen.
-	 * @param disposeOld Whether the old screen should be automatically disposed.
-	 */
-	public void setScreen(Screen screen, boolean disposeOld) {
-		Screen oldScreen = getScreen();
-		super.setScreen(screen);
-		if (disposeOld && oldScreen != null) oldScreen.dispose();
 	}
 	
 	//endregion
@@ -189,7 +176,7 @@ public abstract class Game extends com.badlogic.gdx.Game {
 		Gdx.gl.glClearColor(backgroundRed, backgroundGreen, backgroundBlue, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		super.render();
+		screenManager.render();
 		
 		if (useCursor) {
 			
@@ -235,6 +222,18 @@ public abstract class Game extends com.badlogic.gdx.Game {
 		}
 		
 	}
+
+	@Override
+	public void pause() {
+		screenManager.pause();
+	}
+
+	@Override
+	public void resume() {
+		screenManager.resume();
+	}
+	
+	
 	
 	//endregion
 
