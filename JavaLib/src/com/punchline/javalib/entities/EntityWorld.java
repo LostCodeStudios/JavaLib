@@ -22,6 +22,7 @@ import com.punchline.javalib.entities.systems.render.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.render.RenderSystem;
 import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
+import com.punchline.javalib.entities.templates.EntityPostProcessor;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
 
@@ -41,6 +42,7 @@ public abstract class EntityWorld implements Disposable {
 	private GameOverInfo gameOverInfo;
 	
 	private Map<String, EntityTemplate> templates;
+	private Map<String, EntityPostProcessor> postProcessors;
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
 	private Array<EntityCreationArgs> entitiesToCreate = new Array<EntityCreationArgs>();
@@ -98,11 +100,11 @@ public abstract class EntityWorld implements Disposable {
 		systems = new SystemManager(this);
 		
 		templates = new HashMap<String, EntityTemplate>();
+		postProcessors = new HashMap<String, EntityPostProcessor>();
 		groupTemplates = new HashMap<String, EntityGroupTemplate>();
 		
 		this.input = input;
 		this.camera = camera;
-		positionCamera();
 		
 		physicsWorld = new PhysicsWorld(gravity);
 		bodiesToRemove = new Array<Body>();
@@ -111,6 +113,7 @@ public abstract class EntityWorld implements Disposable {
 		buildTemplates();
 		buildSystems();
 		buildEntities();
+		positionCamera();
 	}
 	
 	/**
@@ -320,7 +323,11 @@ public abstract class EntityWorld implements Disposable {
 	 * @return The created entity.
 	 */
 	public Entity createEntity(String template, Object... args) {
-		Entity e = templates.get(template).buildEntity(entities.obtain(), this, args); //Grab an entity from the entity pool and send it
+		Entity e = templates.get(template).buildEntity(entities.obtain(), this, args);
+		
+		if (postProcessors.containsKey(template)) //If there's a post processor,
+			postProcessors.get(template).process(this, e); //run its processing.
+		
 		entities.add(e);
 		return e;
 	}
@@ -397,23 +404,33 @@ public abstract class EntityWorld implements Disposable {
 	//region Template Management
 	
 	/**
-	 * Adds an EntityTemplate to the template map.
+	 * Adds an {@link EntityTemplate} to the template map.
 	 * @param templateKey The template's key.
 	 * @param template The template.
 	 */
-	public void addTemplate(String templateKey, EntityTemplate template) {
+	protected void addTemplate(String templateKey, EntityTemplate template) {
 		templates.put(templateKey, template);
 	}
 	
 	/**
-	 * Adds an EntityGroupTemplate to the group template map.
+	 * Adds an {@link EntityGroupTemplate} to the group template map.
 	 * @param templateKey The template's key.
 	 * @param template The template.
 	 */
-	public void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
+	protected void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
 		groupTemplates.put(templateKey, template);
 	}
 
+	/**
+	 * Adds an {@link EntityPostProcessor} to the post processor map.
+	 * @param processorKey The processor's key. This must match the 
+	 * key of the template the processor pulls Entities from.
+	 * @param processor The processor.
+	 */
+	protected void addPostProcessor(String processorKey, EntityPostProcessor processor) {
+		postProcessors.put(processorKey, processor);
+	}
+	
 	//endregion
 	
 }
