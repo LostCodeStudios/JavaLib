@@ -21,7 +21,6 @@ public abstract class ComponentSystem extends EntitySystem {
 	 * @param requiredType The first required Component type.
 	 * @param otherTypes Other required Component types.
 	 */
-	@SafeVarargs
 	public ComponentSystem(Class<? extends Component> requiredType, Class<? extends Component>... otherTypes) {
 		componentTypes = new ArrayList<Class<? extends Component>>();
 		
