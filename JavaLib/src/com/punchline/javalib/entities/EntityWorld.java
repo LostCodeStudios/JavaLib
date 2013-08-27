@@ -25,6 +25,7 @@ import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityPostProcessor;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
+import com.punchline.javalib.utils.SpriteSheet;
 
 /**
  * The EntityWorld is where actual gameplay happens. The world manages game
@@ -64,7 +65,7 @@ public abstract class EntityWorld implements Disposable {
 	protected SystemManager systems;
 	
 	/**
-	 * This world's {@link com.badlogic.gdx.graphics.Camera Camera}.
+	 * This world's {@link Camera Camera}.
 	 */
 	protected Camera camera;
 	
@@ -82,6 +83,11 @@ public abstract class EntityWorld implements Disposable {
 	 * This world's {@link DebugRenderSystem}
 	 */
 	protected DebugRenderSystem debugView;
+	
+	/**
+	 * The {@link SpriteSheet} used for this game.
+	 */
+	protected SpriteSheet spriteSheet;
 	
 	//endregion
 
@@ -120,6 +126,11 @@ public abstract class EntityWorld implements Disposable {
 	 * Positions the camera. Called by the constructor.
 	 */
 	protected void positionCamera() { }
+	
+	/**
+	 * Builds the game's {@link SpriteSheet}.
+	 */
+	protected abstract void buildSpriteSheet();
 	
 	/**
 	 * Adds necessary systems to the EntityWorld. Called by the constructor.
@@ -202,7 +213,14 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
-	 * @return This world's Box2D {@link World}
+	 * @return The {@link SpriteSheet} used for this game.
+	 */
+	public SpriteSheet getSpriteSheet() {
+		return spriteSheet;
+	}
+	
+	/**
+	 * @return This world's Box2D {@link World}.
 	 */
 	public World getBox2DWorld() {
 		return physicsWorld.getWorld();
@@ -216,8 +234,7 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
-	 * The entity count in the physicsWorld.
-	 * @return The count of entities active in the physicsWorld.
+	 * @return This world's entity count.
 	 */
 	public int getEntityCount(){
 		return entities.getEntities().size;
@@ -228,7 +245,7 @@ public abstract class EntityWorld implements Disposable {
 	 * @param tag The tag of the entity. "" for not inclusive search.
 	 * @param group The group of the entity. "" for not inclusive search.
 	 * @param type The type of the entity. "" for not inclusive search
-	 * @return
+	 * @return The Entity, or null.
 	 */
 	public Entity tryGetEntity(String tag, String group, String type){
 		return entities.tryGetEntity(tag, group, type);

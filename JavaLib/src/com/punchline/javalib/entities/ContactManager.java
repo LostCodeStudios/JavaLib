@@ -27,7 +27,7 @@ public class ContactManager implements ContactListener {
 	}
 	
 	/**
-	 * Processes all collisions and sensor detections, calling callbacks as necessary.
+	 * Processes all collisions and sensor detections, queuing callbacks to be called later.
 	 */
 	@Override
 	public void beginContact(Contact contact) {

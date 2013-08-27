@@ -94,7 +94,9 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 		base.setOrigin(origin);
 		
 		for (Renderable child : children) {
-			child.setOrigin(origin);
+			Vector2 offset = child.getPosition().cpy().sub(base.getPosition());
+			
+			child.setOrigin(origin.cpy().add(offset));
 		}
 	}
 	

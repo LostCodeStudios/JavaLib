@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.utils.SpriteSheet;
 
 /**
  * Component wrapper for a LibGDX {@link com.badlogic.gdx.graphics.g2d.Sprite Sprite}.
@@ -17,6 +18,36 @@ public class Sprite implements Renderable {
 	//region Fields/Initialization
 	
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
+	
+	/**
+	 * Constructs a Sprite using the given SpriteSheet. This should always be preferred over the other constructors
+	 * because SpriteSheet improves performance.
+	 * @param spriteSheet The SpriteSheet to use.
+	 * @param key The key of the Sprite's TextureRegion.
+	 * @param origin The Sprite's origin.
+	 */
+	public Sprite(SpriteSheet spriteSheet, String key, Vector2 origin) {
+		sprite = new com.badlogic.gdx.graphics.g2d.Sprite(spriteSheet.getRegion(key));
+		
+		setOrigin(origin);
+	}
+	
+	/**
+	 * Constructs a Sprite using the given SpriteSheet. This should always be preferred over the other constructors
+	 * because SpriteSheet improves performance.
+	 * @param spriteSheet The SpriteSheet to use.
+	 * @param key The key of the Sprite's TextureRegion.
+	 * @param origin The Sprite's origin.
+	 */
+	public Sprite(SpriteSheet spriteSheet, String key) {
+		TextureRegion region = spriteSheet.getRegion(key);
+		
+		sprite = new com.badlogic.gdx.graphics.g2d.Sprite(region);
+		
+		Vector2 origin = new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2);
+		
+		setOrigin(origin);
+	}
 	
 	/**
 	 * Constructs a Sprite.

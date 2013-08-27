@@ -100,7 +100,14 @@ public class SpriteSheet implements Disposable {
 	
 	//endregion
 	
-	//region Accessing Regions
+	//region Accessors
+	
+	/**
+	 * @return This SpriteSheet's sheet texture.
+	 */
+	public Texture getTexture() {
+		return sheet;
+	}
 	
 	/**
 	 * @param key The key of the desired TextureRegion.
