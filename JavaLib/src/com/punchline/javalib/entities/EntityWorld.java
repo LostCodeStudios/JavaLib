@@ -22,7 +22,6 @@ import com.punchline.javalib.entities.systems.render.DebugRenderSystem;
 import com.punchline.javalib.entities.systems.render.RenderSystem;
 import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
-import com.punchline.javalib.entities.templates.EntityPostProcessor;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
 import com.punchline.javalib.utils.SpriteSheet;
@@ -43,7 +42,6 @@ public abstract class EntityWorld implements Disposable {
 	private GameOverInfo gameOverInfo;
 	
 	private Map<String, EntityTemplate> templates;
-	private Map<String, EntityPostProcessor> postProcessors;
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
 	private Array<EntityCreationArgs> entitiesToCreate = new Array<EntityCreationArgs>();
@@ -106,7 +104,6 @@ public abstract class EntityWorld implements Disposable {
 		systems = new SystemManager(this);
 		
 		templates = new HashMap<String, EntityTemplate>();
-		postProcessors = new HashMap<String, EntityPostProcessor>();
 		groupTemplates = new HashMap<String, EntityGroupTemplate>();
 		
 		this.input = input;
@@ -342,9 +339,6 @@ public abstract class EntityWorld implements Disposable {
 	public Entity createEntity(String template, Object... args) {
 		Entity e = templates.get(template).buildEntity(entities.obtain(), this, args);
 		
-		if (postProcessors.containsKey(template)) //If there's a post processor,
-			postProcessors.get(template).process(this, e); //run its processing.
-		
 		entities.add(e);
 		return e;
 	}
@@ -436,16 +430,6 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
 		groupTemplates.put(templateKey, template);
-	}
-
-	/**
-	 * Adds an {@link EntityPostProcessor} to the post processor map.
-	 * @param processorKey The processor's key. This must match the 
-	 * key of the template the processor pulls Entities from.
-	 * @param processor The processor.
-	 */
-	protected void addPostProcessor(String processorKey, EntityPostProcessor processor) {
-		postProcessors.put(processorKey, processor);
 	}
 	
 	//endregion

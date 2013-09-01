@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.Entity;
-import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.systems.TagSystem;
-import com.punchline.javalib.entities.templates.EntityPostProcessor;
 import com.punchline.javalib.utils.Convert;
 
 /**
@@ -15,7 +13,7 @@ import com.punchline.javalib.utils.Convert;
  * @author Natman64
  * @created Jul 26, 2013
  */
-public class TrackingCameraSystem extends TagSystem implements EntityPostProcessor {
+public class TrackingCameraSystem extends TagSystem {
 
 	private Camera camera;
 	private Rectangle bounds;
@@ -33,13 +31,6 @@ public class TrackingCameraSystem extends TagSystem implements EntityPostProcess
 
 	@Override
 	protected void process(Entity e) {
-		setPosition(e);
-		
-		clampCamera();
-	}
-
-	@Override
-	public void process(EntityWorld world, Entity e) {
 		setPosition(e);
 		
 		clampCamera();
