@@ -25,5 +25,8 @@ public class TileMapTemplate implements EntityTemplate {
 		
 		return e;
 	}
+	
+	@Override
+	public void dispose() { }
 
 }

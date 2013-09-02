@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities.templates;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 
@@ -8,7 +9,7 @@ import com.punchline.javalib.entities.EntityWorld;
  * @author Natman64
  *
  */
-public interface EntityTemplate {
+public interface EntityTemplate extends Disposable {
 	
 	/**
 	 * Creates an entity.

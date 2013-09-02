@@ -1,6 +1,7 @@
 package com.punchline.javalib.entities.templates;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 
@@ -9,7 +10,7 @@ import com.punchline.javalib.entities.EntityWorld;
  * @author Natman64
  *
  */
-public interface EntityGroupTemplate {
+public interface EntityGroupTemplate extends Disposable {
 
 	/**
 	 * Creates a group of entities.

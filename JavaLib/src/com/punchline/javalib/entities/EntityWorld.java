@@ -170,6 +170,14 @@ public abstract class EntityWorld implements Disposable {
 	@Override
 	public void dispose() {
 		
+		for (EntityTemplate template : templates.values()) {
+			template.dispose();
+		}
+		
+		for (EntityGroupTemplate groupTemplate : groupTemplates.values()) {
+			groupTemplate.dispose();
+		}
+		
 		systems.dispose();
 		physicsWorld.dispose();
 		
