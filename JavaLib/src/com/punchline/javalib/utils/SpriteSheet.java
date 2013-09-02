@@ -97,6 +97,34 @@ public class SpriteSheet implements Disposable {
 		regions.put(key, texRegion);
 		
 	}
+
+	/**
+	 * Adds 4 separate TextureRegions to be used for making an {@link AnimatedSprite}.
+	 * The animations should be next to each other, each one being the same width. The order must be as follows:
+	 * Right, Down, Left, Up.
+	 * @param name
+	 * @param source
+	 */
+	public void addAnimatedSprite(String name, Rectangle source) {
+		int fourth = (int) (source.width / 4);
+		
+		TextureRegion right = new TextureRegion(sheet, 
+				source.x, source.y, fourth, source.height);
+		
+		TextureRegion down = new TextureRegion(sheet,
+				source.x + fourth, source.y, fourth, source.height);
+		
+		TextureRegion left = new TextureRegion(sheet,
+				source.x + fourth * 2, source.y, fourth, source.height);
+		
+		TextureRegion up = new TextureRegion(sheet,
+				source.x + fourth * 3, source.y, fourth, source.height);
+		
+		addRegion(name + "#Right", right);
+		addRegion(name + "#Down", down);
+		addRegion(name + "#Left", left);
+		addRegion(name + "#Up", up);
+	}
 	
 	//endregion
 	

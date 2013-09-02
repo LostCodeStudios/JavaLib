@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.utils.SpriteSheet;
 
 /**
  * A sprite that contains multiple Animations, each mapped to a String showing the state which that animation represents.
@@ -32,6 +33,22 @@ public class AnimatedSprite implements Renderable {
 	//endregion
 	
 	//region Initialization
+	
+	public AnimatedSprite(SpriteSheet spriteSheet, String key, int frameCols, float frameDuration) {
+		
+		Animation right = new Animation(spriteSheet, key + "#Right", frameCols, 1, frameDuration);
+		Animation down = new Animation(spriteSheet, key + "#Down", frameCols, 1, frameDuration);
+		Animation left = new Animation(spriteSheet, key + "#Left", frameCols, 1, frameDuration);
+		Animation up = new Animation(spriteSheet, key + "#Up", frameCols, 1, frameDuration);
+		
+		animations.put("Right", right);
+		animations.put("Down", down);
+		animations.put("Left", left);
+		animations.put("Up", up);
+		
+		setState("Down", true);
+		
+	}
 	
 	/**
 	 * Constructs an AnimatedSprite.
