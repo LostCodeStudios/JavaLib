@@ -182,6 +182,11 @@ public class Animation implements Renderable {
 		return position.cpy();
 	}
 	
+	@Override
+	public float getRotation() {
+		return rotation;
+	}
+	
 	/**
 	 * @param deltaSeconds The amount of seconds since the last time the current frame was checked.
 	 * @return The current frame.

@@ -28,6 +28,11 @@ public interface Renderable extends Component {
 	 */
 	public Vector2 getPosition();
 	
+	/**
+	 * @return This Renderable's rotation.
+	 */
+	public float getRotation();
+	
 	//endregion
 	
 	//region Mutators

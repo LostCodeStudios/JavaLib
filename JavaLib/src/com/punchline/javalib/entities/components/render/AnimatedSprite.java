@@ -86,6 +86,11 @@ public class AnimatedSprite implements Renderable {
 		return position.cpy();
 	}
 	
+	@Override
+	public float getRotation() {
+		return rotation;
+	}
+	
 	/**
 	 * @return The current animation state key.
 	 */

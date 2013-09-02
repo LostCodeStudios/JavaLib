@@ -56,6 +56,11 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 		return base.getPosition();
 	}
 	
+	@Override
+	public float getRotation() {
+		return base.getRotation();
+	}
+	
 	//endregion
 	
 	//region Mutators

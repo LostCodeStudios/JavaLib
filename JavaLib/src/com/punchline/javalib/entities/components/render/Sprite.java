@@ -123,6 +123,11 @@ public class Sprite implements Renderable {
 		return new Vector2(sprite.getX(), sprite.getY());
 	}
 	
+	@Override
+	public float getRotation() {
+		return sprite.getRotation();
+	}
+	
 	//endregion
 	
 	//region Mutators

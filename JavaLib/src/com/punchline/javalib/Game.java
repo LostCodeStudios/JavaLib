@@ -183,7 +183,7 @@ public abstract class Game implements ApplicationListener {
 			//Clamp cursor
 			int cursorX = Gdx.input.getX();
 			int cursorY = Gdx.input.getY();
-			
+
 			boolean cursorChanged = false;
 			
 			if (cursorX < 0) {
@@ -237,4 +237,5 @@ public abstract class Game implements ApplicationListener {
 	
 	//endregion
 
+	
 }

@@ -60,6 +60,11 @@ public class ParticleEffect implements Renderable {
 		return new Vector2();
 	}
 	
+	@Override
+	public float getRotation() {
+		return 0f;
+	}
+	
 	//endregion
 
 	//region Mutators
