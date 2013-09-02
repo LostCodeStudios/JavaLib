@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.utils.SpriteSheet;
 
@@ -37,18 +38,17 @@ public class Animation implements Renderable {
 	 * @param key The animation's region key.
 	 * @param frameCols The number of columns in this Animation.
 	 * @param frameRows The number of rows in this Animation.
+	 * @param playType How this Animation should animate.
 	 * @param frameDuration The duration of each animation frame.
 	 */
-	public Animation(SpriteSheet spriteSheet, String key, int frameCols, int frameRows, float frameDuration) {
+	public Animation(SpriteSheet spriteSheet, String key, int frameCols, int frameRows, int playType, float frameDuration) {
 		
-		TextureRegion[] regions = new TextureRegion[frameCols * frameRows];
+		Array<TextureRegion> regions = new Array<TextureRegion>();
 		
 		TextureRegion animationRegion = spriteSheet.getRegion(key);
 		
 		int frameWidth = animationRegion.getRegionWidth() / frameCols;
 		int frameHeight = animationRegion.getRegionHeight() / frameRows;
-		
-		int i = 0;
 		
 		for (int y = 0; y < frameRows; y++) {
 			
@@ -60,12 +60,12 @@ public class Animation implements Renderable {
 				
 				TextureRegion region = new TextureRegion(spriteSheet.getTexture(), xCoord, yCoord, frameWidth, frameHeight);
 				
-				regions[i++] = region;
+				regions.add(region);
 				
 			}
 		}
 		
-		animation = new com.badlogic.gdx.graphics.g2d.Animation(frameDuration, regions);
+		animation = new com.badlogic.gdx.graphics.g2d.Animation(frameDuration, regions, playType);
 		
 		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
 		

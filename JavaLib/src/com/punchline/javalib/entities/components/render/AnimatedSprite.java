@@ -19,7 +19,7 @@ public class AnimatedSprite implements Renderable {
 
 	//region Fields
 	
-	private Map<String, Animation> animations;
+	private Map<String, Animation> animations = new HashMap<String, Animation>();
 	private String state;
 	
 	private float stateTime = 0f;
@@ -30,16 +30,31 @@ public class AnimatedSprite implements Renderable {
 	private float scaleY = 1f;
 	private Vector2 origin;
 	
+	/**
+	 * Whether this AnimatedSprite needs to keep updating frames.
+	 */
+	public boolean animate = true;
+	
 	//endregion
 	
 	//region Initialization
 	
-	public AnimatedSprite(SpriteSheet spriteSheet, String key, int frameCols, float frameDuration) {
+	/**
+	 * Constructs an AnimatedSprite.
+	 * @param spriteSheet The game's SpriteSheet.
+	 * @param key The key prefix of the AnimatedSprite's separate Animations.
+	 * @param frameCols The number of frames per animation.
+	 * @param frameDuration The duration of each frame.
+	 * @param playType How the Animations should animate.
+	 */
+	public AnimatedSprite(SpriteSheet spriteSheet, String key, int frameCols, int playType, float frameDuration) {
 		
-		Animation right = new Animation(spriteSheet, key + "#Right", frameCols, 1, frameDuration);
-		Animation down = new Animation(spriteSheet, key + "#Down", frameCols, 1, frameDuration);
-		Animation left = new Animation(spriteSheet, key + "#Left", frameCols, 1, frameDuration);
-		Animation up = new Animation(spriteSheet, key + "#Up", frameCols, 1, frameDuration);
+		//TODO this is basically hard-coded.
+		
+		Animation right = new Animation(spriteSheet, key + "#Right", frameCols, 1, playType, frameDuration);
+		Animation down = new Animation(spriteSheet, key + "#Down", frameCols, 1, playType, frameDuration);
+		Animation left = new Animation(spriteSheet, key + "#Left", frameCols, 1, playType, frameDuration);
+		Animation up = new Animation(spriteSheet, key + "#Up", frameCols, 1, playType, frameDuration);
 		
 		animations.put("Right", right);
 		animations.put("Down", down);
@@ -47,6 +62,7 @@ public class AnimatedSprite implements Renderable {
 		animations.put("Up", up);
 		
 		setState("Down", true);
+		setOrigin(new Vector2(getWidth() / 2, getHeight() / 2));
 		
 	}
 	
@@ -60,8 +76,6 @@ public class AnimatedSprite implements Renderable {
 	 */
 	public AnimatedSprite(String[] keys, Animation[] animations, int frameWidth, int frameHeight, String initialState) {
 		
-		this.animations = new HashMap<String, Animation>();
-		
 		for (int i = 0; i < keys.length; i++) {
 			if (i < animations.length) {
 				this.animations.put(keys[i], animations[i]);
@@ -69,6 +83,7 @@ public class AnimatedSprite implements Renderable {
 		}
 		
 		setState(initialState, true);
+		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
 		
 	}
 	

@@ -109,16 +109,16 @@ public class SpriteSheet implements Disposable {
 		int fourth = (int) (source.width / 4);
 		
 		TextureRegion right = new TextureRegion(sheet, 
-				source.x, source.y, fourth, source.height);
+				(int) source.x, (int) source.y, fourth, (int) source.height);
 		
 		TextureRegion down = new TextureRegion(sheet,
-				source.x + fourth, source.y, fourth, source.height);
+				(int) source.x + fourth, (int) source.y, fourth, (int) source.height);
 		
 		TextureRegion left = new TextureRegion(sheet,
-				source.x + fourth * 2, source.y, fourth, source.height);
+				(int) source.x + fourth * 2, (int) source.y, fourth, (int) source.height);
 		
 		TextureRegion up = new TextureRegion(sheet,
-				source.x + fourth * 3, source.y, fourth, source.height);
+				(int) source.x + fourth * 3, (int) source.y, fourth, (int) source.height);
 		
 		addRegion(name + "#Right", right);
 		addRegion(name + "#Down", down);

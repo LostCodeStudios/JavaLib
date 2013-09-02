@@ -113,6 +113,7 @@ public abstract class EntityWorld implements Disposable {
 		bodiesToRemove = new Array<Body>();
 		contactManager = new ContactManager(this);
 		
+		buildSpriteSheet();
 		buildTemplates();
 		buildSystems();
 		buildEntities();
