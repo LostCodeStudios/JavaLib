@@ -25,7 +25,6 @@ public class AnimatedSprite implements Renderable {
 	private float stateTime = 0f;
 	
 	private Vector2 position;
-	private float rotation;
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
@@ -117,9 +116,7 @@ public class AnimatedSprite implements Renderable {
 	}
 	
 	@Override
-	public float getRotation() {
-		return rotation;
-	}
+	public float getRotation() { return 0f; }
 	
 	/**
 	 * @return The current animation state key.
@@ -158,9 +155,7 @@ public class AnimatedSprite implements Renderable {
 	}
 
 	@Override
-	public void setRotation(float degrees) {
-		this.rotation = degrees;
-	}
+	public void setRotation(float degrees) { }
 
 	@Override
 	public void setScale(float scaleX, float scaleY) {
@@ -196,7 +191,7 @@ public class AnimatedSprite implements Renderable {
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
-				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, rotation);
+				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, 0f);
 	}
 	
 	//endregion

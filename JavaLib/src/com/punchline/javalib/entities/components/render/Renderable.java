@@ -29,7 +29,7 @@ public interface Renderable extends Component {
 	public Vector2 getPosition();
 	
 	/**
-	 * @return This Renderable's rotation.
+	 * @return This Renderable's rotation, in radians.
 	 */
 	public float getRotation();
 	
@@ -45,9 +45,9 @@ public interface Renderable extends Component {
 	
 	/**
 	 * Sets the rotation at which the component should be rendered.
-	 * @param degrees
+	 * @param radians Rotation in radians.
 	 */
-	public void setRotation(float degrees);
+	public void setRotation(float radians);
 	
 	/**
 	 * Sets the scale that should be applied when this component is drawn.
