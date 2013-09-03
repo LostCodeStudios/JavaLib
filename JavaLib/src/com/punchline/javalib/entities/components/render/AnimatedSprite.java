@@ -128,6 +128,14 @@ public class AnimatedSprite implements Renderable {
 	}
 	
 	/**
+	 * @param state An animation key.
+	 * @return Whether this AnimatedSprite contains an Animation with that key.
+	 */
+	public boolean hasState(String state) {
+		return animations.containsKey(state);
+	}
+	
+	/**
 	 * @param deltaSeconds The amount of seconds since this was last called.
 	 * @return The current frame that needs to be drawn.
 	 */
