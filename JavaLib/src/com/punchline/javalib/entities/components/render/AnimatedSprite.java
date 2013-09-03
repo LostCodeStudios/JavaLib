@@ -42,26 +42,25 @@ public class AnimatedSprite implements Renderable {
 	/**
 	 * Constructs an AnimatedSprite.
 	 * @param spriteSheet The game's SpriteSheet.
-	 * @param key The key prefix of the AnimatedSprite's separate Animations.
-	 * @param frameCols The number of frames per animation.
+	 * @param prefix The key prefix of the AnimatedSprite's separate Animations.
+	 * @param frameWidth The width of each frame.
 	 * @param frameDuration The duration of each frame.
 	 * @param playType How the Animations should animate.
 	 */
-	public AnimatedSprite(SpriteSheet spriteSheet, String key, int frameCols, int playType, float frameDuration) {
+	public AnimatedSprite(SpriteSheet spriteSheet, String prefix, int frameWidth, int playType, float frameDuration) {
 		
-		//TODO this is basically hard-coded.
+		Map<String, TextureRegion> regions = spriteSheet.getRegions(prefix);
 		
-		Animation right = new Animation(spriteSheet, key + "#Right", frameCols, 1, playType, frameDuration);
-		Animation down = new Animation(spriteSheet, key + "#Down", frameCols, 1, playType, frameDuration);
-		Animation left = new Animation(spriteSheet, key + "#Left", frameCols, 1, playType, frameDuration);
-		Animation up = new Animation(spriteSheet, key + "#Up", frameCols, 1, playType, frameDuration);
+		for (String key : regions.keySet()) {
+			int frameCols = regions.get(key).getRegionWidth() / frameWidth;
+			
+			Animation animation = new Animation(spriteSheet, prefix + key, frameCols, 1, 
+					com.badlogic.gdx.graphics.g2d.Animation.LOOP_PINGPONG, 0.3f);
+			
+			this.animations.put(key, animation);
+			setState(key, true);
+		}
 		
-		animations.put("Right", right);
-		animations.put("Down", down);
-		animations.put("Left", left);
-		animations.put("Up", up);
-		
-		setState("Down", true);
 		setOrigin(new Vector2(getWidth() / 2, getHeight() / 2));
 		
 	}
@@ -70,11 +69,9 @@ public class AnimatedSprite implements Renderable {
 	 * Constructs an AnimatedSprite.
 	 * @param keys The animation keys.
 	 * @param animations The animation values. NOTE: This must have the same size as the keys array.
-	 * @param frameWidth The width of each frame.
-	 * @param frameHeight The height of each frame.
 	 * @param initialState The key of the AnimatedSprite's initial state.
 	 */
-	public AnimatedSprite(String[] keys, Animation[] animations, int frameWidth, int frameHeight, String initialState) {
+	public AnimatedSprite(String[] keys, Animation[] animations, String initialState) {
 		
 		for (int i = 0; i < keys.length; i++) {
 			if (i < animations.length) {
@@ -83,7 +80,7 @@ public class AnimatedSprite implements Renderable {
 		}
 		
 		setState(initialState, true);
-		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
+		setOrigin(new Vector2(getWidth() / 2, getHeight() / 2));
 		
 	}
 	

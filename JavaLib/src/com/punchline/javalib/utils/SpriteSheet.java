@@ -75,8 +75,8 @@ public class SpriteSheet implements Disposable {
 	public void addRegion(String key, Rectangle region) {
 		
 		TextureRegion texRegion = new TextureRegion(
-				sheet, region.x, region.y,
-				region.width, region.height);
+				sheet, (int)region.x, (int)region.y,
+				(int)region.width, (int)region.height);
 		
 		regions.put(key, texRegion);
 		
@@ -97,34 +97,6 @@ public class SpriteSheet implements Disposable {
 		regions.put(key, texRegion);
 		
 	}
-
-	/**
-	 * Adds 4 separate TextureRegions to be used for making an {@link AnimatedSprite}.
-	 * The animations should be next to each other, each one being the same width. The order must be as follows:
-	 * Right, Down, Left, Up.
-	 * @param name
-	 * @param source
-	 */
-	public void addAnimatedSprite(String name, Rectangle source) {
-		int fourth = (int) (source.width / 4);
-		
-		TextureRegion right = new TextureRegion(sheet, 
-				(int) source.x, (int) source.y, fourth, (int) source.height);
-		
-		TextureRegion down = new TextureRegion(sheet,
-				(int) source.x + fourth, (int) source.y, fourth, (int) source.height);
-		
-		TextureRegion left = new TextureRegion(sheet,
-				(int) source.x + fourth * 2, (int) source.y, fourth, (int) source.height);
-		
-		TextureRegion up = new TextureRegion(sheet,
-				(int) source.x + fourth * 3, (int) source.y, fourth, (int) source.height);
-		
-		addRegion(name + "#Right", right);
-		addRegion(name + "#Down", down);
-		addRegion(name + "#Left", left);
-		addRegion(name + "#Up", up);
-	}
 	
 	//endregion
 	
@@ -143,6 +115,23 @@ public class SpriteSheet implements Disposable {
 	 */
 	public TextureRegion getRegion(String key) {
 		return regions.get(key);
+	}
+	
+	/**
+	 * @param prefix A key prefix.
+	 * @return A map of all TextureRegions that use the given prefix, with their suffixes as the keys.
+	 */
+	public Map<String, TextureRegion> getRegions(String prefix) {
+		Map<String, TextureRegion> regions = new HashMap<String, TextureRegion>();
+		
+		for (String key : this.regions.keySet()) {
+			if (key.startsWith(prefix)) {
+				String suffix = key.replace(prefix, "");
+				regions.put(suffix, this.regions.get(key));
+			}
+		}
+		
+		return regions;
 	}
 	
 	//endregion
