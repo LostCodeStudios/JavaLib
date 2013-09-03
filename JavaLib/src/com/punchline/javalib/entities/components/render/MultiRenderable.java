@@ -67,13 +67,22 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	
 	@Override
 	public void setPosition(Vector2 position) {
-		base.setPosition(position);
 		
-		//Move all children to the new position, preserving their offset from the base's position.
-		for (Renderable child : children) {
-			Vector2 offset = child.getPosition().sub(getPosition());
-			child.setPosition(offset.add(position));
+		try {
+			base.getPosition(); //this might trigger an exception if setPosition() 
+										//hasn't been called before
+		} catch (NullPointerException ex) {
+			base.setPosition(position);
 		}
+		
+		Vector2 offset = position.cpy().sub(base.getPosition());
+		
+		//Move all children relative to their old positions.
+		for (Renderable child : children) {
+			child.setPosition(child.getPosition().add(offset));
+		}
+		
+		return;
 	}
 
 	@Override

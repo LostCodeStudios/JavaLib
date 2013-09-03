@@ -112,7 +112,8 @@ public class AnimatedSprite implements Renderable {
 
 	@Override
 	public Vector2 getPosition() {
-		return position.cpy();
+		TextureRegion region = getCurrentFrame(0f);
+		return position.cpy().add(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
 	}
 	
 	@Override
@@ -153,7 +154,7 @@ public class AnimatedSprite implements Renderable {
 	@Override
 	public void setPosition(Vector2 position) {
 		TextureRegion region = getCurrentFrame(0f);
-		this.position = position.sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
+		this.position = position.cpy().sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
 	}
 
 	@Override
