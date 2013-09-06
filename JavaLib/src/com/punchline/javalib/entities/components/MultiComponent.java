@@ -1,5 +1,7 @@
 package com.punchline.javalib.entities.components;
 
+import java.util.HashSet;
+
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -20,7 +22,7 @@ public class MultiComponent<T extends Component> implements Component {
 	protected T base;
 	
 	/**
-	 * This MultiComponent's child components.
+	 * This MultiComponent's child components, including the base.
 	 */
 	protected Array<T> children = new Array<T>();
 	
@@ -32,6 +34,8 @@ public class MultiComponent<T extends Component> implements Component {
 	public MultiComponent(T base, T... children) {
 		this.base = base;
 		
+		this.children.add(base);
+		
 		for (T child : children) {
 			this.children.add(child);
 		}
@@ -42,9 +46,7 @@ public class MultiComponent<T extends Component> implements Component {
 	//region Events
 	
 	@Override
-	public void onAdd(ComponentManager container) {
-		base.onAdd(container);
-		
+	public void onAdd(ComponentManager container) {		
 		for (T child : children) {
 			child.onAdd(container);
 		}
@@ -52,13 +54,45 @@ public class MultiComponent<T extends Component> implements Component {
 
 	@Override
 	public void onRemove(ComponentManager container) {
-		base.onRemove(container);
-		
 		for (T child : children) {
 			child.onRemove(container);
 		}
 	}
 
+	//endregion
+	
+	//region Reordering
+	
+	/**
+	 * Reorders the MultiComponent's children.
+	 * @param order An Array of integers, specifying the new order. Example: {0, 4, 1, 3, 2}
+	 */
+	public void reorder(Array<Integer> order) {
+		//Check for the proper size
+		if (order.size != children.size) throw new IllegalArgumentException("The order array's size does not match the size of the children array.");
+		
+		//Check for duplicates
+		HashSet<Integer> duplicateSet = new HashSet<Integer>();
+		
+		for (Integer i : order) {
+			duplicateSet.add(i);
+		}
+		
+		if (duplicateSet.size() != order.size) throw new IllegalArgumentException("The order array contained duplicate indices.");
+		
+		//Now it should be safe to reorder.
+		Array<T> children = new Array<T>();
+		
+		for (Integer i : order) {
+			T child = children.get(i);
+			
+			children.add(child);
+		}
+		
+		this.children = children;
+	}
+	
+	
 	//endregion
 	
 	//region Accessors
@@ -79,14 +113,10 @@ public class MultiComponent<T extends Component> implements Component {
 	}
 	
 	/**
-	 * @return An Array containing all Components contained in this MultiComponent, with the base component at index 0 and children in the same order
-	 * starting from index 1.
+	 * @return A copy of this MultiComponent's children list.
 	 */
 	public Array<T> getComponents() {
-		Array<T> components = new Array<T>();
-		components.add(base);
-		components.addAll(children.toArray());
-		return components;
+		return new Array<T>(children);
 	}
 	
 	//endregion
