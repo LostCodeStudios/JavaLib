@@ -24,6 +24,7 @@ import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
+import com.punchline.javalib.utils.Random;
 import com.punchline.javalib.utils.SpriteSheet;
 
 /**
@@ -37,6 +38,8 @@ import com.punchline.javalib.utils.SpriteSheet;
 public abstract class EntityWorld implements Disposable {
 	
 	//region Fields
+	
+	private Random r = new Random();
 	
 	private boolean gameOver = false;
 	private GameOverInfo gameOverInfo;
@@ -439,6 +442,21 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
 		groupTemplates.put(templateKey, template);
+	}
+	
+	//endregion
+	
+	//region Helpers
+	
+	public Vector2 randomPosition() {
+		Rectangle bounds = getBounds();
+		
+		Vector2 pos = new Vector2();
+		
+		pos.x = r.nextFloat(bounds.x, bounds.x + bounds.width);
+		pos.y = r.nextFloat(bounds.y, bounds.y + bounds.height);
+		
+		return pos;
 	}
 	
 	//endregion
