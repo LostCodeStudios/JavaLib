@@ -143,10 +143,7 @@ public final class DebugRenderSystem extends InputSystem {
 				font.draw(spriteBatch, "Mouse pos: " + mousePosition.toString(), 0, i++ * font.getLineHeight());
 				
 				//real mouse position
-				Vector2 pos = mousePosition.cpy();
-				pos.x = mousePosition.x - Gdx.graphics.getWidth()/2f + world.getCamera().position.x;
-				pos.y= -mousePosition.y + Gdx.graphics.getHeight()/2f + world.getCamera().position.y;
-				font.draw(spriteBatch, "World mouse pos: " +pos.toString(), 0, i++ * font.getLineHeight());
+				font.draw(spriteBatch, "World mouse pos: " + world.toWorldCoordinates(mousePosition), 0, i++ * font.getLineHeight());
 				
 				spriteBatch.end();
 				
