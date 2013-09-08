@@ -79,8 +79,8 @@ public class CameraMovementSystem extends InputSystem  {
 			camera.position.x = bounds.x + camera.viewportWidth / 2;
 		}
 		
-		if (top > bounds.y + camera.viewportHeight) {
-			camera.position.y = bounds.y + camera.viewportHeight - camera.viewportHeight / 2;
+		if (top > bounds.y + bounds.height) {
+			camera.position.y = bounds.y + bounds.height - camera.viewportHeight / 2;
 		}
 		
 		if (right > bounds.x + bounds.width) {
