@@ -45,9 +45,9 @@ public interface Renderable extends Component {
 	
 	/**
 	 * Sets the rotation at which the component should be rendered.
-	 * @param radians Rotation in radians.
+	 * @param degrees Rotation in degrees.
 	 */
-	public void setRotation(float radians);
+	public void setRotation(float degrees);
 	
 	/**
 	 * Sets the scale that should be applied when this component is drawn.
