@@ -68,7 +68,6 @@ public abstract class InputSystem extends EntitySystem implements InputProcessor
 	 */
 	public InputSystem(InputMultiplexer input) {
 		this.input = input;
-		input.addProcessor(this);
 		
 		tiltEnabled = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
 	}
