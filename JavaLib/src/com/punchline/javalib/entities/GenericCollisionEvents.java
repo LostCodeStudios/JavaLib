@@ -43,4 +43,26 @@ public final class GenericCollisionEvents {
 		
 	}
 	
+	/**
+	 * @return A Collidable that does nothing.
+	 */
+	public static Collidable empty() {
+		
+		return new Collidable() {
+			
+			@Override
+			public void onAdd(ComponentManager container) { }
+			
+			@Override
+			public void onRemove(ComponentManager contanier) { }
+			
+			@Override
+			public float onCollide(Entity container, Entity victim) {
+				return 1;
+			}
+			
+		};
+		
+	}
+	
 }

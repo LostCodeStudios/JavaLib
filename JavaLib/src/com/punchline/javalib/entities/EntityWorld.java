@@ -24,6 +24,8 @@ import com.punchline.javalib.entities.templates.EntityCreationArgs;
 import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
+import com.punchline.javalib.utils.Convert;
+import com.punchline.javalib.utils.Random;
 import com.punchline.javalib.utils.SpriteSheet;
 
 /**
@@ -37,6 +39,8 @@ import com.punchline.javalib.utils.SpriteSheet;
 public abstract class EntityWorld implements Disposable {
 	
 	//region Fields
+	
+	private Random r = new Random();
 	
 	private boolean gameOver = false;
 	private GameOverInfo gameOverInfo;
@@ -439,6 +443,37 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	protected void addGroupTemplate(String templateKey, EntityGroupTemplate template) {
 		groupTemplates.put(templateKey, template);
+	}
+	
+	//endregion
+	
+	//region Helpers
+	
+	/**
+	 * @return A random position within this world's bounds.
+	 */
+	public Vector2 randomPosition() {
+		Rectangle bounds = getBounds();
+		
+		Vector2 pos = new Vector2();
+		
+		pos.x = r.nextFloat(bounds.x, bounds.x + bounds.width);
+		pos.y = r.nextFloat(bounds.y, bounds.y + bounds.height);
+		
+		return pos;
+	}
+	
+	/**
+	 * @param screenCoordinates A Vector2 whose coordinates are in screen pixels.
+	 * @return A Vector2 whose coordinates are in meters and adjusted to a world position.
+	 */
+	public Vector2 toWorldCoordinates(Vector2 screenCoordinates) {
+		Vector2 pos = screenCoordinates.cpy();
+		
+		pos.x = screenCoordinates.x - Gdx.graphics.getWidth() / 2f + camera.position.x;
+		pos.y = -screenCoordinates.y + Gdx.graphics.getHeight() / 2f + camera.position.y;
+		
+		return Convert.pixelsToMeters(pos);
 	}
 	
 	//endregion

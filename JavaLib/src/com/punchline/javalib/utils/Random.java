@@ -19,12 +19,30 @@ public class Random {
 	}
 	
 	/**
+	 * @param lowerBound The inclusive lower bound.
+	 * @param upperBound The inclusive upper bound.
+	 * @return A random integer from the range [lowerBound, upperBound].
+	 */
+	public int nextInt(int lowerBound, int upperBound) {
+		return rand.nextInt(upperBound - lowerBound) + lowerBound;
+	}
+	
+	/**
 	 * @param n The exclusive upper bound of this random number generation.
 	 * @return A random float from the range [0, n) 
 	 * generated using {@link java.util.Random#nextFloat}.
 	 */
-	public float nextFloat(int n) {
+	public float nextFloat(float n) {
 		return rand.nextFloat() * n;
+	}
+	
+	/**
+	 * @param lowerBound The inclusive lower bound.
+	 * @param upperBound The inclusive upper bound.
+	 * @return A random float from the range [lowerBound, upperBound].
+	 */
+	public float nextFloat(float lowerBound, float upperBound) {
+		return nextFloat(upperBound + 1 - lowerBound) + lowerBound;
 	}
 	
 	/**
@@ -32,8 +50,17 @@ public class Random {
 	 * @return A random double from the range [0, n)
 	 * generated using {@link java.util.Random#nextDouble}.
 	 */
-	public double nextDouble(int n) {
+	public double nextDouble(double n) {
 		return rand.nextDouble() * n;
+	}
+	
+	/**
+	 * @param lowerBound The inclusive lower bound.
+	 * @param upperBound The inclusive upper bound.
+	 * @return A random double from the range [lowerBound, upperBound].
+	 */
+	public double nextDouble(double lowerBound, double upperBound) {
+		return nextDouble(upperBound + 1 - lowerBound) + lowerBound;
 	}
 	
 	/**

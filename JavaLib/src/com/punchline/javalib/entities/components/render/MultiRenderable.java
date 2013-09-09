@@ -67,14 +67,6 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	
 	@Override
 	public void setPosition(Vector2 position) {
-		
-		try {
-			base.getPosition(); //this might trigger an exception if setPosition() 
-										//hasn't been called before
-		} catch (NullPointerException ex) {
-			base.setPosition(position);
-		}
-		
 		Vector2 offset = position.cpy().sub(base.getPosition());
 		
 		//Move all children relative to their old positions.
@@ -86,18 +78,14 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	}
 
 	@Override
-	public void setRotation(float degrees) {
-		base.setRotation(degrees);
-		
+	public void setRotation(float degrees) {		
 		for (Renderable child : children) {
 			child.setRotation(degrees);
 		}
 	}
 
 	@Override
-	public void setScale(float scaleX, float scaleY) {
-		base.setScale(scaleX, scaleY);
-		
+	public void setScale(float scaleX, float scaleY) {		
 		for (Renderable child : children) {
 			child.setScale(scaleX, scaleY);
 		}
@@ -105,10 +93,8 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 
 	@Override
 	public void setOrigin(Vector2 origin) {
-		base.setOrigin(origin);
-		
 		for (Renderable child : children) {
-			Vector2 offset = child.getPosition().cpy().sub(base.getPosition());
+			Vector2 offset = child.getPosition().sub(base.getPosition());
 			
 			child.setOrigin(origin.cpy().add(offset));
 		}
@@ -119,9 +105,7 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	//region Rendering
 
 	@Override
-	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
-		base.draw(spriteBatch, deltaSeconds);
-		
+	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {		
 		for (Renderable child : children) {
 			child.draw(spriteBatch, deltaSeconds);
 		}
