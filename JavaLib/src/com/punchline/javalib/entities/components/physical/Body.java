@@ -63,7 +63,7 @@ public class Body implements Transform, Velocity {
 	 * @param e The entity that will own this body.
 	 * @param bodyDef The definition of the body to be created.
 	 */
-	private Body(EntityWorld world, Entity e, BodyDef bd){
+	public Body(EntityWorld world, Entity e, BodyDef bd){
 		entityWorld = world;
 		body = world.getBox2DWorld().createBody(bd);
 		body.setUserData(e);
