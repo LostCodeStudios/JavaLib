@@ -52,6 +52,8 @@ public class Health extends Stat {
 	
 	@Override
 	public void drain(double amount) {
+		if (isEmpty()) return; //Already dead, don't drain.
+		
 		super.drain(amount);
 		
 		if (isEmpty()) { //Dead
