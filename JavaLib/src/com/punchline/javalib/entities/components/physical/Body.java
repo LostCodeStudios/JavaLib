@@ -2,7 +2,9 @@ package com.punchline.javalib.entities.components.physical;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.ComponentManager;
@@ -18,6 +20,30 @@ public class Body implements Transform, Velocity {
 	
 	private EntityWorld entityWorld;
 	private com.badlogic.gdx.physics.box2d.Body body;
+	
+	/**
+	 * Constructs a Body without using BodyDef or FixtureDef.
+	 * @param world The EntityWorld.
+	 * @param e The entity that contains this Body.
+	 * @param bodyType The type of this Body.
+	 * @param shape The body's shape.
+	 * @param position The body's initial position.
+	 */
+	public Body(EntityWorld world, Entity e, BodyType bodyType, Shape shape, Vector2 position) {
+		entityWorld = world;
+		
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = bodyType;
+		bodyDef.position.set(position);
+		
+		body = world.getBox2DWorld().createBody(bodyDef);
+		body.setUserData(e);
+		
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		
+		body.createFixture(fixtureDef);
+	}
 	
 	/**
 	 * Constructs a body component.

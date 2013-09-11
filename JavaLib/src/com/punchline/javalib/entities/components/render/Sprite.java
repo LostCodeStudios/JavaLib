@@ -120,7 +120,7 @@ public class Sprite implements Renderable {
 	
 	@Override
 	public Vector2 getPosition() {
-		return new Vector2(sprite.getX(), sprite.getY());
+		return new Vector2(sprite.getX() + getWidth() / 2, sprite.getY() + getHeight() / 2);
 	}
 	
 	@Override
@@ -136,8 +136,8 @@ public class Sprite implements Renderable {
 	 * Sets the Sprite's center position.
 	 * @param position The new position.
 	 */
-	public void setPosition(Vector2 position) {		
-		sprite.setPosition(position.x - sprite.getOriginX(), position.y - sprite.getOriginY());
+	public void setPosition(Vector2 position) {	
+		sprite.setPosition(position.x - getWidth() / 2, position.y - getHeight() / 2);
 	}
 	
 	/**

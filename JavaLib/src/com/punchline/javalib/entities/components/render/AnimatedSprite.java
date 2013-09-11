@@ -25,7 +25,6 @@ public class AnimatedSprite implements Renderable {
 	private float stateTime = 0f;
 	
 	private Vector2 position;
-	private float rotation;
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
@@ -112,19 +111,26 @@ public class AnimatedSprite implements Renderable {
 
 	@Override
 	public Vector2 getPosition() {
-		return position.cpy();
+		TextureRegion region = getCurrentFrame(0f);
+		return position.cpy().add(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
 	}
 	
 	@Override
-	public float getRotation() {
-		return rotation;
-	}
+	public float getRotation() { return 0f; }
 	
 	/**
 	 * @return The current animation state key.
 	 */
 	public String getState() {
 		return state;
+	}
+	
+	/**
+	 * @param state An animation key.
+	 * @return Whether this AnimatedSprite contains an Animation with that key.
+	 */
+	public boolean hasState(String state) {
+		return animations.containsKey(state);
 	}
 	
 	/**
@@ -145,13 +151,11 @@ public class AnimatedSprite implements Renderable {
 	@Override
 	public void setPosition(Vector2 position) {
 		TextureRegion region = getCurrentFrame(0f);
-		this.position = position.sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
+		this.position = position.cpy().sub(new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2));
 	}
 
 	@Override
-	public void setRotation(float degrees) {
-		this.rotation = degrees;
-	}
+	public void setRotation(float degrees) { }
 
 	@Override
 	public void setScale(float scaleX, float scaleY) {
@@ -187,7 +191,7 @@ public class AnimatedSprite implements Renderable {
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		TextureRegion region = getCurrentFrame(deltaSeconds);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y, 
-				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, rotation);
+				region.getRegionWidth(), region.getRegionHeight(), scaleX, scaleY, 0f);
 	}
 	
 	//endregion

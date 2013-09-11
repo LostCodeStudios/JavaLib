@@ -3,6 +3,7 @@ package com.punchline.javalib.entities.components.generic;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.entities.components.abstracted.Stat;
 
 /**
  * A component describing an Entity's health. When health becomes 0, the Entity will be deleted.
@@ -51,6 +52,8 @@ public class Health extends Stat {
 	
 	@Override
 	public void drain(double amount) {
+		if (isEmpty()) return; //Already dead, don't drain.
+		
 		super.drain(amount);
 		
 		if (isEmpty()) { //Dead

@@ -1,4 +1,4 @@
-package com.punchline.javalib.entities.components.generic;
+package com.punchline.javalib.entities.components.abstracted;
 
 import com.punchline.javalib.entities.components.Component;
 
