@@ -3,9 +3,9 @@ package com.punchline.javalib.entities.components.physical;
 import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
-import com.punchline.javalib.entities.Entity.EntityDeletionCallback;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.utils.events.EventCallback;
 
 /**
  * Component wrapper for a Box2D sensor fixture. Must only be added to Entities that already have {@link Body} components. 
@@ -70,14 +70,14 @@ public class Sensor implements Component {
 	public void onDetected(Entity e, final EntityWorld world) {
 		entitiesInView.add(e);
 		
-		e.onDeleted = new EntityDeletionCallback() {
+		e.onDeleted.addCallback(this, new EventCallback() {
 
 			@Override
-			public void invoke(Entity owner) {
+			public void invoke(Entity e, Object... args) {
 				onEscaped(owner, world);
 			}
 			
-		};
+		});
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class Sensor implements Component {
 	public void onEscaped(Entity e, final EntityWorld world) {
 		entitiesInView.removeValue(e, true);
 		
-		e.onDeleted = null;
+		e.onDeleted.removeCallback(this);
 	}
 	
 	@Override

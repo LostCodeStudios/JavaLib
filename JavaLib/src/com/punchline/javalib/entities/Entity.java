@@ -3,6 +3,7 @@ package com.punchline.javalib.entities;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.utils.events.EventHandler;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
@@ -11,21 +12,6 @@ import com.punchline.javalib.entities.components.ComponentManager;
  *
  */
 public final class Entity extends ComponentManager implements Poolable {
-	
-	/**
-	 * Callback interface for when an Entity is deleted.
-	 * @author Natman64
-	 *
-	 */
-	public interface EntityDeletionCallback {
-		
-		/**
-		 * Called when this Entity is deleted.
-		 * @param owner The entity being deleted.
-		 */
-		public void invoke(Entity owner);
-		
-	}
 	
 	//region Fields
 	
@@ -45,9 +31,9 @@ public final class Entity extends ComponentManager implements Poolable {
 	private String type = "";
 	
 	/**
-	 * Callback for when this Entity is deleted.
+	 * EventHandler that is invoked when this Entity is deleted.
 	 */
-	public EntityDeletionCallback onDeleted;
+	public final EventHandler onDeleted = new EventHandler();
 	
 	//endregion
 	
@@ -112,7 +98,7 @@ public final class Entity extends ComponentManager implements Poolable {
 		type = "";
 		deleted = false;
 		changed = false;
-		onDeleted = null;
+		onDeleted.clear();
 	}	
 
 	//endregion
