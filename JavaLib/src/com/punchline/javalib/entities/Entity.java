@@ -96,9 +96,6 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	public void delete() {
 		deleted = true;
-		
-		if (onDeleted != null)
-			onDeleted.invoke(this);
 	}
 
 	/**
