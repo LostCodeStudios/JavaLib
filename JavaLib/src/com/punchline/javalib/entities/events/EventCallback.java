@@ -1,4 +1,4 @@
-package com.punchline.javalib.utils.events;
+package com.punchline.javalib.entities.events;
 
 import com.punchline.javalib.entities.Entity;
 

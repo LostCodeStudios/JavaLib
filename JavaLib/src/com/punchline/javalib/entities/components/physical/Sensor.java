@@ -5,9 +5,8 @@ import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.entities.events.EventCallback;
 import com.punchline.javalib.utils.LogManager;
-import com.punchline.javalib.utils.events.EventCallback;
-
 /**
  * Component wrapper for a Box2D sensor fixture. Must only be added to Entities that already have {@link Body} components. 
  * Tracks a list of Entities currently within the sensor fixture. Contains event handlers for when Entities are 

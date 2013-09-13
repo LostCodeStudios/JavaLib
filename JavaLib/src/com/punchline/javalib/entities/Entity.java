@@ -3,7 +3,7 @@ package com.punchline.javalib.entities;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
-import com.punchline.javalib.utils.events.EventHandler;
+import com.punchline.javalib.entities.events.EventHandler;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
@@ -15,19 +15,13 @@ public final class Entity extends ComponentManager implements Poolable {
 	
 	//region Fields
 	
-	/**
-	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
-	 */
+	/** This entity's unique tag, for identifying it individually. */
 	private String tag = "";
 	
-	/**
-	 * The name of the group this entity belongs to. This must be set only once, by a template.
-	 */
+	/** The name of the group this entity belongs to. */
 	private String group = "";
 	
-	/**
-	 * This entity's type. This must be set only once, by a template.
-	 */
+	/** This entity's type. */
 	private String type = "";
 	
 	/**

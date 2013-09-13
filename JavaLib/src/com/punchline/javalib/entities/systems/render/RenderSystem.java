@@ -1,5 +1,7 @@
 package com.punchline.javalib.entities.systems.render;
 
+import java.util.Comparator;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,9 +18,27 @@ import com.punchline.javalib.utils.Convert;
  */
 public final class RenderSystem extends ComponentSystem {
 	
+	/**
+	 * Comparator implementation used for properly layering Renderables.
+	 * @author Natman64
+	 *
+	 */
+	private class RenderableComparator implements Comparator<Entity> {
+
+		@Override
+		public int compare(Entity o1, Entity o2) {
+			Renderable r1 = o1.getComponent(Renderable.class);
+			Renderable r2 = o2.getComponent(Renderable.class);
+			
+			return r1.getLayer() - r2.getLayer();
+		}
+		
+	}
+	
 	private Camera camera;
 	private SpriteBatch spriteBatch;
-
+	private RenderableComparator comparator = new RenderableComparator();
+	
 	//region Initialization/Disposal
 	
 	/**
@@ -46,6 +66,8 @@ public final class RenderSystem extends ComponentSystem {
 	
 	@Override
 	public void processEntities() {
+		
+		if (processingListChanged) entities.sort(comparator);
 		
 		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined);

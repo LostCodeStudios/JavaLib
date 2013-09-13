@@ -27,6 +27,7 @@ public class Animation implements Renderable {
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
+	private int layer = 0;
 	
 	//endregion
 	
@@ -187,6 +188,9 @@ public class Animation implements Renderable {
 		return rotation;
 	}
 	
+	@Override
+	public int getLayer() { return layer; }
+	
 	/**
 	 * @param deltaSeconds The amount of seconds since the last time the current frame was checked.
 	 * @return The current frame.
@@ -219,6 +223,11 @@ public class Animation implements Renderable {
 	@Override
 	public void setOrigin(Vector2 origin) {
 		this.origin = origin;
+	}
+	
+	@Override
+	public void setLayer(int layer) {
+		this.layer = layer;
 	}
 	
 	/**

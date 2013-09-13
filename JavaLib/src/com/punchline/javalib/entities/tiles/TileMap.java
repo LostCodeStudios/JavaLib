@@ -40,6 +40,7 @@ public class TileMap implements Component, Renderable, Transform {
 	private TiledMap map;
 	private MapBodyManager bodyManager;
 	private OrthogonalTiledMapRenderer renderer;
+	private int layer = 0;
 	
 	/**
 	 * Constructs a TileMap component.
@@ -128,6 +129,11 @@ public class TileMap implements Component, Renderable, Transform {
 	//region Renderable Implementation
 	
 	@Override
+	public int getLayer() {
+		return layer;
+	}
+	
+	@Override
 	public void setPosition(Vector2 position) { }
 
 	@Override
@@ -139,6 +145,11 @@ public class TileMap implements Component, Renderable, Transform {
 	@Override
 	public void setOrigin(Vector2 origin) { }
 
+	@Override
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
+	
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		if (!init) {

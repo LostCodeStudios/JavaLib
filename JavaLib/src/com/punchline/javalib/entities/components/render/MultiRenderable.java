@@ -61,6 +61,11 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 		return base.getRotation();
 	}
 	
+	@Override
+	public int getLayer() {
+		return base.getLayer();
+	}
+	
 	//endregion
 	
 	//region Mutators
@@ -98,6 +103,11 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 			
 			child.setOrigin(origin.cpy().add(offset));
 		}
+	}
+	
+	@Override
+	public void setLayer(int layer) {
+		base.setLayer(layer);
 	}
 	
 	//endregion
