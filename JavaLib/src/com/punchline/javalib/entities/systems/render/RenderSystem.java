@@ -67,10 +67,10 @@ public final class RenderSystem extends ComponentSystem {
 	@Override
 	public void processEntities() {
 		
+		if (processingListChanged) entities.sort(comparator);
+		
 		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined);
-		
-		entities.sort(comparator);
 		
 		spriteBatch.begin();
 		
