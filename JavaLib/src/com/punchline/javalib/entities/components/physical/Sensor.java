@@ -6,7 +6,7 @@ import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.events.EventCallback;
-
+import com.punchline.javalib.utils.LogManager;
 /**
  * Component wrapper for a Box2D sensor fixture. Must only be added to Entities that already have {@link Body} components. 
  * Tracks a list of Entities currently within the sensor fixture. Contains event handlers for when Entities are 
@@ -18,7 +18,7 @@ public class Sensor implements Component {
 	
 	//region Fields
 	
-	private Array<Entity> entitiesInView = new Array<Entity>();
+	private final Array<Entity> entitiesInView = new Array<Entity>();
 	
 	/**
 	 * The Entity that owns this component.
@@ -67,14 +67,14 @@ public class Sensor implements Component {
 	 * @param e The Entity that entered the sensor.
 	 * @param world The world the Entity resides in.
 	 */
-	public void onDetected(Entity e, final EntityWorld world) {
-		entitiesInView.add(e);
+	public void onDetected(final Entity es, final EntityWorld world) {
+		entitiesInView.add(es);
 		
-		e.onDeleted.addCallback(this, new EventCallback() {
+		es.onDeleted.addCallback(this, new EventCallback() {
 
 			@Override
 			public void invoke(Entity e, Object... args) {
-				onEscaped(owner, world);
+				entitiesInView.removeValue(es, true);
 			}
 			
 		});
@@ -87,6 +87,8 @@ public class Sensor implements Component {
 	 */
 	public void onEscaped(Entity e, final EntityWorld world) {
 		entitiesInView.removeValue(e, true);
+		
+		LogManager.debug("SENSOR", "E: " + e.getTag() + " escaped to Sensor" + this);
 		
 		e.onDeleted.removeCallback(this);
 	}
