@@ -15,19 +15,13 @@ public final class Entity extends ComponentManager implements Poolable {
 	
 	//region Fields
 	
-	/**
-	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
-	 */
+	/** This entity's unique tag, for identifying it individually. */
 	private String tag = "";
 	
-	/**
-	 * The name of the group this entity belongs to. This must be set only once, by a template.
-	 */
+	/** The name of the group this entity belongs to. */
 	private String group = "";
 	
-	/**
-	 * This entity's type. This must be set only once, by a template.
-	 */
+	/** This entity's type. */
 	private String type = "";
 	
 	/**
