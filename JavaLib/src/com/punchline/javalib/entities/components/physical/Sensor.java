@@ -5,6 +5,7 @@ import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.utils.LogManager;
 import com.punchline.javalib.utils.events.EventCallback;
 
 /**
@@ -18,7 +19,7 @@ public class Sensor implements Component {
 	
 	//region Fields
 	
-	private Array<Entity> entitiesInView = new Array<Entity>();
+	private final Array<Entity> entitiesInView = new Array<Entity>();
 	
 	/**
 	 * The Entity that owns this component.
@@ -67,14 +68,14 @@ public class Sensor implements Component {
 	 * @param e The Entity that entered the sensor.
 	 * @param world The world the Entity resides in.
 	 */
-	public void onDetected(Entity e, final EntityWorld world) {
-		entitiesInView.add(e);
+	public void onDetected(final Entity es, final EntityWorld world) {
+		entitiesInView.add(es);
 		
-		e.onDeleted.addCallback(this, new EventCallback() {
+		es.onDeleted.addCallback(this, new EventCallback() {
 
 			@Override
 			public void invoke(Entity e, Object... args) {
-				onEscaped(owner, world);
+				entitiesInView.removeValue(es, true);
 			}
 			
 		});
@@ -87,6 +88,8 @@ public class Sensor implements Component {
 	 */
 	public void onEscaped(Entity e, final EntityWorld world) {
 		entitiesInView.removeValue(e, true);
+		
+		LogManager.debug("SENSOR", "E: " + e.getTag() + " escaped to Sensor" + this);
 		
 		e.onDeleted.removeCallback(this);
 	}

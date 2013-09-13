@@ -1,6 +1,7 @@
 package com.punchline.javalib.utils.events;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.punchline.javalib.entities.Entity;
@@ -38,9 +39,10 @@ public class EventHandler {
 	 * @param args Miscellaneous arguments for the event.
 	 */
 	public void invoke(Entity e, Object... args) {
-		for (EventCallback callback : callbacks.values()) {
-			callback.invoke(e, args);
-		}
+		Iterator<EventCallback> iter = callbacks.values().iterator();
+		while(iter.hasNext())
+			iter.next().invoke(e, args);
+		
 	}
 	
 	/**
