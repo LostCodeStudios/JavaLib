@@ -60,6 +60,7 @@ public class AnimatedSprite implements Renderable {
 			setState(key, true);
 		}
 		
+		position = Vector2.Zero.cpy();
 		setOrigin(new Vector2(getWidth() / 2, getHeight() / 2));
 		
 	}
