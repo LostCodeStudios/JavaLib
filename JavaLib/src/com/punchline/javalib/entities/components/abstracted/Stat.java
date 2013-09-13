@@ -9,7 +9,10 @@ import com.punchline.javalib.entities.components.Component;
  */
 public abstract class Stat implements Component {
 	
+	/** This stat's current value. */
 	protected double current;
+	
+	/** This stat's max value. */
 	protected double max;
 	
 	/**
