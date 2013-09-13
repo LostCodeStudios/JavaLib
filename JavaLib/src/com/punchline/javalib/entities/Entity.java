@@ -3,7 +3,7 @@ package com.punchline.javalib.entities;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
-import com.punchline.javalib.utils.events.EventHandler;
+import com.punchline.javalib.entities.events.EventHandler;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
