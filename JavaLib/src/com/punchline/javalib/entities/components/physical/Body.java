@@ -144,7 +144,7 @@ public class Body implements Transform, Velocity {
 
 	@Override
 	public void onRemove(ComponentManager container) {
-	    entityWorld.safelyRemoveBody(body);
+	    entityWorld.getBox2DWorld().destroyBody(body);
 	}
 	
 	//endregion
