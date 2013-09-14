@@ -61,7 +61,7 @@ public class ParticleSystem extends ComponentSystem {
 					Entity victim = (Entity)fixture.getBody().getUserData();
 					
 					//Call the on collide event for the entity and terminate if appropriate.
-					return col.onCollide(e, victim);
+					return col.continueCollision(e, victim);
 				}
 			}.init(e),
 			pos, pos.cpy().add(deltaX));
