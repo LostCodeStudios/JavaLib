@@ -59,9 +59,8 @@ public final class ContactManager extends EventHandler implements ContactListene
 			this.addCallback(new Object(), new EventCallback(){
 				@Override
 				public void invoke(Entity e, Object... args) {
-					// TODO Auto-generated method stub
 					sensor.onDetected(detectee, world);
-				}	
+				}
 			});
 		}
 		
@@ -84,7 +83,6 @@ public final class ContactManager extends EventHandler implements ContactListene
 					this.addCallback(new Object(), new EventCallback(){
 						@Override
 						public void invoke(Entity e, Object... args) {
-							// TODO Auto-generated method stub
 							c1.onCollide(e1, e2);
 						}	
 					});
@@ -93,7 +91,6 @@ public final class ContactManager extends EventHandler implements ContactListene
 					this.addCallback(new Object(), new EventCallback(){
 						@Override
 						public void invoke(Entity e, Object... args) {
-							// TODO Auto-generated method stub
 							c2.onCollide(e2, e1);
 						}	
 					});
@@ -107,7 +104,7 @@ public final class ContactManager extends EventHandler implements ContactListene
 	 * Processes all ended contacts, calling Sensor.onEscape callbacks as necessary.
 	 */
 	@Override
-	public void endContact(Contact contact) { 
+	public void endContact(Contact contact) {
 		Fixture f1 = contact.getFixtureA();
 		Fixture f2 = contact.getFixtureB();
 		
@@ -120,6 +117,7 @@ public final class ContactManager extends EventHandler implements ContactListene
 		if (e1 == null || e2 == null)
 			return;
 		
+		//SENSOR CODE
 		if((f1.isSensor() || f2.isSensor()) && !(f2.isSensor() && f2.isSensor())){
 			
 			final Entity escapee;
@@ -140,7 +138,6 @@ public final class ContactManager extends EventHandler implements ContactListene
 			this.addCallback(new Object(), new EventCallback(){
 				@Override
 				public void invoke(Entity e, Object... args) {
-					// TODO Auto-generated method stub
 					sensor.onEscaped(escapee, world);
 				}	
 			});
