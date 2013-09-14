@@ -51,44 +51,28 @@ public abstract class EntityWorld implements Disposable {
 	private Array<EntityCreationArgs> entitiesToCreate = new Array<EntityCreationArgs>();
 	private Array<Body> bodiesToRemove;
 	
-	/**
-	 * The InputMultiplexer managing this world's game.
-	 */
+	/** The InputMultiplexer managing this world's game. */
 	protected InputMultiplexer input;
 	
-	/**
-	 * This world's {@link EntityManager}.
-	 */
+	/** This world's {@link EntityManager}. */
 	protected EntityManager entities;
 	
-	/**
-	 * This world's {@link SystemManager}.
-	 */
+	/** This world's {@link SystemManager}. */
 	protected SystemManager systems;
 	
-	/**
-	 * This world's {@link Camera Camera}.
-	 */
+	/** This world's {@link Camera Camera}. */
 	protected Camera camera;
 	
-	/**
-	 * This world's {@link PhysicsWorld}
-	 */
+	/** This world's {@link PhysicsWorld} */
 	protected PhysicsWorld physicsWorld;
 
-	/**
-	 * The world's {@link ContactManager}.
-	 */
+	/** The world's {@link ContactManager}. */
 	protected ContactManager contactManager;
 	
-	/**
-	 * This world's {@link DebugRenderSystem}
-	 */
+	/** This world's {@link DebugRenderSystem} */
 	protected DebugRenderSystem debugView;
 	
-	/**
-	 * The {@link SpriteSheet} used for this game.
-	 */
+	/** The {@link SpriteSheet} used for this game. */
 	protected SpriteSheet spriteSheet;
 	
 	//endregion

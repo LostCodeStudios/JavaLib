@@ -33,6 +33,12 @@ public interface Renderable extends Component {
 	 */
 	public float getRotation();
 	
+	/**
+	 * @return This Renderable's drawing layer. When drawn, this Renderable will appear below every Renderable
+	 * with a greater layer value.
+	 */
+	public int getLayer();
+	
 	//endregion
 	
 	//region Mutators
@@ -61,6 +67,12 @@ public interface Renderable extends Component {
 	 * @param origin The origin.
 	 */
 	public void setOrigin(Vector2 origin);
+	
+	/**
+	 * Sets this Renderable's drawing layer.
+	 * @param layer The layer this Renderable should be drawn at.
+	 */
+	public void setLayer(int layer);
 	
 	//endregion
 	

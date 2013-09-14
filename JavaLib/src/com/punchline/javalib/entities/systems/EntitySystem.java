@@ -16,7 +16,10 @@ public abstract class EntitySystem implements Disposable {
 	
 	//region Fields
 	
-	private Array<Entity> entities = new Array<Entity>();
+	/**
+	 * This system's processing list. Use direct access sparingly.
+	 */
+	protected Array<Entity> entities = new Array<Entity>();
 	
 	private long previousTime;
 	private float processTime;
@@ -28,6 +31,11 @@ public abstract class EntitySystem implements Disposable {
 	 * The {@link EntityWorld} in which this system is contained.
 	 */
 	protected EntityWorld world;
+	
+	/**
+	 * If the processing list has been modified since the last call to processEntities(), this value is true.
+	 */
+	protected boolean processingListChanged;
 	
 	//endregion
 	
@@ -117,6 +125,8 @@ public abstract class EntitySystem implements Disposable {
 		time = System.nanoTime();
 		
 		processTime = (float)((time - previousTime) / 1000.0);
+		
+		processingListChanged = false;
 	}
 	
 	/**
@@ -184,6 +194,8 @@ public abstract class EntitySystem implements Disposable {
 	public void add(Entity e) {
 		entities.add(e);
 		onAdded(e);
+		
+		processingListChanged = true;
 	}
 	
 	/**
@@ -193,6 +205,8 @@ public abstract class EntitySystem implements Disposable {
 	public void remove(Entity e) {
 		entities.removeValue(e, true);
 		onRemoved(e);
+		
+		processingListChanged = true;
 	}
 	
 	/**

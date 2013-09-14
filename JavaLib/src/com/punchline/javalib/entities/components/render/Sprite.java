@@ -19,6 +19,8 @@ public class Sprite implements Renderable {
 	
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	
+	private int layer = 0;
+	
 	/**
 	 * Constructs a Sprite using the given SpriteSheet. This should always be preferred over the other constructors
 	 * because SpriteSheet improves performance.
@@ -128,6 +130,11 @@ public class Sprite implements Renderable {
 		return sprite.getRotation();
 	}
 	
+	@Override
+	public int getLayer() {
+		return layer;
+	}
+	
 	//endregion
 	
 	//region Mutators
@@ -156,6 +163,11 @@ public class Sprite implements Renderable {
 	@Override
 	public void setOrigin(Vector2 origin) {
 		sprite.setOrigin(origin.x, origin.y);
+	}
+	
+	@Override
+	public void setLayer(int layer) {
+		this.layer = layer;
 	}
 	
 	//endregion

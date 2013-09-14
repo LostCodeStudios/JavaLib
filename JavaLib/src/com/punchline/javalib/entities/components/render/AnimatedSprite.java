@@ -28,6 +28,7 @@ public class AnimatedSprite implements Renderable {
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
+	private int layer = 0;
 	
 	/**
 	 * Whether this AnimatedSprite needs to keep updating frames.
@@ -60,6 +61,7 @@ public class AnimatedSprite implements Renderable {
 			setState(key, true);
 		}
 		
+		position = Vector2.Zero.cpy();
 		setOrigin(new Vector2(getWidth() / 2, getHeight() / 2));
 		
 	}
@@ -118,6 +120,9 @@ public class AnimatedSprite implements Renderable {
 	@Override
 	public float getRotation() { return 0f; }
 	
+	@Override
+	public int getLayer() { return layer; }
+	
 	/**
 	 * @return The current animation state key.
 	 */
@@ -166,6 +171,11 @@ public class AnimatedSprite implements Renderable {
 	@Override
 	public void setOrigin(Vector2 origin) {
 		this.origin = origin;
+	}
+	
+	@Override
+	public void setLayer(int layer) {
+		this.layer = layer;
 	}
 	
 	/**

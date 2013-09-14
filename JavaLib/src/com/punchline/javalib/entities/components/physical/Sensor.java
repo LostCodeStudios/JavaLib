@@ -3,9 +3,10 @@ package com.punchline.javalib.entities.components.physical;
 import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
-import com.punchline.javalib.entities.Entity.EntityDeletionCallback;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.entities.events.EventCallback;
+import com.punchline.javalib.utils.LogManager;
 
 /**
  * Component wrapper for a Box2D sensor fixture. Must only be added to Entities that already have {@link Body} components. 
@@ -18,7 +19,7 @@ public class Sensor implements Component {
 	
 	//region Fields
 	
-	private Array<Entity> entitiesInView = new Array<Entity>();
+	private final Array<Entity> entitiesInView = new Array<Entity>();
 	
 	/**
 	 * The Entity that owns this component.
@@ -67,17 +68,17 @@ public class Sensor implements Component {
 	 * @param e The Entity that entered the sensor.
 	 * @param world The world the Entity resides in.
 	 */
-	public void onDetected(Entity e, final EntityWorld world) {
+	public void onDetected(final Entity e, final EntityWorld world) {
 		entitiesInView.add(e);
 		
-		e.onDeleted = new EntityDeletionCallback() {
+		e.onDeleted.addCallback(this, new EventCallback() {
 
 			@Override
-			public void invoke(Entity owner) {
-				onEscaped(owner, world);
+			public void invoke(Entity e, Object... args) {
+				entitiesInView.removeValue(e, true);
 			}
 			
-		};
+		});
 	}
 	
 	/**
@@ -88,7 +89,9 @@ public class Sensor implements Component {
 	public void onEscaped(Entity e, final EntityWorld world) {
 		entitiesInView.removeValue(e, true);
 		
-		e.onDeleted = null;
+		LogManager.debug("SENSOR", "E: " + e.getTag() + " escaped to Sensor" + this);
+		
+		e.onDeleted.removeCallback(this);
 	}
 	
 	@Override

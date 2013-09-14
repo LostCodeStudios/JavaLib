@@ -3,6 +3,7 @@ package com.punchline.javalib.entities;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.entities.events.EventHandler;
 
 /**
  * A game entity that contains several {@link Component Components} which define its attributes.
@@ -12,42 +13,21 @@ import com.punchline.javalib.entities.components.ComponentManager;
  */
 public final class Entity extends ComponentManager implements Poolable {
 	
-	/**
-	 * Callback interface for when an Entity is deleted.
-	 * @author Natman64
-	 *
-	 */
-	public interface EntityDeletionCallback {
-		
-		/**
-		 * Called when this Entity is deleted.
-		 * @param owner The entity being deleted.
-		 */
-		public void invoke(Entity owner);
-		
-	}
-	
 	//region Fields
 	
-	/**
-	 * This entity's unique tag, for identifying it individually. This must be set only once, by a template.
-	 */
+	/** This entity's unique tag, for identifying it individually. */
 	private String tag = "";
 	
-	/**
-	 * The name of the group this entity belongs to. This must be set only once, by a template.
-	 */
+	/** The name of the group this entity belongs to. */
 	private String group = "";
 	
-	/**
-	 * This entity's type. This must be set only once, by a template.
-	 */
+	/** This entity's type. */
 	private String type = "";
 	
 	/**
-	 * Callback for when this Entity is deleted.
+	 * EventHandler that is invoked when this Entity is deleted.
 	 */
-	public EntityDeletionCallback onDeleted;
+	public final EventHandler onDeleted = new EventHandler();
 	
 	//endregion
 	
@@ -96,9 +76,6 @@ public final class Entity extends ComponentManager implements Poolable {
 	 */
 	public void delete() {
 		deleted = true;
-		
-		if (onDeleted != null)
-			onDeleted.invoke(this);
 	}
 
 	/**
@@ -112,7 +89,7 @@ public final class Entity extends ComponentManager implements Poolable {
 		type = "";
 		deleted = false;
 		changed = false;
-		onDeleted = null;
+		onDeleted.clear();
 	}	
 
 	//endregion

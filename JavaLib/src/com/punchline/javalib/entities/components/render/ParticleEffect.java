@@ -16,6 +16,8 @@ public class ParticleEffect implements Renderable {
 	
 	private com.badlogic.gdx.graphics.g2d.ParticleEffect particleEffect;
 	
+	private int layer = 0;
+	
 	/**
 	 * Creates a particle effect
 	 */
@@ -65,6 +67,11 @@ public class ParticleEffect implements Renderable {
 		return 0f;
 	}
 	
+	@Override
+	public int getLayer() {
+		return layer;
+	}
+	
 	//endregion
 
 	//region Mutators
@@ -83,6 +90,11 @@ public class ParticleEffect implements Renderable {
 	@Override
 	public void setOrigin(Vector2 origin) { }
 
+	@Override
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
+	
 	//endregion
 	
 	//region Rendering

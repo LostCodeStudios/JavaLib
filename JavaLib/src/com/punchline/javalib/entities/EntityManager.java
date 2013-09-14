@@ -47,6 +47,8 @@ public class EntityManager extends Pool<Entity>{
 		newEntities.clear();
 		changedEntities.clear();
 		for(Entity e : removedEntities){
+			if (e.onDeleted != null)
+				e.onDeleted.invoke(e);
 			this.free(e); //Frees the entity from the entity pool. See pooling.
 		}
 		
