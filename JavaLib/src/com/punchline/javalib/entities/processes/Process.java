@@ -1,13 +1,10 @@
-/**
- * 
- */
 package com.punchline.javalib.entities.processes;
 
 import com.punchline.javalib.entities.EntityWorld;
 
 /**
- * @author Punchline Games
  * A process object.
+ * @author MadcowD
  */
 public abstract class Process {
 
@@ -46,7 +43,6 @@ public abstract class Process {
 	
 	
 	//endregion
-	
 	
 	//region MUTATORS
 

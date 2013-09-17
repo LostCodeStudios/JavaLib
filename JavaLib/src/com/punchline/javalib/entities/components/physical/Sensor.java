@@ -7,6 +7,7 @@ import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.events.EventCallback;
 import com.punchline.javalib.utils.LogManager;
+
 /**
  * Component wrapper for a Box2D sensor fixture. Must only be added to Entities that already have {@link Body} components. 
  * Tracks a list of Entities currently within the sensor fixture. Contains event handlers for when Entities are 
@@ -67,14 +68,14 @@ public class Sensor implements Component {
 	 * @param e The Entity that entered the sensor.
 	 * @param world The world the Entity resides in.
 	 */
-	public void onDetected(final Entity es, final EntityWorld world) {
-		entitiesInView.add(es);
+	public void onDetected(final Entity e, final EntityWorld world) {
+		entitiesInView.add(e);
 		
-		es.onDeleted.addCallback(this, new EventCallback() {
+		e.onDeleted.addCallback(this, new EventCallback() {
 
 			@Override
 			public void invoke(Entity e, Object... args) {
-				entitiesInView.removeValue(es, true);
+				entitiesInView.removeValue(e, true);
 			}
 			
 		});

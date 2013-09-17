@@ -25,17 +25,19 @@ public final class GenericCollisionEvents {
 			public void onRemove(ComponentManager container) { }
 
 			@Override
-			public float onCollide(Entity container, Entity victim) {
+			public void onCollide(Entity container, Entity victim) {
 				if (container.hasComponent(Health.class) && victim.hasComponent(Health.class)) {
-					
-					if (victim.getGroup().equals(container.getGroup()))
-						return 0;
 					
 					Health h1 = (Health)container.getComponent(Health.class);
 					Health h2 = (Health)victim.getComponent(Health.class);
 					h2.drain(h1.getMaxValue());
 				}
-				
+			}
+
+			@Override
+			public float continueCollision(Entity container, Entity victim) {
+				if (victim.getGroup().equals(container.getGroup()))
+					return 0;
 				return 1;
 			}
 			
@@ -57,7 +59,13 @@ public final class GenericCollisionEvents {
 			public void onRemove(ComponentManager contanier) { }
 			
 			@Override
-			public float onCollide(Entity container, Entity victim) {
+			public void onCollide(Entity container, Entity victim) {
+				
+			}
+
+			@Override
+			public float continueCollision(Entity container, Entity victim) {
+				// TODO Auto-generated method stub
 				return 1;
 			}
 			

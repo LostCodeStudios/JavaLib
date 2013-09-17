@@ -1,6 +1,5 @@
 package com.punchline.javalib.entities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +8,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -48,47 +45,29 @@ public abstract class EntityWorld implements Disposable {
 	private Map<String, EntityTemplate> templates;
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
-	private Array<EntityCreationArgs> entitiesToCreate = new Array<EntityCreationArgs>();
-	private Array<Body> bodiesToRemove;
-	
-	/**
-	 * The InputMultiplexer managing this world's game.
-	 */
+
+	/** The InputMultiplexer managing this world's game. */
 	protected InputMultiplexer input;
 	
-	/**
-	 * This world's {@link EntityManager}.
-	 */
+	/** This world's {@link EntityManager}. */
 	protected EntityManager entities;
 	
-	/**
-	 * This world's {@link SystemManager}.
-	 */
+	/** This world's {@link SystemManager}. */
 	protected SystemManager systems;
 	
-	/**
-	 * This world's {@link Camera Camera}.
-	 */
+	/** This world's {@link Camera Camera}. */
 	protected Camera camera;
 	
-	/**
-	 * This world's {@link PhysicsWorld}
-	 */
+	/** This world's {@link PhysicsWorld} */
 	protected PhysicsWorld physicsWorld;
 
-	/**
-	 * The world's {@link ContactManager}.
-	 */
+	/** The world's {@link ContactManager}. */
 	protected ContactManager contactManager;
 	
-	/**
-	 * This world's {@link DebugRenderSystem}
-	 */
+	/** This world's {@link DebugRenderSystem} */
 	protected DebugRenderSystem debugView;
 	
-	/**
-	 * The {@link SpriteSheet} used for this game.
-	 */
+	/** The {@link SpriteSheet} used for this game. */
 	protected SpriteSheet spriteSheet;
 	
 	//endregion
@@ -114,7 +93,6 @@ public abstract class EntityWorld implements Disposable {
 		this.camera = camera;
 		
 		physicsWorld = new PhysicsWorld(gravity);
-		bodiesToRemove = new Array<Body>();
 		contactManager = new ContactManager(this);
 		
 		buildSpriteSheet();
@@ -293,6 +271,8 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	public void process() {
 		
+		this.contactManager.process();
+		
 		systems.process(
 				entities.getNewEntities(), 
 				entities.getChangedEntities(), 
@@ -300,46 +280,13 @@ public abstract class EntityWorld implements Disposable {
 		
 		entities.process();
 		
-		//REMOVE BODIES SAFELY
-		safelyRemoveBodies();
 		
-		//CREATE NEW ENTITIES SAFELY
-		safelyCreateEntities();
 		
 		physicsWorld.process(Gdx.graphics.getDeltaTime());
 	}
 	
 	//endregion
 
-	//region Safe Body Removal
-	
-	/**
-	 * Marks a body for safe deletion.
-	 * @param Body The body to be removed.
-	 */
-	public void safelyRemoveBody(com.badlogic.gdx.physics.box2d.Body body){
-		if(!bodiesToRemove.contains(body, true))
-			bodiesToRemove.add(body);
-	}
-	
-	private void safelyRemoveBodies() {
-		for(int i = 0; i < bodiesToRemove.size; i++) {
-			Body body = bodiesToRemove.get(i);
-			
-		    //to prevent some obscure c assertion that happened randomly once in a blue moon
-		    final ArrayList<JointEdge> list = body.getJointList();
-		    
-		    while (list.size() > 0) {
-		        physicsWorld.getWorld().destroyJoint(list.get(0).joint);
-		    }
-		    
-		    // actual remove
-		    physicsWorld.getWorld().destroyBody(body);
-		}
-		bodiesToRemove.clear();
-	}
-	
-	//endregion
 	
 	//region Entity Creation
 
@@ -384,44 +331,6 @@ public abstract class EntityWorld implements Disposable {
 		}
 	}
 	
-	/**
-	 * Safely creates an Entity using the {@link EntityTemplate} associated with the given tag.
-	 * @param template The tag of the template to use.
-	 * @param args Arguments for creating the entity.
-	 */
-	public void safelyCreateEntity(String template, Object... args) {
-		entitiesToCreate.add(new EntityCreationArgs(template, false, args));
-	}
-	
-	/**
-	 * Safely creates a group of Entities using the {@link EntityGroupTemplate} associated with the given tag.
-	 * @param template The tag of the template to use.
-	 * @param args Arguments for creating the entity group.
-	 */
-	public void safelyCreateEntityGroup(String template, Object... args) {
-		entitiesToCreate.add(new EntityCreationArgs(template, true, args));
-	}
-	
-	/**
-	 * Safely creates an Entity or group of Entities using the given {@link EntityCreationArgs}.
-	 * Use this method when creating Entities that have Body components, or you may cause a crash.
-	 * @param args
-	 */
-	public void safeCreate(EntityCreationArgs args) {
-		entitiesToCreate.add(args);
-	}
-	
-	private void safelyCreateEntities() {
-		for (EntityCreationArgs args : entitiesToCreate) {
-			if (args.useGroupTemplate()) {
-				createEntityGroup(args.getTemplateTag(), args.getArgs());
-			} else {
-				createEntity(args.getTemplateTag(), args.getArgs());
-			}
-		}
-		
-		entitiesToCreate.clear();
-	}
 	
 	//endregion
 	

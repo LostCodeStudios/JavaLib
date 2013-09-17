@@ -22,7 +22,7 @@ public class TileMapTemplate implements EntityTemplate {
 		
 		TileMap map = new TileMap(world, mapFilename, materialsFilename);
 		e.addComponent(map);
-		
+		 
 		return e;
 	}
 	

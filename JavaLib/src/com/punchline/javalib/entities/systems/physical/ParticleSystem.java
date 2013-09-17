@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Particle;
+import com.punchline.javalib.entities.events.EventCallback;
+import com.punchline.javalib.entities.events.EventHandler;
 import com.punchline.javalib.entities.systems.ComponentSystem;
 
 /**
@@ -28,7 +30,7 @@ public class ParticleSystem extends ComponentSystem {
 	public void dispose() { }
 
 	@Override
-	protected void process(Entity e) {
+	protected void process(final Entity e) {
 		Particle p = (Particle)e.getComponent(Particle.class);
 		
 		//Move the particle
@@ -41,29 +43,34 @@ public class ParticleSystem extends ComponentSystem {
 			
 			//Perform the raycast
 			c.rayCast(new RayCastCallback(){
-				Entity e;
-				public RayCastCallback init(Entity e){
-					this.e = e;
-					return this;
-				}
-				
-				
 				@Override
 				public float reportRayFixture(Fixture fixture, Vector2 point,
 						Vector2 normal, float fraction) {
 					//If collision occurs
-					Collidable col = (Collidable)e.getComponent(Collidable.class);
+					final Collidable col = (Collidable)e.getComponent(Collidable.class);
 					
 					//Get the victim
 					
 					if (fixture.isSensor()) return 0;
 					
-					Entity victim = (Entity)fixture.getBody().getUserData();
+					final Entity victim = (Entity)fixture.getBody().getUserData();
 					
-					//Call the on collide event for the entity and terminate if appropriate.
-					return col.onCollide(e, victim);
+					float continueCol = col.continueCollision(e, victim);
+					
+					
+					if(continueCol == 0)
+						//Call the on collide event for the entity and terminate if appropriate.
+						rayCastCollisions.addCallback(new Object(), new EventCallback(){
+							@Override
+							public void invoke(Entity es, Object... args) {
+								col.onCollide(e, victim);
+							}
+						});
+					
+					//Return weather or not the ray cast sould be terminated.
+					return col.continueCollision(e, victim);
 				}
-			}.init(e),
+			},
 			pos, pos.cpy().add(deltaX));
 		}
 		
@@ -73,5 +80,18 @@ public class ParticleSystem extends ComponentSystem {
 		float angularVelocity = p.getAngularVelocity() * deltaSeconds();
 		p.setRotation(p.getRotation() + angularVelocity);
 	}
+	
+	@Override
+	public void processEntities()
+	{
+		super.processEntities();
+		rayCastCollisions.invoke(null);
+		rayCastCollisions.clear();
+	}
+	
+	/**
+	 * Used for raycast collisions so that they are called outside of the world step.
+	 */
+	private EventHandler rayCastCollisions = new EventHandler();
 
 }

@@ -84,7 +84,7 @@ public class MultiComponent<T extends Component> implements Component {
 		Array<T> children = new Array<T>();
 		
 		for (Integer i : order) {
-			T child = children.get(i);
+			T child = this.children.get(i);
 			
 			children.add(child);
 		}

@@ -18,6 +18,6 @@ public interface EntityTemplate extends Disposable {
 	 * @param args Arguments.
 	 * @return An {@link Entity} of this template.
 	 */
-	public Entity buildEntity(Entity e, EntityWorld world, Object... args);
+	public Entity buildEntity(final Entity e, EntityWorld world, Object... args);
 	
 }

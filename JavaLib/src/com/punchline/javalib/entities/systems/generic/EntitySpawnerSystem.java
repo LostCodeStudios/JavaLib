@@ -29,7 +29,7 @@ public class EntitySpawnerSystem extends ComponentSystem {
 		//if spawn delay has passed.
 		if(es.spawn(deltaSeconds()))
 		{
-			world.safeCreate(es.getCreationArgs());
+			world.create(es.getCreationArgs());
 		}
 	}
 

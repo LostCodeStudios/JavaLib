@@ -4,6 +4,7 @@ import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.components.abstracted.Stat;
+import com.punchline.javalib.entities.events.EventHandler;
 
 /**
  * A component describing an Entity's health. When health becomes 0, the Entity will be deleted.
@@ -11,22 +12,6 @@ import com.punchline.javalib.entities.components.abstracted.Stat;
  * @created Jul 23, 2013
  */
 public class Health extends Stat {
-	
-	/**
-	 * Callback for when an Entity dies.
-	 * @author Nathaniel
-	 * @created Jul 24, 2013
-	 */
-	public interface HealthEventCallback {
-		
-		/**
-		 * Called when the owner of this component runs out of health.
-		 * @param owner The owner of this component.
-		 * @param world The world that Entity owner belongs to.
-		 */
-		public void invoke(Entity owner, EntityWorld world);
-		
-	}
 	
 	private Entity owner;
 	private EntityWorld world;
@@ -36,6 +21,21 @@ public class Health extends Stat {
 	 * The health bar will only render if the EntityWorld contains a HealthRenderSystem.
 	 */
 	public boolean render = false;
+	
+	/**
+	 * Invoked when the Entity that owns this component dies.
+	 */
+	public final EventHandler onDeath = new EventHandler();
+
+	/**
+	 * Invoked when the Entity that owns this component takes damage.
+	 */
+	public final EventHandler onDamage = new EventHandler();
+	
+	/**
+	 * Invoked when the Entity that owns this component is healed.
+	 */
+	public final EventHandler onHeal = new EventHandler();
 	
 	/**
 	 * Constructs a Health component.
@@ -85,21 +85,6 @@ public class Health extends Stat {
 			
 		}
 	}
-
-	/**
-	 * Callback for when the Entity that owns this component dies.
-	 */
-	public HealthEventCallback onDeath;
-
-	/**
-	 * Callback for when the Entity that owns this component takes damage.
-	 */
-	public HealthEventCallback onDamage;
-	
-	/**
-	 * Callback for when the Entity that owns this component is healed.
-	 */
-	public HealthEventCallback onHeal;
 	
 	@Override
 	public void onAdd(ComponentManager container) { }

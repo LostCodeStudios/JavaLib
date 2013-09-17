@@ -34,6 +34,13 @@ public class EntityRemovalSystem extends ComponentSystem {
 	@Override
 	public void setWorld(EntityWorld world) {
 		super.setWorld(world);
+	}
+
+	@Override
+	public void dispose() { }
+
+	@Override
+	public void processEntities() {
 		
 		//Set up the removal bounds
 		Rectangle bounds = world.getBounds();
@@ -42,11 +49,11 @@ public class EntityRemovalSystem extends ComponentSystem {
 		this.bounds.y -= REMOVAL_THRESHOLD;
 		this.bounds.width += REMOVAL_THRESHOLD * 2;
 		this.bounds.height += REMOVAL_THRESHOLD * 2;
+		
+		super.processEntities();
+		
 	}
-
-	@Override
-	public void dispose() { }
-
+	
 	@Override
 	protected void process(Entity e) {
 		Transform t = (Transform)e.getComponent(Transform.class);
