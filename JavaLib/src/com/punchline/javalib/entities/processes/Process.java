@@ -1,6 +1,7 @@
 package com.punchline.javalib.entities.processes;
 
 import com.badlogic.gdx.utils.Array;
+import com.punchline.javalib.entities.EntityWorld;
 
 
 /**
@@ -21,9 +22,9 @@ public abstract class Process {
 	
 	/**
 	 * Updates the process based on a certain delta time from the previous call. TO END A PROCESS CALL THIS.END()
-	 * @param deltaMS The time in MS that the previous call was called.
+	 * @param deltaTime The time in MS that the previous call was called.
 	 */
-	public abstract void update(int deltaMS);
+	public abstract void update(EntityWorld world, float deltaTime);
 	
 	
 	/**

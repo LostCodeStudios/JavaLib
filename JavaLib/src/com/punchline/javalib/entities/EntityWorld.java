@@ -55,6 +55,9 @@ public abstract class EntityWorld implements Disposable {
 	/** This world's {@link SystemManager}. */
 	protected SystemManager systems;
 	
+	/** This world's {@link ProcessManager). */
+	protected ProcessManager processes;
+	
 	/** This world's {@link Camera Camera}. */
 	protected Camera camera;
 	
@@ -280,7 +283,7 @@ public abstract class EntityWorld implements Disposable {
 		
 		entities.process();
 		
-		
+		processes.process(this, Gdx.graphics.getDeltaTime());
 		
 		physicsWorld.process(Gdx.graphics.getDeltaTime());
 	}
