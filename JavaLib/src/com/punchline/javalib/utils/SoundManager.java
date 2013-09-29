@@ -219,4 +219,11 @@ public final class SoundManager {
 		if (isMusicPaused()) currentSong.play();
 	}
 	
+	/**
+	 * Stops the current song, if a song is playing or paused.
+	 */
+	public static void stopMusic() {
+		if (currentSong != null) currentSong.stop();
+	}
+	
 }

@@ -280,8 +280,6 @@ public abstract class EntityWorld implements Disposable {
 		
 		entities.process();
 		
-		
-		
 		physicsWorld.process(Gdx.graphics.getDeltaTime());
 	}
 	
