@@ -53,7 +53,7 @@ public class Particle implements Velocity, Transform {
 
 	@Override
 	public Vector2 getPosition() {
-		return position;
+		return position.cpy();
 	}
 
 	@Override
@@ -82,12 +82,12 @@ public class Particle implements Velocity, Transform {
 
 	@Override
 	public Vector2 getLinearVelocity() {
-		return linearVelocity;
+		return linearVelocity.cpy();
 	}
 
 	@Override
 	public void setLinearVelocity(Vector2 linearVelocity) {
-		this.linearVelocity = linearVelocity;
+		this.linearVelocity = linearVelocity.cpy();
 	}
 
 	@Override

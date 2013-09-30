@@ -97,6 +97,7 @@ public abstract class EntityWorld implements Disposable {
 		
 		physicsWorld = new PhysicsWorld(gravity);
 		contactManager = new ContactManager(this);
+		processes = new ProcessManager();
 		
 		buildSpriteSheet();
 		buildTemplates();
