@@ -17,7 +17,7 @@ public final class Convert {
 	/**
 	 * The ratio between meters and pixels.
 	 */
-	static float pixelMeterRatio;
+	private static float pixelMeterRatio;
 
 	/**
 	 * Initializes Convert class with a meter to Pixel ratio.

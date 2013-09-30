@@ -181,7 +181,7 @@ public final class SoundManager {
 	public static void playSong(String key, float volume, boolean looping) {
 		if (volumeInvalid(volume)) return;
 		
-		if (isMusicPlaying()) currentSong.pause();
+		if (isMusicPlaying()) currentSong.stop();
 		
 		Music song = songs.get(key);
 		song.setLooping(looping);
@@ -217,6 +217,13 @@ public final class SoundManager {
 	 */
 	public static void resumeMusic() {
 		if (isMusicPaused()) currentSong.play();
+	}
+	
+	/**
+	 * Stops the current song, if a song is playing or paused.
+	 */
+	public static void stopMusic() {
+		if (currentSong != null) currentSong.stop();
 	}
 	
 }
