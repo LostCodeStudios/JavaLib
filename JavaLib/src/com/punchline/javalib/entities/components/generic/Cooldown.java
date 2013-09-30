@@ -1,6 +1,5 @@
 package com.punchline.javalib.entities.components.generic;
 
-import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.components.abstracted.Stat;
@@ -9,18 +8,16 @@ import com.punchline.javalib.entities.components.abstracted.Stat;
  * A component describing any kind of cooldown.
  * @author GenericCode
  * @created September 25, 2013
- * @deprecated by Natman64 - working on implementing this through the new Processes
+ *
  */
 
 public class Cooldown extends Stat {
 	
-	private Entity owner;
 	private EntityWorld world;
 	
-	public Cooldown(Entity owner, EntityWorld world, float max){
+	public Cooldown(EntityWorld world, float max){
 		super(max);
 		
-		this.owner = owner;
 		this.world = world;
 	}
 	
@@ -29,7 +26,7 @@ public class Cooldown extends Stat {
 			super.drain(1);
 		if(this.isEmpty())
 			return true;
-		return false;
+		return false; 
 	}
 	@Override
 	public void onAdd(ComponentManager container) { }

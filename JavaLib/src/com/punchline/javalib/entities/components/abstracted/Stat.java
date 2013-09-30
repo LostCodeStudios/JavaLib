@@ -24,6 +24,10 @@ public abstract class Stat implements Component {
 			this.regeneration = regeneration;
 		}
 		
+		public void setRate(double rate) {
+			this.regeneration = rate;
+		}
+		
 		@Override
 		public void update(EntityWorld world, float deltaTime) {
 			stat.current += regeneration * deltaTime;
@@ -116,7 +120,8 @@ public abstract class Stat implements Component {
 		if (rate == 0) {
 			if (regenerationProcess != null) regenerationProcess.end(ProcessState.ABORTED);
 		} else {
-			regenerationProcess = new RegenerationProcess(this, rate);
+			if (regenerationProcess == null) regenerationProcess = new RegenerationProcess(this, rate);
+			else regenerationProcess.setRate(rate);
 			world.getProcessManager().attach(regenerationProcess);
 		}
 	}
