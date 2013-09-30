@@ -9,6 +9,7 @@ import com.punchline.javalib.entities.components.abstracted.Stat;
  * A component describing any kind of cooldown.
  * @author GenericCode
  * @created September 25, 2013
+ * @deprecated by Natman64 - working on implementing this through the new Processes
  */
 
 public class Cooldown extends Stat {
