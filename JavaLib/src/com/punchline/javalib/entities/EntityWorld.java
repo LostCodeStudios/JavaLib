@@ -88,6 +88,7 @@ public abstract class EntityWorld implements Disposable {
 		entities = new EntityManager();
 		
 		systems = new SystemManager(this);
+		processes = new ProcessManager();
 		
 		templates = new HashMap<String, EntityTemplate>();
 		groupTemplates = new HashMap<String, EntityGroupTemplate>();
