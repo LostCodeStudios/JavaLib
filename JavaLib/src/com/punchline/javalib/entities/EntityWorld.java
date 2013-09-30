@@ -233,6 +233,13 @@ public abstract class EntityWorld implements Disposable {
 	}
 	
 	/**
+	 * @return This world's {@link ProcessManager.}
+	 */
+	public ProcessManager getProcessManager() {
+		return processes;
+	}
+	
+	/**
 	 * Tries to get an entity based on its tag and/or its group and/or its type.
 	 * @param tag The tag of the entity. "" for not inclusive search.
 	 * @param group The group of the entity. "" for not inclusive search.
@@ -271,7 +278,7 @@ public abstract class EntityWorld implements Disposable {
 	//region Processing
 	
 	/**
-	 * Runs all system processing.
+	 * Runs all processing.
 	 */
 	public void process() {
 		

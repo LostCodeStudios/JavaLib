@@ -32,9 +32,9 @@ public class Cooldown extends Stat {
 		return false;
 	}
 	@Override
-	public void onAdd(ComponentManager container) {}
+	public void onAdd(ComponentManager container) { }
 
 	@Override
-	public void onRemove(ComponentManager container) {}
+	public void onRemove(ComponentManager container) { }
 
 }

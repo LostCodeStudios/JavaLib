@@ -7,7 +7,7 @@ import com.punchline.javalib.entities.processes.Process;
 import com.punchline.javalib.entities.processes.ProcessState;
 
 /**
- * Manages all processes in a given EntityWorld, W.
+ * Manages all processes in a given EntityWorld.
  * @author MadcowD
  * @created Sep 28, 2013
  */

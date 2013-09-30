@@ -1,5 +1,8 @@
 package com.punchline.javalib.entities.components.abstracted;
 
+import com.punchline.javalib.entities.EntityWorld;
+import com.punchline.javalib.entities.processes.Process;
+import com.punchline.javalib.entities.processes.ProcessState;
 import com.punchline.javalib.entities.components.Component;
 
 /**
@@ -9,11 +12,39 @@ import com.punchline.javalib.entities.components.Component;
  */
 public abstract class Stat implements Component {
 	
+	//region Regeneration Process
+	
+	private class RegenerationProcess extends Process {
+
+		private Stat stat;
+		private double regeneration;
+		
+		public RegenerationProcess(Stat stat, double regeneration) {
+			this.stat = stat;
+			this.regeneration = regeneration;
+		}
+		
+		@Override
+		public void update(EntityWorld world, float deltaTime) {
+			stat.current += regeneration * deltaTime;
+			if (stat.current > stat.max) stat.current = stat.max;
+			if (stat.current < 0) stat.current = 0;
+		}
+		
+	}
+	
+	//endregion
+	
+	//region Fields/Initialization
+	
 	/** This stat's current value. */
 	protected double current;
 	
 	/** This stat's max value. */
 	protected double max;
+	
+	/** This stat's regeneration process. */
+	protected RegenerationProcess regenerationProcess;
 	
 	/**
 	 * Constructs a StatBar.
@@ -23,6 +54,10 @@ public abstract class Stat implements Component {
 		this.max = max;
 		this.current = max;
 	}
+	
+	//endregion
+	
+	//region Accessors
 	
 	/**
 	 * @return The StatBar's current value.
@@ -49,8 +84,12 @@ public abstract class Stat implements Component {
 	 * @return How full the StatBar is, from 0 to 1.
 	 */
 	public float fraction() {
-		return (float)(current/max);
+		return (float) (current / max);
 	}
+	
+	//endregion
+	
+	//region Mutators
 	
 	/**
 	 * Sets the current value of the StatBar.
@@ -65,6 +104,21 @@ public abstract class Stat implements Component {
 		
 		if (current > max) current = max;
 		if (current < 0) { current = 0; onEmpty(); } //Call empty event
+		
+	}
+	
+	/**
+	 * Sets this stat's regeneration rate.
+	 * @param world The EntityWorld. Needed for attaching a RegenerationProcess.
+	 * @param rate The rate of regeneration, in seconds.
+	 */
+	public void setRegenerationRate(EntityWorld world, double rate) {
+		if (rate == 0) {
+			if (regenerationProcess != null) regenerationProcess.end(ProcessState.ABORTED);
+		} else {
+			regenerationProcess = new RegenerationProcess(this, rate);
+			world.getProcessManager().attach(regenerationProcess);
+		}
 	}
 	
 	/**
@@ -111,6 +165,10 @@ public abstract class Stat implements Component {
 		setCurrentValue(max);
 	}
 	
+	//endregion
+	
+	//region Events
+	
 	/**
 	 * Called when the StatBar is drained by any amount.
 	 * @param amount The amount drained.
@@ -127,5 +185,7 @@ public abstract class Stat implements Component {
 	 * Called when the StatBar becomes empty.
 	 */
 	protected void onEmpty() { }
+	
+	//endregion
 	
 }
