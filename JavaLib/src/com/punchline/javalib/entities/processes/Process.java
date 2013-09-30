@@ -5,13 +5,59 @@ import com.punchline.javalib.entities.EntityWorld;
 
 
 /**
- * A process object.
+ * A Process that is run repeatedly by the EntityWorld for a temporary amount of time.
  * @author MadcowD
  */
 public abstract class Process {
 	
+	//region Fields
 	
-	//region Functioning Loop
+	private ProcessState state;
+	private Array<Process> childProcesses = new Array<Process>();
+	
+	//endregion
+	
+	//region Mutators/Accessors
+	
+	/**
+	 * Gets the state of the process.
+	 * @return The current state of the process.
+	 */
+	public ProcessState getState(){
+		return state;
+	}
+	
+	/**
+	 * Gets a GDX array of the children processes.
+	 * @return The children processes of this process.
+	 */
+	public Array<Process> getChildren(){
+		return childProcesses;
+	}
+	
+	//endregion
+	
+	//region Children
+	
+	/**
+	 * Attaches a process to this process as a child to be called on the success of this process.
+	 * @param child The child to be attached.
+	 */
+	public void attachChild(Process child){
+		childProcesses.add(child);
+	}
+	
+	/**
+	 * Removes a processes from the children of this process.
+	 * @param child The child to be removed.
+	 */
+	public void detachChild(Process child){
+		childProcesses.removeValue(child, true);
+	}
+	
+	//endregion
+	
+	//region Life Cycle
 	
 	/**
 	 * Function first called when the process is ran.
@@ -26,7 +72,6 @@ public abstract class Process {
 	 */
 	public abstract void update(EntityWorld world, float deltaTime);
 	
-	
 	/**
 	 * Called when a process is ended (after all updates have been called).
 	 */
@@ -35,56 +80,8 @@ public abstract class Process {
 			return;
 		else
 			state = endState;
-			
 	}
 	
 	//endregion
-	
-	
-	//region Mutators/Accessors
-	/**
-	 * Gets the state of the process.
-	 * @return The current state of the process.
-	 */
-	public ProcessState getState(){
-		return state;
-	}
-	
-	
-	
-	//region Children
-	/**
-	 * Attaches a process to this process as a child to be called on the success of this process.
-	 * @param child The child to be attached.
-	 */
-	public void attatchChild(Process child){
-		childProcesses.add(child);
-	}
-	
-	/**
-	 * Removes a processes from the children of this process.
-	 * @param child The child to be removed.
-	 */
-	public void detachChild(Process child){
-		childProcesses.removeValue(child, true);
-	}
-	
-	/**
-	 * Gets a GDX array of the children processes.
-	 * @return The children processes of this process.
-	 */
-	public Array<Process> getChildren(){
-		return childProcesses;
-	}
-	
-	//endregion
-	
-	//endregion
-	
-	//region Fields
-	ProcessState state;
-	Array<Process> childProcesses = new Array<Process>();
-	
-	
-	//endregion
+
 }
