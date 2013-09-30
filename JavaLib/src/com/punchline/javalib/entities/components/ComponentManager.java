@@ -3,8 +3,6 @@ package com.punchline.javalib.entities.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -51,7 +49,7 @@ public abstract class ComponentManager {
 		}
 		
 		for (Component c : components) {
-			if (isInstance(c, type)) {
+			if (type.isInstance(c)) {
 				componentMap.put(type, c);
 				return (T) c;
 			}
@@ -77,27 +75,6 @@ public abstract class ComponentManager {
 		
 		componentMap.clear();
 		components.clear();
-	}
-	
-	private boolean isInstance(Object o, Class<?> clazz) {
-		if (Gdx.app.getType() == ApplicationType.WebGL) {
-			//GWT does not support Class<?>.isInstance(), so this has to be handled specifically
-			Class<?> type = o.getClass();
-			
-			return equalsOrInherits(type, clazz);
-		} else {
-			return clazz.isInstance(o);
-		}
-	}
-	
-	private boolean equalsOrInherits(Class<?> class1, Class<?> class2) {
-		if (class1 == class2) return true;
-		
-		for (Class<?> interfaze : class1.getInterfaces()) {
-			if (interfaze == class2) return true;
-		}
-		
-		return equalsOrInherits(class1.getSuperclass(), class2);
 	}
 	
 }
