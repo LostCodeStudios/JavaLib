@@ -3,6 +3,8 @@ package com.punchline.javalib.entities.components;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -14,9 +16,10 @@ import com.badlogic.gdx.utils.Array;
  *
  */
 public abstract class ComponentManager {
-
+	
 	private Array<Component> components = new Array<Component>();
-	private Map<Class<? extends Component>, Component> componentMap = new HashMap<Class<? extends Component>, Component>();
+	private Map<Class<? extends Component>, Component> componentMap = 
+			new HashMap<Class<? extends Component>, Component>();
 	
 	/**
 	 * Adds the given component to this container.
@@ -48,7 +51,7 @@ public abstract class ComponentManager {
 		}
 		
 		for (Component c : components) {
-			if (type.isInstance(c)) {
+			if (isInstance(c, type)) {
 				componentMap.put(type, c);
 				return (T) c;
 			}
@@ -73,8 +76,28 @@ public abstract class ComponentManager {
 			c.onRemove(this);
 		
 		componentMap.clear();
-		
 		components.clear();
+	}
+	
+	private boolean isInstance(Object o, Class<?> clazz) {
+		if (Gdx.app.getType() == ApplicationType.WebGL) {
+			//GWT does not support Class<?>.isInstance(), so this has to be handled specifically
+			Class<?> type = o.getClass();
+			
+			return equalsOrInherits(type, clazz);
+		} else {
+			return clazz.isInstance(o);
+		}
+	}
+	
+	private boolean equalsOrInherits(Class<?> class1, Class<?> class2) {
+		if (class1 == class2) return true;
+		
+		for (Class<?> interfaze : class1.getInterfaces()) {
+			if (interfaze == class2) return true;
+		}
+		
+		return equalsOrInherits(class1.getSuperclass(), class2);
 	}
 	
 }
