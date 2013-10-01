@@ -17,22 +17,21 @@ public abstract class Stat implements Component {
 	private class RegenerationProcess extends Process {
 
 		private Stat stat;
-		private double regeneration;
+		private double rate;
 		
-		public RegenerationProcess(Stat stat, double regeneration) {
+		public RegenerationProcess(Stat stat, double rate) {
 			this.stat = stat;
-			this.regeneration = regeneration;
+			this.rate = rate;
 		}
 		
 		public void setRate(double rate) {
-			this.regeneration = rate;
+			this.rate = rate;
 		}
 		
 		@Override
 		public void update(EntityWorld world, float deltaTime) {
-			stat.current += regeneration * deltaTime;
-			if (stat.current > stat.max) stat.current = stat.max;
-			if (stat.current < 0) stat.current = 0;
+			double current = stat.current + rate * deltaTime;
+			stat.setCurrentValue(current);
 		}
 		
 	}
