@@ -131,6 +131,7 @@ public class View extends Sensor {
 	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
+		refresh();
 	}
 
 	//endregion
