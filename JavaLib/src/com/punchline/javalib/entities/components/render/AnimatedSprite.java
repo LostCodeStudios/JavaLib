@@ -28,6 +28,7 @@ public class AnimatedSprite implements Renderable {
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private Vector2 origin;
+	private float rotation = 0f;
 	private int layer = 0;
 	
 	/**
@@ -118,7 +119,7 @@ public class AnimatedSprite implements Renderable {
 	}
 	
 	@Override
-	public float getRotation() { return 0f; }
+	public float getRotation() { return rotation; }
 	
 	@Override
 	public int getLayer() { return layer; }
@@ -160,7 +161,9 @@ public class AnimatedSprite implements Renderable {
 	}
 
 	@Override
-	public void setRotation(float degrees) { }
+	public void setRotation(float degrees) { 
+		this.rotation = degrees;
+	}
 
 	@Override
 	public void setScale(float scaleX, float scaleY) {
