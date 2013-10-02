@@ -13,11 +13,17 @@ import com.punchline.javalib.entities.components.physical.Sensor;
  */
 public class View extends Sensor {
 	
+	//region Fields
+	
 	private float viewRange;
 	private float fov;
 	private int vertices;
 	private float offsetDegrees;
 
+	private Vector2 position = Vector2.Zero.cpy();
+	
+	//endregion
+	
 	//region Initialization
 	
 	/**
@@ -118,6 +124,14 @@ public class View extends Sensor {
 	public void setOffset(float degrees) {
 		offsetDegrees = degrees;
 	}
+	
+	/**
+	 * Sets the position of the View sensor relative to its parent body's position.
+	 * @param position
+	 */
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
 
 	//endregion
 	
@@ -128,16 +142,18 @@ public class View extends Sensor {
 		super.refresh();
 		
 		Vector2[] verts = new Vector2[vertices];
-		verts[0] = new Vector2(0, 0);
+		verts[0] = new Vector2(0, 0).add(position);
 		
 		float degrees = 360f * fov;
 		
 		float start = (float)Math.toRadians(offsetDegrees + degrees / 2);
 		
 		for (int i = 1; i < vertices; i++) {
-			float angle = start - ((float) i / (vertices - 1)) * (float)Math.toRadians(degrees);
+			float angle = start - ((float) i / (vertices)) * (float)Math.toRadians(degrees);
 			
-			verts[i] = new Vector2(viewRange * (float) Math.cos(angle), viewRange * (float) Math.sin(angle));
+			verts[i] = new Vector2(
+					viewRange * (float) Math.cos(angle), 
+					viewRange * (float) Math.sin(angle)).add(position);
 		}
 		
 		PolygonShape shape = new PolygonShape();
