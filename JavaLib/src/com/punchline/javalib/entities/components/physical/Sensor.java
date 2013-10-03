@@ -102,7 +102,7 @@ public class Sensor implements Component {
 
 	@Override
 	public void onRemove(ComponentManager container) {
-		destroy();
+		//destroy();
 	}
 
 	//endregion
