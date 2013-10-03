@@ -101,7 +101,9 @@ public class Sensor implements Component {
 	}
 
 	@Override
-	public void onRemove(ComponentManager container) { }
+	public void onRemove(ComponentManager container) {
+		destroy();
+	}
 
 	//endregion
 	
@@ -111,6 +113,10 @@ public class Sensor implements Component {
 	 * Forces this Sensor to re-calculate its fixture.
 	 */
 	public void refresh() { 
+		destroy(); //destroy the old fixture to make room for the new one.
+	}
+	
+	public void destroy() {
 		if (fixture != null) body.destroyFixture(fixture); //Destroy the old fixture, if there is one
 	}
 	
