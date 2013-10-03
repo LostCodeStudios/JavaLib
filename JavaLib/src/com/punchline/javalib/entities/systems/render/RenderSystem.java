@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Transform;
+import com.punchline.javalib.entities.components.render.Parallax;
 import com.punchline.javalib.entities.components.render.Renderable;
 import com.punchline.javalib.entities.systems.ComponentSystem;
 import com.punchline.javalib.utils.Convert;
@@ -88,13 +89,20 @@ public final class RenderSystem extends ComponentSystem {
 		if (e.hasComponent(Transform.class)) { 
 			Transform t = (Transform)e.getComponent(Transform.class);
 			
-			Vector2 pos = t.getPosition().cpy();
+			Vector2 pos = Convert.metersToPixels(t.getPosition().cpy());
 			float angle = t.getRotation();
 			
-			r.setPosition(Convert.metersToPixels(pos));
+			//Handle position setting for paralax scrolling.
+			if(e.hasComponent(Parallax.class)){
+				Parallax p = e.getComponent(Parallax.class);
+				// v = (v - c.p) * modulus_velocity
+				r.setPosition((new Vector2(p.getCameraPosition())).scl(p.getDepthRatio()).sub(pos.cpy()));
+			}
+			else
+				r.setPosition(pos);
+			
 			r.setRotation((float)Math.toDegrees(angle));
-		}
-		
+		}		
 		r.draw(spriteBatch, deltaSeconds());
 		
 	}	
