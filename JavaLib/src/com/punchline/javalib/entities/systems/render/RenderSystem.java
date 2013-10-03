@@ -92,7 +92,7 @@ public final class RenderSystem extends ComponentSystem {
 			Vector2 pos = Convert.metersToPixels(t.getPosition().cpy());
 			float angle = t.getRotation();
 			
-			//Handle position setting for paralax scrolling.
+			//Handle position setting for parallax scrolling.
 			if(e.hasComponent(Parallax.class)){
 				Parallax p = e.getComponent(Parallax.class);
 				// v = (v - c.p) * modulus_velocity
