@@ -48,7 +48,7 @@ public class ProcessManager {
 	 * @param deltaTime 
 	 * @param world
 	 */
-	public void process(EntityWorld world, float deltaTime ) {
+	public void process(EntityWorld world, float deltaTime) {
 		for(Iterator<Process> i = attachedProcesses.iterator(); i.hasNext(); )
 		{
 			//Get the process
@@ -56,7 +56,7 @@ public class ProcessManager {
 			
 			//Handle states
 			if (p.getState() == ProcessState.RUNNING) {
-				p.update(world, deltaTime ); //IF IT'S RUNNING, UPDATE
+				p.update(world, deltaTime); //IF IT'S RUNNING, UPDATE
 			} else { //IF IT IS DEAD
 				 if (p.getState() == ProcessState.SUCCEEDED) {
 					 for(Process child : p.getChildren()) {
