@@ -96,7 +96,7 @@ public final class RenderSystem extends ComponentSystem {
 			if(e.hasComponent(Parallax.class)){
 				Parallax p = e.getComponent(Parallax.class);
 				// v = (v - c.p) * modulus_velocity
-				r.setPosition((new Vector2(p.getCameraPosition())).scl(p.getDepthRatio()).sub(pos.cpy()));
+				r.setPosition((new Vector2(p.getCameraPosition())).scl((1 - p.getDepthRatio())).add(pos.cpy()));
 			}
 			else
 				r.setPosition(pos);
