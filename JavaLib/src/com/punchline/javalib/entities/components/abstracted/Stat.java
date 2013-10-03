@@ -103,10 +103,10 @@ public abstract class Stat implements Component {
 		if (current < this.current) onDrain(this.current - current); //Call drain event
 		if (current > this.current) onFill(current - this.current); //Call fill event
 		
-		this.current = current;
-		
 		if (current > max) current = max;
 		if (current < 0) { current = 0; onEmpty(); } //Call empty event
+		
+		this.current = current; //finally, assign the value
 		
 	}
 	
