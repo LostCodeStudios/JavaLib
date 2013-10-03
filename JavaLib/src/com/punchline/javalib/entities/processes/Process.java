@@ -84,4 +84,15 @@ public abstract class Process {
 	
 	//endregion
 
+	//region Events
+	
+	/**
+	 * Event called when this process is ended by the {@link ProcessManager}.
+	 * @param world
+	 * @param endState The state this Process ended with.
+	 */
+	public abstract void onEnd(EntityWorld world, ProcessState endState);
+	
+	//endregion
+	
 }

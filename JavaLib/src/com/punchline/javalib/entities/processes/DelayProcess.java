@@ -40,4 +40,11 @@ public class DelayProcess extends Process {
 
 	//endregion
 	
+	//region Events
+	
+	@Override
+	public void onEnd(EntityWorld world, ProcessState endState) { }
+	
+	//endregion
+	
 }

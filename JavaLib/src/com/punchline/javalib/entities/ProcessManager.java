@@ -63,6 +63,8 @@ public class ProcessManager {
 						this.attach(child); //If the process was successful, attach its children
 					 }
 				 }
+				 
+				 p.onEnd(world, p.getState());
 		
 				 //REMOVE FROM PROCESS MANAGER
 				 i.remove();

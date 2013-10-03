@@ -33,6 +33,9 @@ public abstract class Stat implements Component {
 			double current = stat.current + rate * deltaTime;
 			stat.setCurrentValue(current);
 		}
+
+		@Override
+		public void onEnd(EntityWorld world, ProcessState endState) { }
 		
 	}
 	
