@@ -5,7 +5,6 @@ import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.systems.ComponentSystem;
-import com.punchline.javalib.utils.Convert;
 
 /**
  * The EntityRemovalSystem processes all Entities that have a position in the EntityWorld.
@@ -16,10 +15,10 @@ import com.punchline.javalib.utils.Convert;
 public class EntityRemovalSystem extends ComponentSystem {
 
 	/**
-	 * How far an entity can be outside of the world. This is necessary because a position describes an entity's center.
+	 * How far an entity can be outside of the world, in meters. This is necessary because a position describes an entity's center.
 	 * Entities whose sprites have a larger radius than this number will be removed while still visible to the player.
 	 */
-	public static final float REMOVAL_THRESHOLD = Convert.pixelsToMeters(400f);
+	public static final float REMOVAL_THRESHOLD = 5f;
 	
 	private Rectangle bounds;
 	

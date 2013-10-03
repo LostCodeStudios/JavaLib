@@ -60,15 +60,15 @@ public abstract class Process {
 	//region Life Cycle
 	
 	/**
-	 * Function first called when the process is ran.
+	 * Function first called when the process is run for the first time.
 	 */
-	public void start(){
+	public void start() {
 		state = ProcessState.RUNNING;
 	}
 	
 	/**
-	 * Updates the process based on a certain delta time from the previous call. TO END A PROCESS CALL THIS.END()
-	 * @param deltaTime The time in MS that the previous call was called.
+	 * Updates the process.
+	 * @param deltaTime The time in seconds since the previous call of update().
 	 */
 	public abstract void update(EntityWorld world, float deltaTime);
 	

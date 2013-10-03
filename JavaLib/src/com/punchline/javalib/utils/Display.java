@@ -58,6 +58,7 @@ public final class Display {
 	
 	/**
 	 * @return The horizontal scaling that is being applied to the game to fit on the screen.
+	 * @deprecated Scaling should be applied indirectly by rendering through a camera with a viewport of {@link #preferredWidth}, {@link #preferredHeight}.
 	 */
 	public static float scaleX() {
 		return Gdx.graphics.getWidth() / preferredWidth;
@@ -65,6 +66,7 @@ public final class Display {
 	
 	/**
 	 * @return The vertical scaling that is being applied to the game to fit on the screen.
+	 * @deprecated Scaling should be applied indirectly by rendering through a camera with a viewport of {@link #preferredWidth}, {@link #preferredHeight}.
 	 */
 	public static float scaleY() {
 		return Gdx.graphics.getHeight() / preferredHeight;
@@ -72,6 +74,7 @@ public final class Display {
 	
 	/**
 	 * @return The average scale.
+	 * @deprecated Scaling should be applied indirectly by rendering through a camera with a viewport of {@link #preferredWidth}, {@link #preferredHeight}.
 	 */
 	public static float scale() {
 		return (scaleX() + scaleY()) / 2;

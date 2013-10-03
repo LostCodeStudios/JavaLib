@@ -32,9 +32,9 @@ public abstract class Game implements ApplicationListener {
 	/**
 	 * The texture that will be drawn as the game's cursor. The sprite must take up the entire texture.
 	 * If null, the default system mouse will be drawn.
+	 * @deprecated The horrible cursor system has been removed for the time being because it sucked.
 	 */
 	protected Texture cursorTexture;
-	private boolean useCursor = false;
 	
 	/**
 	 * The game window's width, in pixels.
@@ -99,11 +99,6 @@ public abstract class Game implements ApplicationListener {
 		 
 		Gdx.graphics.setDisplayMode(w, h, fullScreen);
 		Display.init(w, h); //Initialize the display helper
-		
-		if (cursorTexture != null) { //If we have a cursor texture, use it.
-			useCursor = true;
-			Gdx.input.setCursorCatched(true);
-		}
 		
 		input = new InputMultiplexer();
 		Gdx.input.setInputProcessor(input);
@@ -177,50 +172,6 @@ public abstract class Game implements ApplicationListener {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		screenManager.render();
-		
-		if (useCursor) {
-			
-			//Clamp cursor
-			int cursorX = Gdx.input.getX();
-			int cursorY = Gdx.input.getY();
-
-			boolean cursorChanged = false;
-			
-			if (cursorX < 0) {
-				cursorX = 0;
-				cursorChanged = true;
-			} else if (cursorX > Gdx.graphics.getWidth() - cursorTexture.getWidth()) {
-				cursorX = Gdx.graphics.getWidth() - cursorTexture.getWidth();
-				cursorChanged = true;
-			}
-			
-			if (cursorY < 0) {
-				cursorY = 0;
-				cursorChanged = true;
-			} else if (cursorY > Gdx.graphics.getHeight() - cursorTexture.getHeight()) {
-				cursorY = Gdx.graphics.getHeight() - cursorTexture.getHeight();
-				cursorChanged = true;
-			}
-			
-			//Draw cursor
-			spriteBatch.begin();
-			
-			spriteBatch.draw(
-					cursorTexture, 
-					cursorX, 
-					Gdx.graphics.getHeight() - cursorY - cursorTexture.getHeight(),
-					cursorTexture.getWidth() * Display.scaleX(), //Scaled for high-res mobile devices
-					cursorTexture.getHeight() * Display.scaleY());
-			
-			spriteBatch.end();
-			
-			//Set to clamped position
-			if (cursorChanged) {
-				Gdx.input.setCursorPosition(cursorX, Gdx.graphics.getHeight() - cursorY);
-			}
-			
-		}
-		
 	}
 
 	@Override
