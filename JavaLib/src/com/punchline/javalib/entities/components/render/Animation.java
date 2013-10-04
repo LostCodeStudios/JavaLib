@@ -16,6 +16,28 @@ import com.punchline.javalib.utils.SpriteSheet;
  */
 public class Animation implements Renderable {
 
+	//region Animation Types
+	
+	/** Normal animation type. */
+	public static final int NORMAL = com.badlogic.gdx.graphics.g2d.Animation.NORMAL;
+	
+	/** Reversed animation. */
+	public static final int REVERSED = com.badlogic.gdx.graphics.g2d.Animation.REVERSED;
+	
+	/** Looping animation. */
+	public static final int LOOP = com.badlogic.gdx.graphics.g2d.Animation.LOOP;
+	
+	/** Reversed looping animation. */
+	public static final int LOOP_REVERSED = com.badlogic.gdx.graphics.g2d.Animation.LOOP_REVERSED;
+	
+	/** Animates back and forth. */
+	public static final int LOOP_PINGPONG = com.badlogic.gdx.graphics.g2d.Animation.LOOP_PINGPONG;
+	
+	/** Loops randomly from frame to frame. */
+	public static final int LOOP_RANDOM = com.badlogic.gdx.graphics.g2d.Animation.LOOP_RANDOM;
+	
+	//endregion
+	
 	//region Fields
 	
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
