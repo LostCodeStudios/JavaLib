@@ -17,6 +17,7 @@ public class TrackingCameraSystem extends TagSystem {
 
 	private Camera camera;
 	private Rectangle bounds;
+	private Vector2 offset;
 	
 	/**
 	 * Constructs a TrackingCameraSystem.
@@ -27,6 +28,8 @@ public class TrackingCameraSystem extends TagSystem {
 		
 		this.camera = camera;
 		this.bounds = Convert.metersToPixels(bounds);
+		
+		this.offset = new Vector2();
 	}
 
 	@Override
@@ -36,10 +39,27 @@ public class TrackingCameraSystem extends TagSystem {
 		clampCamera();
 	}
 	
+	/**
+	 * @return The camera's offset from the tracked Entity.
+	 */
+	public Vector2 getCameraOffset() {
+		return offset.cpy();
+	}
+	
+	/**
+	 * Sets the camera's offset from the tracked Entity.
+	 * @param offset
+	 */
+	public void setCameraOffset(Vector2 offset) {
+		this.offset = offset;
+	}
+	
 	private void setPosition(Entity e) {
 		Transform t = (Transform)e.getComponent(Transform.class);
 		
 		Vector2 pos = Convert.metersToPixels(t.getPosition());
+		
+		pos.add(offset);
 		
 		camera.position.set(pos.x, pos.y, 0f);
 	}
