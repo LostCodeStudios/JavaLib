@@ -22,12 +22,26 @@ public class TrackingCameraSystem extends TagSystem {
 	/**
 	 * Constructs a TrackingCameraSystem.
 	 * @param tag The tag of the entity for the camera to follow.
+	 * @deprecated Use the other constructor that takes no bounds, bounds are now obtained every tick from the world.
 	 */
 	public TrackingCameraSystem(String tag, Camera camera, Rectangle bounds) {
 		super(tag);
 		
 		this.camera = camera;
 		this.bounds = Convert.metersToPixels(bounds);
+		
+		this.offset = new Vector2();
+	}
+	
+	/**
+	 * Constructs a TrackingCameraSystem.
+	 * @param tag The tag of the entity for the camera to follow.
+	 * @param camera The camera that this system controls.
+	 */
+	public TrackingCameraSystem(String tag, Camera camera) {
+		super(tag);
+		
+		this.camera = camera;
 		
 		this.offset = new Vector2();
 	}
@@ -64,7 +78,9 @@ public class TrackingCameraSystem extends TagSystem {
 		camera.position.set(pos.x, pos.y, 0f);
 	}
 	
-	private void clampCamera() {
+	private void clampCamera() {	
+		bounds = Convert.metersToPixels(world.getBounds());
+		
 		float left = camera.position.x - camera.viewportWidth / 2;
 		float bottom = camera.position.y - camera.viewportHeight / 2;
 		float right = left + camera.viewportWidth;
