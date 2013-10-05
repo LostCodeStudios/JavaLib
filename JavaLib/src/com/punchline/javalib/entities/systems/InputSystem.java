@@ -46,12 +46,12 @@ public abstract class InputSystem extends EntitySystem implements InputProcessor
 	/**
 	 * The minimum accelerometer x value that will trigger a tilt event.
 	 */
-	protected float tiltThresholdX = 1.5f;
+	protected float tiltThresholdX = 3f;
 	
 	/**
 	 * The minimum accelerometer y value that will trigger a tilt event.
 	 */
-	protected float tiltThresholdY = 3f;
+	protected float tiltThresholdY = 1.5f;
 	
 	/**
 	 * The minimum accelerometer z value that will trigger a tilt event.
