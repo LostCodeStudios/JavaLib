@@ -66,20 +66,37 @@ public class Animation implements Renderable {
 	 */
 	public Animation(SpriteSheet spriteSheet, String key, int frameCols, int frameRows, int playType, float frameDuration) {
 		
+		this(spriteSheet, key, frameCols, frameRows, 0, 0, playType, frameDuration);
+		
+	}
+	
+	/**
+	 * Constructs an Animation using a SpriteSheet. Using a SpriteSheet will increase performance.
+	 * @param spriteSheet The game's SpriteSheet.
+	 * @param key The animation's region key.
+	 * @param frameCols The number of columns in this Animation.
+	 * @param frameRows The number of rows in this Animation.
+	 * @param xPadding The number of pixels between each frame column.
+	 * @param yPadding The number of pixels between each frame row.
+	 * @param playType How this Animation should animate.
+	 * @param frameDuration The duration of each animation frame.
+	 */
+	public Animation(SpriteSheet spriteSheet, String key, int frameCols, int frameRows, int xPadding, int yPadding, int playType, float frameDuration) {
+		
 		Array<TextureRegion> regions = new Array<TextureRegion>();
 		
 		TextureRegion animationRegion = spriteSheet.getRegion(key);
 		
-		int frameWidth = animationRegion.getRegionWidth() / frameCols;
-		int frameHeight = animationRegion.getRegionHeight() / frameRows;
+		int frameWidth = (animationRegion.getRegionWidth() - xPadding * (frameCols - 1)) / frameCols;
+		int frameHeight = (animationRegion.getRegionHeight() - yPadding * (frameRows - 1)) / frameRows;
 		
 		for (int y = 0; y < frameRows; y++) {
 			
-			int yCoord = animationRegion.getRegionY() + y * frameHeight;
+			int yCoord = animationRegion.getRegionY() + y * frameHeight + y * yPadding;
 			
 			for (int x = 0; x < frameCols; x++) {
 				
-				int xCoord = animationRegion.getRegionX() + x * frameWidth;
+				int xCoord = animationRegion.getRegionX() + x * frameWidth + x * xPadding;
 				
 				TextureRegion region = new TextureRegion(spriteSheet.getTexture(), xCoord, yCoord, frameWidth, frameHeight);
 				

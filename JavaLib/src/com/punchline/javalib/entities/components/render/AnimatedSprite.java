@@ -50,12 +50,28 @@ public class AnimatedSprite implements Renderable {
 	 */
 	public AnimatedSprite(SpriteSheet spriteSheet, String prefix, int frameWidth, int playType, float frameDuration) {
 		
+		this(spriteSheet, prefix, frameWidth, 0, 0, playType, frameDuration);
+		
+	}
+	
+	/**
+	 * Constructs an AnimatedSprite.
+	 * @param spriteSheet The game's SpriteSheet.
+	 * @param prefix The key prefix of the AnimatedSprite's separate Animations.
+	 * @param frameWidth The width of each frame.
+	 * @param xPadding The number of pixels separating each frame column.
+	 * @param yPadding The number of pixels separating each frame row.
+	 * @param frameDuration The duration of each frame.
+	 * @param playType How the Animations should animate.
+	 */
+	public AnimatedSprite(SpriteSheet spriteSheet, String prefix, int frameWidth, int xPadding, int yPadding, int playType, float frameDuration) {
+		
 		Map<String, TextureRegion> regions = spriteSheet.getRegions(prefix);
 		
 		for (String key : regions.keySet()) {
 			int frameCols = regions.get(key).getRegionWidth() / frameWidth;
 			
-			Animation animation = new Animation(spriteSheet, prefix + key, frameCols, 1, 
+			Animation animation = new Animation(spriteSheet, prefix + key, frameCols, 1, xPadding, yPadding,
 					com.badlogic.gdx.graphics.g2d.Animation.LOOP_PINGPONG, 0.3f);
 			
 			this.animations.put(key, animation);
