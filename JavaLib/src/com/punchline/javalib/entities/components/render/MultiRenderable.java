@@ -2,6 +2,7 @@ package com.punchline.javalib.entities.components.render;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.components.MultiComponent;
 
@@ -20,6 +21,15 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	 * @param children All Renderable components that will be drawn above the base Renderable.
 	 */
 	public MultiRenderable(Renderable base, Renderable... children) {
+		super(base, children);
+	}
+	
+	/**
+	 * Makes a MultiRenderable component.
+	 * @param base The base Renderable whose position and other fields will be returned by this component.
+	 * @param children All Renderable components that will be drawn above the base Renderable.
+	 */
+	public MultiRenderable(Renderable base, Array<Renderable> children) {
 		super(base, children);
 	}
 	

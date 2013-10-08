@@ -41,6 +41,21 @@ public class MultiComponent<T extends Component> implements Component {
 		}
 	}
 	
+	/**
+	 * Constructs a MultiComponent.
+	 * @param base The base Component.
+	 * @param children The child components.
+	 */
+	public MultiComponent(T base, Array<T> children) {
+		this.base = base;
+		
+		this.children.add(base);
+		
+		for (T child : children) {
+			this.children.add(child);
+		}
+	}
+	
 	//endregion
 	
 	//region Events
