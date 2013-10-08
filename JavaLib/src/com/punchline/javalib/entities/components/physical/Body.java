@@ -46,6 +46,24 @@ public class Body implements Transform, Velocity {
 	}
 	
 	/**
+	 * Creates a Body without any attached fixtures.
+	 * @param world The EntityWorld.
+	 * @param e The entity that contains this Body.
+	 * @param bodyType The type of this Body.
+	 * @param position The body's initial position.
+	 */
+	public Body(EntityWorld world, Entity e, BodyType bodyType, Vector2 position) {
+		entityWorld = world;
+		
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = bodyType;
+		bodyDef.position.set(position);
+		
+		body = world.getBox2DWorld().createBody(bodyDef);
+		body.setUserData(e);
+	}
+	
+	/**
 	 * Constructs a body component.
 	 * @param world The EntityWorld.
 	 * @param e The entity that will own this body.
