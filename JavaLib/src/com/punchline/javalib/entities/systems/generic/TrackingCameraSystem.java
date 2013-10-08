@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.punchline.javalib.entities.Entity;
+import com.punchline.javalib.entities.components.generic.Health;
 import com.punchline.javalib.entities.components.physical.Transform;
 import com.punchline.javalib.entities.systems.TagSystem;
 import com.punchline.javalib.utils.Convert;
@@ -69,6 +70,14 @@ public class TrackingCameraSystem extends TagSystem {
 	}
 	
 	private void setPosition(Entity e) {
+		if (e.hasComponent(Health.class)) {
+			Health h = e.getComponent(Health.class);
+			
+			if (h.isEmpty()) {
+				return; //Don't track dead entities
+			}
+		}
+		
 		Transform t = (Transform)e.getComponent(Transform.class);
 		
 		Vector2 pos = Convert.metersToPixels(t.getPosition());
