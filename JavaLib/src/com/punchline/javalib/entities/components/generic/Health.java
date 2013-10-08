@@ -16,25 +16,20 @@ public class Health extends Stat {
 	private Entity owner;
 	private EntityWorld world;
 	
-	/**
-	 * Whether a health bar should be rendered above this component's owner.
-	 * The health bar will only render if the EntityWorld contains a HealthRenderSystem.
-	 */
+	/** Whether this health component should delete its owner when it dies. */
+	public boolean deleteOnDeath = true;
+	
+	/** Whether a health bar should be rendered above this component's owner.
+	 * The health bar will only render if the EntityWorld contains a HealthRenderSystem. */
 	public boolean render = false;
 	
-	/**
-	 * Invoked when the Entity that owns this component dies.
-	 */
+	/** Invoked when the Entity that owns this component dies. */
 	public final EventHandler onDeath = new EventHandler();
 
-	/**
-	 * Invoked when the Entity that owns this component takes damage.
-	 */
+	/** Invoked when the Entity that owns this component takes damage. */
 	public final EventHandler onDamage = new EventHandler();
 	
-	/**
-	 * Invoked when the Entity that owns this component is healed.
-	 */
+	/** Invoked when the Entity that owns this component is healed. */
 	public final EventHandler onHeal = new EventHandler();
 	
 	/**
@@ -61,7 +56,7 @@ public class Health extends Stat {
 			if (onDeath != null)
 				onDeath.invoke(owner, world);
 			
-			owner.delete();
+			if (deleteOnDeath) owner.delete();
 			
 			return;
 		}
