@@ -38,6 +38,7 @@ public final class GenericCollisionEvents {
 			public float continueCollision(Entity container, Entity victim) {
 				if (victim.getGroup().equals(container.getGroup()))
 					return 0;
+				
 				return 1;
 			}
 			
@@ -65,7 +66,6 @@ public final class GenericCollisionEvents {
 
 			@Override
 			public float continueCollision(Entity container, Entity victim) {
-				// TODO Auto-generated method stub
 				return 1;
 			}
 			
