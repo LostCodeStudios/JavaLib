@@ -72,7 +72,7 @@ public class AnimatedSprite implements Renderable {
 			int frameCols = regions.get(key).getRegionWidth() / frameWidth;
 			
 			Animation animation = new Animation(spriteSheet, prefix + key, frameCols, 1, xPadding, yPadding,
-					com.badlogic.gdx.graphics.g2d.Animation.LOOP_PINGPONG, 0.3f);
+					playType, frameDuration);
 			
 			this.animations.put(key, animation);
 			setState(key, true);
