@@ -44,6 +44,8 @@ public abstract class EntityWorld implements Disposable {
 	private Map<String, EntityTemplate> templates;
 	private Map<String, EntityGroupTemplate> groupTemplates;
 	
+	private float timeCoefficient = 1;
+	
 
 	/** The InputMultiplexer managing this world's game. */
 	protected InputMultiplexer input;
@@ -192,6 +194,19 @@ public abstract class EntityWorld implements Disposable {
 	
 	//region Accessors/Mutators
 	
+	
+
+	
+	
+	
+	public float getTimeCoefficient() {
+		return timeCoefficient;
+	}
+
+	public void setTimeCoefficient(float timeCoefficient) {
+		this.timeCoefficient = timeCoefficient;
+	}
+
 	/**
 	 * @return This world's boundaries, in meters.
 	 */
@@ -287,13 +302,13 @@ public abstract class EntityWorld implements Disposable {
 		systems.process(
 				entities.getNewEntities(), 
 				entities.getChangedEntities(), 
-				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime());
+				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime()  * timeCoefficient);
 		
 		entities.process();
 		
-		processes.process(this, Gdx.graphics.getDeltaTime());
+		processes.process(this, Gdx.graphics.getDeltaTime() * timeCoefficient);
 		
-		physicsWorld.process(Gdx.graphics.getDeltaTime());
+		physicsWorld.process(Gdx.graphics.getDeltaTime() * timeCoefficient);
 	}
 	
 	//endregion
