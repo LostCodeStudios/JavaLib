@@ -12,27 +12,17 @@ public class EntityManager extends Pool<Entity>{
 	
 	//region Fields
 	
-	/**
-	 * Contains all entities.
-	 */
+	/** Contains all entities. */
 	private Array<Entity> entities = new Array<Entity>();
 	
-	/**
-	 * Contains all entities that have been added in this iteration of the game loop.
-	 */
+	/** Contains all entities that have been added in this iteration of the game loop. */
 	private Array<Entity> newEntities = new Array<Entity>();
 	
-	/**
-	 * Contains all entities that have been changed in this iteration of the game loop.
-	 */
+	/** Contains all entities that have been changed in this iteration of the game loop. */
 	private Array<Entity> changedEntities = new Array<Entity>();
 	
-	/**
-	 * Contains all entities that have been removed in this iteration of the game loop.
-	 */
+	/** Contains all entities that have been removed in this iteration of the game loop. */
 	private Array<Entity> removedEntities = new Array<Entity>();
-	
-	int free = 0;
 	
 	//endregion
 	
@@ -46,9 +36,11 @@ public class EntityManager extends Pool<Entity>{
 		//Clears the information/post-processing lists.
 		newEntities.clear();
 		changedEntities.clear();
+		
 		for(Entity e : removedEntities){
 			if (e.onDeleted != null)
 				e.onDeleted.invoke(e);
+			
 			this.free(e); //Frees the entity from the entity pool. See pooling.
 		}
 		

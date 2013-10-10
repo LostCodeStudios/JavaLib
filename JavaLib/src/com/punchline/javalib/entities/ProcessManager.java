@@ -34,8 +34,19 @@ public class ProcessManager {
 	 * Aborts all of the processes in the Process manager.
 	 */
 	public void abortAll(){
-		for(Process p : attachedProcesses){
+		for (Process p : attachedProcesses) {
 			p.end(ProcessState.ABORTED);
+		}
+	}
+	
+	/**
+	 * Ends all processes of the given type.
+	 * @param type
+	 * @param endState The ProcessState to end with.
+	 */
+	public void endAll(Class<? extends Process> type, ProcessState endState) {
+		for (Process p : attachedProcesses) {
+			if (type.isInstance(p)) p.end(endState);
 		}
 	}
 	
