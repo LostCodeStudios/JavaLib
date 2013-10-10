@@ -56,12 +56,16 @@ public final class ContactManager extends EventHandler implements ContactListene
 				detectee = e1;
 			}
 			
-			this.addCallback(new Object(), new EventCallback(){
-				@Override
-				public void invoke(Entity e, Object... args) {
-					sensor.onDetected(detectee, world);
-				}
-			});
+			if (sensor != null) {
+			
+				this.addCallback(new Object(), new EventCallback(){
+					@Override
+					public void invoke(Entity e, Object... args) {
+						sensor.onDetected(detectee, world);
+					}
+				});
+				
+			}
 		}
 		
 		
@@ -126,21 +130,22 @@ public final class ContactManager extends EventHandler implements ContactListene
 			//LOGIC
 			if (f1.isSensor()) { //e2 escaped e1
 				sensor = (Sensor) e1.getComponent(Sensor.class);
-				escapee = e2;
-				
-			}
-			else
-			{ //e1 escaped e2
+				escapee = e2;	
+			} else { //e1 escaped e2
 				sensor = (Sensor) e2.getComponent(Sensor.class);
-				escapee= e1;
+				escapee = e1;
 			}
 			
-			this.addCallback(new Object(), new EventCallback(){
-				@Override
-				public void invoke(Entity e, Object... args) {
-					sensor.onEscaped(escapee, world);
-				}	
-			});
+			if (sensor != null) {
+			
+				this.addCallback(new Object(), new EventCallback(){
+					@Override
+					public void invoke(Entity e, Object... args) {
+						sensor.onEscaped(escapee, world);
+					}	
+				});
+				
+			}
 			
 		}
 	}
