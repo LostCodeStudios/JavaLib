@@ -157,7 +157,7 @@ public abstract class EntitySystem implements Disposable {
 	 * @return The amount of seconds between this call of processEntities() and the previous call of processEntities().
 	 */
 	public float deltaSeconds() {
-		return Gdx.graphics.getDeltaTime();
+		return Gdx.graphics.getDeltaTime() * world.getTimeCoefficient();
 	}
 	
 	/**

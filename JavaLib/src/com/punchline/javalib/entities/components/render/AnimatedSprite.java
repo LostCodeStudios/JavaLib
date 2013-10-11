@@ -31,10 +31,7 @@ public class AnimatedSprite implements Renderable {
 	private float rotation = 0f;
 	private int layer = 0;
 	
-	/**
-	 * Whether this AnimatedSprite needs to keep updating frames.
-	 */
-	public boolean animate = true;
+	private boolean pause = false;
 	
 	//endregion
 	
@@ -116,6 +113,10 @@ public class AnimatedSprite implements Renderable {
 	
 	//region Accessors
 	
+	public boolean isPaused(){
+		return pause ;
+	}
+	
 	@Override
 	public float getWidth() {
 		TextureRegion region = getCurrentFrame(0f);
@@ -162,7 +163,8 @@ public class AnimatedSprite implements Renderable {
 	public TextureRegion getCurrentFrame(float deltaSeconds) {
 		Animation currentAnimation = animations.get(state);
 		
-		currentAnimation.setStateTime(stateTime += deltaSeconds);
+		if(!pause)
+			currentAnimation.setStateTime(stateTime += deltaSeconds);
 		return currentAnimation.getCurrentFrame(0f); //Delta is already accounted for.
 	}
 	
@@ -170,6 +172,20 @@ public class AnimatedSprite implements Renderable {
 	
 	//region Mutators
 
+	/**
+	 * Pauses the animation and ends looping.
+	 */
+	public void pause(){
+		pause = true;
+	}
+	
+	/**
+	 * Unpauses the animation and starts looping.
+	 */
+	public void unpause(){
+		pause = false;
+	}
+	
 	@Override
 	public void setPosition(Vector2 position) {
 		TextureRegion region = getCurrentFrame(0f);
@@ -224,5 +240,4 @@ public class AnimatedSprite implements Renderable {
 	}
 	
 	//endregion
-	
 }
