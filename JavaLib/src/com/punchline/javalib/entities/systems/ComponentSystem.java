@@ -6,46 +6,53 @@ import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.Component;
 
 /**
- * An {@link EntitySystem} that processes {@link Entity Entities} which have specified {@link Component Components}.
+ * An {@link EntitySystem} that processes {@link Entity Entities} which have
+ * specified {@link Component Components}.
+ * 
  * @author Natman64
- *
+ * 
  */
 public abstract class ComponentSystem extends EntitySystem {
 
 	private ArrayList<Class<? extends Component>> componentTypes;
-	
-	//region Initialization
-	
+
+	// region Initialization
+
 	/**
 	 * Makes a ComponentSystem.
-	 * @param requiredType The first required Component type.
-	 * @param otherTypes Other required Component types.
+	 * 
+	 * @param requiredType
+	 *            The first required Component type.
+	 * @param otherTypes
+	 *            Other required Component types.
 	 */
-	public ComponentSystem(Class<? extends Component> requiredType, Class<? extends Component>... otherTypes) {
+	public ComponentSystem(Class<? extends Component> requiredType,
+			Class<? extends Component>... otherTypes) {
 		componentTypes = new ArrayList<Class<? extends Component>>();
-		
+
 		componentTypes.add(requiredType);
-		
+
 		for (Class<? extends Component> type : otherTypes) {
 			componentTypes.add(type);
 		}
 	}
 
-	//endregion
-	
-	//region Entity Management
-	
+	// endregion
+
+	// region Entity Management
+
 	@Override
 	public boolean canProcess(Entity e) {
-		
+
 		for (Class<? extends Component> type : componentTypes) {
-			if (!e.hasComponent(type)) return false;
+			if (!e.hasComponent(type))
+				return false;
 		}
-		
+
 		return true;
-		
+
 	}
-	
-	//endregion
+
+	// endregion
 
 }

@@ -8,62 +8,70 @@ import com.punchline.javalib.entities.components.ComponentManager;
 import com.punchline.javalib.entities.components.physical.Sensor;
 
 /**
- * Component wrapper for a sensor fixture that triggers an event in the EntityWorld when
- * entities pass through it.
+ * Component wrapper for a sensor fixture that triggers an event in the
+ * EntityWorld when entities pass through it.
+ * 
  * @author Natman64
  * @created Aug 1, 2013
  * 
  */
 public class TriggerZone extends Sensor {
-	
+
 	private FixtureDef fixtureDef;
-	
+
 	/**
 	 * Constructs a TriggerZone.
-	 * @param owner The Entity that owns this TriggerZone.
-	 * @param shape The shape of the sensor fixture.
+	 * 
+	 * @param owner
+	 *            The Entity that owns this TriggerZone.
+	 * @param shape
+	 *            The shape of the sensor fixture.
 	 */
 	public TriggerZone(Entity owner, Shape shape) {
 		super(owner);
-		
+
 		fixtureDef = new FixtureDef();
 		fixtureDef.isSensor = true;
 		fixtureDef.shape = shape;
 	}
-	
+
 	/**
 	 * Constructs a rectangle TriggerZone.
-	 * @param owner The Entity that owns this TriggerZone.
-	 * @param width The width of the sensor fixture.
-	 * @param height The height of the sensor fixture.
+	 * 
+	 * @param owner
+	 *            The Entity that owns this TriggerZone.
+	 * @param width
+	 *            The width of the sensor fixture.
+	 * @param height
+	 *            The height of the sensor fixture.
 	 */
 	public TriggerZone(Entity owner, float width, float height) {
 		super(owner);
-		
+
 		fixtureDef = new FixtureDef();
 		fixtureDef.isSensor = true;
-		
+
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width / 2, height / 2);
-		
+
 		fixtureDef.shape = shape;
 	}
-	
+
 	@Override
 	public void onRemove(ComponentManager container) {
 		super.onRemove(container);
-		
+
 		fixtureDef.shape.dispose();
 	}
 
 	@Override
 	public void refresh() {
 		super.refresh();
-		
+
 		fixtureDef.isSensor = true;
-		
+
 		fixture = body.createFixture(fixtureDef);
 		fixture.setUserData(owner);
 	}
-	
+
 }

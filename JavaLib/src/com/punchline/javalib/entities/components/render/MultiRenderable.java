@@ -8,51 +8,63 @@ import com.punchline.javalib.entities.components.MultiComponent;
 
 /**
  * A Renderable {@link MultiComponent}. The Renderables are drawn in order.
+ * 
  * @author Natman64
  * @created Aug 12, 2013
  */
-public class MultiRenderable extends MultiComponent<Renderable> implements Renderable {
+public class MultiRenderable extends MultiComponent<Renderable> implements
+		Renderable {
 
-	//region Initialization
-	
+	// region Initialization
+
 	/**
 	 * Makes a MultiRenderable component.
-	 * @param base The base Renderable whose position and other fields will be returned by this component.
-	 * @param children All Renderable components that will be drawn above the base Renderable.
+	 * 
+	 * @param base
+	 *            The base Renderable whose position and other fields will be
+	 *            returned by this component.
+	 * @param children
+	 *            All Renderable components that will be drawn above the base
+	 *            Renderable.
 	 */
 	public MultiRenderable(Renderable base, Renderable... children) {
 		super(base, children);
 	}
-	
+
 	/**
 	 * Makes a MultiRenderable component.
-	 * @param base The base Renderable whose position and other fields will be returned by this component.
-	 * @param children All Renderable components that will be drawn above the base Renderable.
+	 * 
+	 * @param base
+	 *            The base Renderable whose position and other fields will be
+	 *            returned by this component.
+	 * @param children
+	 *            All Renderable components that will be drawn above the base
+	 *            Renderable.
 	 */
 	public MultiRenderable(Renderable base, Array<Renderable> children) {
 		super(base, children);
 	}
-	
-	//endregion
-	
-	//region Events
-	
+
+	// endregion
+
+	// region Events
+
 	@Override
-	public void onAdd(ComponentManager container) { 
+	public void onAdd(ComponentManager container) {
 		super.onAdd(container);
 	}
 
 	@Override
-	public void onRemove(ComponentManager container) { 
+	public void onRemove(ComponentManager container) {
 		super.onAdd(container);
 	}
 
-	//endregion
-	
-	//region Accessors
-	
+	// endregion
+
+	// region Accessors
+
 	@Override
-	public float getWidth() {		
+	public float getWidth() {
 		return base.getWidth();
 	}
 
@@ -65,42 +77,42 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	public Vector2 getPosition() {
 		return base.getPosition();
 	}
-	
+
 	@Override
 	public float getRotation() {
 		return base.getRotation();
 	}
-	
+
 	@Override
 	public int getLayer() {
 		return base.getLayer();
 	}
-	
-	//endregion
-	
-	//region Mutators
-	
+
+	// endregion
+
+	// region Mutators
+
 	@Override
 	public void setPosition(Vector2 position) {
 		Vector2 offset = position.cpy().sub(base.getPosition());
-		
-		//Move all children relative to their old positions.
+
+		// Move all children relative to their old positions.
 		for (Renderable child : children) {
 			child.setPosition(child.getPosition().add(offset));
 		}
-		
+
 		return;
 	}
 
 	@Override
-	public void setRotation(float degrees) {		
+	public void setRotation(float degrees) {
 		for (Renderable child : children) {
 			child.setRotation(degrees);
 		}
 	}
 
 	@Override
-	public void setScale(float scaleX, float scaleY) {		
+	public void setScale(float scaleX, float scaleY) {
 		for (Renderable child : children) {
 			child.setScale(scaleX, scaleY);
 		}
@@ -110,27 +122,27 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	public void setOrigin(Vector2 origin) {
 		for (Renderable child : children) {
 			Vector2 offset = child.getPosition().sub(base.getPosition());
-			
+
 			child.setOrigin(origin.cpy().add(offset));
 		}
 	}
-	
+
 	@Override
 	public void setLayer(int layer) {
 		base.setLayer(layer);
 	}
-	
-	//endregion
-	
-	//region Rendering
+
+	// endregion
+
+	// region Rendering
 
 	@Override
-	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {		
+	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		for (Renderable child : children) {
 			child.draw(spriteBatch, deltaSeconds);
 		}
 	}
 
-	//endregion
-	
+	// endregion
+
 }

@@ -5,26 +5,31 @@ import com.punchline.javalib.entities.components.MultiComponent;
 
 /**
  * MultiComponent implementation for Box2D body components.
+ * 
  * @author Natman64
- *
+ * 
  */
-public class MultiBody extends MultiComponent<Body> implements Transform, Velocity {
+public class MultiBody extends MultiComponent<Body> implements Transform,
+		Velocity {
 
-	//region Initialization
-	
+	// region Initialization
+
 	/**
 	 * Constructs a MultiBody.
-	 * @param base The main body.
-	 * @param children The rest of the bodies.
+	 * 
+	 * @param base
+	 *            The main body.
+	 * @param children
+	 *            The rest of the bodies.
 	 */
 	public MultiBody(Body base, Body... children) {
 		super(base, children);
 	}
 
-	//endregion
-	
-	//region Velocity Implementation
-	
+	// endregion
+
+	// region Velocity Implementation
+
 	@Override
 	public Vector2 getLinearVelocity() {
 		return base.getLinearVelocity();
@@ -48,10 +53,10 @@ public class MultiBody extends MultiComponent<Body> implements Transform, Veloci
 			child.setAngularVelocity(angularVelocity);
 		}
 	}
-	
-	//endregion
-	
-	//region Transform Implementation
+
+	// endregion
+
+	// region Transform Implementation
 
 	@Override
 	public Vector2 getPosition() {
@@ -61,7 +66,7 @@ public class MultiBody extends MultiComponent<Body> implements Transform, Veloci
 	@Override
 	public void setPosition(Vector2 position) {
 		Vector2 offset = position.cpy().sub(base.getPosition());
-		
+
 		for (Body child : children) {
 			child.setPosition(child.getPosition().add(offset));
 		}
@@ -84,6 +89,6 @@ public class MultiBody extends MultiComponent<Body> implements Transform, Veloci
 		return base.getOrigin();
 	}
 
-	//endregion
-	
+	// endregion
+
 }

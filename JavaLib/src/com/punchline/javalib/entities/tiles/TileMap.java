@@ -16,89 +16,111 @@ import com.punchline.javalib.utils.Convert;
 import com.punchline.javalib.utils.Display;
 
 /**
- * Component wrapper for a map made in Tiled. When added to an Entity, this will automatically add bodies to the
- * Box2D physics world, as defined by the Tiled map's "physics" object layer and the given materials XML file.
+ * Component wrapper for a map made in Tiled. When added to an Entity, this will
+ * automatically add bodies to the Box2D physics world, as defined by the Tiled
+ * map's "physics" object layer and the given materials XML file.
  * 
- * Map objects that contain the property "Entity" with a template tag will be used to create an Entity. The args provided
- * to the template will be as follows:
+ * Map objects that contain the property "Entity" with a template tag will be
+ * used to create an Entity. The args provided to the template will be as
+ * follows:
  * 
- * args[0] = The BodyDef that can be used to make the Entity's body.
- * args[1] = The FixtureDef that can be used to make the Entity's body.
- * args[2] = The properties of the MapObject.
+ * args[0] = The BodyDef that can be used to make the Entity's body. args[1] =
+ * The FixtureDef that can be used to make the Entity's body. args[2] = The
+ * properties of the MapObject.
  * 
  * @author Natman64
  * @created Aug 1, 2013
  */
 public class TileMap implements Component, Renderable, Transform {
 
-	//region Fields/Initialization
-	
+	// region Fields/Initialization
+
 	private static TmxMapLoader loader = new TmxMapLoader();
-	
+
 	private boolean init = false;
-	
+
 	private TiledMap map;
 	private MapBodyManager bodyManager;
 	private OrthogonalTiledMapRenderer renderer;
 	private int layer = 0;
-	
+
 	/**
 	 * Constructs a TileMap component.
-	 * @param world The EntityWorld containing this map.
-	 * @param mapFilename The file path of the map's .tmx file.
-	 * @param materialsFilename The file path of the XML file containing the materials info for the map.
+	 * 
+	 * @param world
+	 *            The EntityWorld containing this map.
+	 * @param mapFilename
+	 *            The file path of the map's .tmx file.
+	 * @param materialsFilename
+	 *            The file path of the XML file containing the materials info
+	 *            for the map.
 	 */
-	public TileMap(EntityWorld world, String mapFilename, String materialsFilename) {
+	public TileMap(EntityWorld world, String mapFilename,
+			String materialsFilename) {
 		map = loader.load(mapFilename);
-		
-		bodyManager = new MapBodyManager(world, Convert.getMeterPixelRatio(), materialsFilename, 0);
+
+		bodyManager = new MapBodyManager(world, Convert.getMeterPixelRatio(),
+				materialsFilename, 0);
 	}
-	
-	//endregion
-	
-	//region TiledMap Accessors/Mutators
-	
+
+	// endregion
+
+	// region TiledMap Accessors/Mutators
+
 	/**
 	 * @return The TiledMap.
 	 */
 	public TiledMap getMap() {
 		return map;
 	}
-	
+
 	/**
 	 * Sets a cell of a tile layer to the given cell.
-	 * @param layerName The name of the layer to edit.
-	 * @param x The x coordinate of the tile to edit.
-	 * @param y The y coordinate of the tile to edit.
-	 * @param value The cell to set the tile to.
+	 * 
+	 * @param layerName
+	 *            The name of the layer to edit.
+	 * @param x
+	 *            The x coordinate of the tile to edit.
+	 * @param y
+	 *            The y coordinate of the tile to edit.
+	 * @param value
+	 *            The cell to set the tile to.
 	 */
 	public void setTile(String layerName, int x, int y, Cell value) {
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName); //get the desired layer
-		
-		if (layer == null) return; //null check
-		
-		layer.setCell(x, y, value); //set the desired cell
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(
+				layerName); // get the desired layer
+
+		if (layer == null)
+			return; // null check
+
+		layer.setCell(x, y, value); // set the desired cell
 	}
-	
+
 	/**
 	 * Gets a cell of a tile layer.
-	 * @param layerName The name of the layer to search.
-	 * @param x The x coordinate of the tile to return.
-	 * @param y The y coordinate of the tile to return.
+	 * 
+	 * @param layerName
+	 *            The name of the layer to search.
+	 * @param x
+	 *            The x coordinate of the tile to return.
+	 * @param y
+	 *            The y coordinate of the tile to return.
 	 * @return The desired tile.
 	 */
 	public Cell getTile(String layerName, int x, int y) {
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName); //get the desired layer
-		
-		if (layer == null) return null; //null check
-		
-		return layer.getCell(x, y); //return the desired cell
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(
+				layerName); // get the desired layer
+
+		if (layer == null)
+			return null; // null check
+
+		return layer.getCell(x, y); // return the desired cell
 	}
-	
-	//endregion
-	
-	//region Transform Implementation
-	
+
+	// endregion
+
+	// region Transform Implementation
+
 	@Override
 	public Vector2 getPosition() {
 		return Vector2.Zero.cpy();
@@ -124,49 +146,54 @@ public class TileMap implements Component, Renderable, Transform {
 		return 0f;
 	}
 
-	//endregion
-	
-	//region Renderable Implementation
-	
+	// endregion
+
+	// region Renderable Implementation
+
 	@Override
 	public int getLayer() {
 		return layer;
 	}
-	
-	@Override
-	public void setPosition(Vector2 position) { }
 
 	@Override
-	public void setRotation(float degrees) { }
+	public void setPosition(Vector2 position) {
+	}
 
 	@Override
-	public void setScale(float scaleX, float scaleY) { }
+	public void setRotation(float degrees) {
+	}
 
 	@Override
-	public void setOrigin(Vector2 origin) { }
+	public void setScale(float scaleX, float scaleY) {
+	}
+
+	@Override
+	public void setOrigin(Vector2 origin) {
+	}
 
 	@Override
 	public void setLayer(int layer) {
 		this.layer = layer;
 	}
-	
+
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		if (!init) {
 			renderer = new OrthogonalTiledMapRenderer(map, spriteBatch);
 			init = true;
 		}
-		
+
 		spriteBatch.end();
-		renderer.setView(spriteBatch.getProjectionMatrix().cpy(), 0, 0, Display.getRealWidth(), Display.getRealHeight());
+		renderer.setView(spriteBatch.getProjectionMatrix().cpy(), 0, 0,
+				Display.getRealWidth(), Display.getRealHeight());
 		renderer.render();
 		spriteBatch.begin();
 	}
 
-	//endregion
-	
-	//region Events
-	
+	// endregion
+
+	// region Events
+
 	@Override
 	public void onAdd(ComponentManager container) {
 		bodyManager.createPhysics(map);
@@ -178,7 +205,7 @@ public class TileMap implements Component, Renderable, Transform {
 		map.dispose();
 		renderer.dispose();
 	}
-	
-	//endregion
-	
+
+	// endregion
+
 }

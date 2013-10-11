@@ -14,72 +14,82 @@ import com.punchline.javalib.utils.Display;
 
 /**
  * A GameScreen containing a Scene2D stage for a menu.
+ * 
  * @author Natman64
  * @created Jul 24, 2013
  * 
  */
 public abstract class MenuScreen extends InputScreen {
-	
+
 	/**
 	 * The menu's skin.
 	 */
 	protected Skin skin;
-	
+
 	/**
 	 * The menu's stage.
 	 */
 	private Stage stage;
-	
+
 	/**
 	 * The window containing menu elements.
 	 */
 	protected Window window;
-	
+
 	/**
 	 * The title of the menu.
 	 */
 	protected String title;
-	
+
 	private Drawable background;
-	
+
 	/**
 	 * Makes a MenuScreen.
-	 * @param game The game containing this screen.
-	 * @param skinHandle A FileHandle pointing to the UI skin.
-	 * @param title The title of the menu.
-	 * @param textHandle A FileHandle pointing to the background texture. Null if no background is needed.
+	 * 
+	 * @param game
+	 *            The game containing this screen.
+	 * @param skinHandle
+	 *            A FileHandle pointing to the UI skin.
+	 * @param title
+	 *            The title of the menu.
+	 * @param textHandle
+	 *            A FileHandle pointing to the background texture. Null if no
+	 *            background is needed.
 	 */
-	public MenuScreen(Game game, FileHandle skinHandle, String title, FileHandle textureHandle) {
+	public MenuScreen(Game game, FileHandle skinHandle, String title,
+			FileHandle textureHandle) {
 		super(game);
-		
+
 		skin = new Skin(skinHandle);
-		stage = new Stage(Display.getPreferredWidth(), Display.getPreferredHeight(), false);
-		
+		stage = new Stage(Display.getPreferredWidth(),
+				Display.getPreferredHeight(), false);
+
 		this.title = title;
-		
+
 		if (textureHandle != null) {
 			Texture backgroundTexture = new Texture(textureHandle);
 			TextureRegion source = new TextureRegion(backgroundTexture);
 			background = new TextureRegionDrawable(source);
 		}
-		
+
 		initialize();
 	}
-	
+
 	/**
 	 * Initializes this MenuScreen's table with all necessary elements.
 	 */
-	protected void initialize() { 
+	protected void initialize() {
 		window = new Window(title, skin);
-		window.setSize(Display.getPreferredWidth(), Display.getPreferredHeight());
+		window.setSize(Display.getPreferredWidth(),
+				Display.getPreferredHeight());
 		window.setPosition(0, 0);
-		
+
 		if (background != null)
 			window.setBackground(background);
-		
+
 		stage.addActor(window);
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		stage.act(delta);
@@ -88,7 +98,7 @@ public abstract class MenuScreen extends InputScreen {
 
 	@Override
 	public void resize(int width, int height) {
-	
+
 	}
 
 	@Override
@@ -105,12 +115,12 @@ public abstract class MenuScreen extends InputScreen {
 
 	@Override
 	public void pause() {
-		
+
 	}
 
 	@Override
 	public void resume() {
-		
+
 	}
 
 	@Override

@@ -6,50 +6,56 @@ import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
  * @author MadcowD
- * @created Jul 23, 2013
- * The particle class.
+ * @created Jul 23, 2013 The particle class.
  */
 public class Particle implements Velocity, Transform {
 
-	//region Fields
-	
+	// region Fields
+
 	private Vector2 position;
 	private float rotation;
 	private Vector2 origin;
 	private Vector2 linearVelocity;
 	private float angularVelocity;
-	
-	//endregion
-	
-	//region Initialization
-	
+
+	// endregion
+
+	// region Initialization
+
 	/**
 	 * Initializes a particle with a given transform.
-	 * @param position The position of the particle.
-	 * @param rotation The rotation of the particle.
-	 * @param origin The origin of the particle.
+	 * 
+	 * @param position
+	 *            The position of the particle.
+	 * @param rotation
+	 *            The rotation of the particle.
+	 * @param origin
+	 *            The origin of the particle.
 	 */
-	public Particle(Entity e, Vector2 position, float rotation, Vector2 origin){
-		linearVelocity = new Vector2(0,0);
+	public Particle(Entity e, Vector2 position, float rotation, Vector2 origin) {
+		linearVelocity = new Vector2(0, 0);
 		angularVelocity = 0f;
-		
+
 		this.origin = origin;
 		this.rotation = rotation;
 		this.position = position;
 	}
-	
+
 	/**
 	 * Initializes a particle with a given transform (without an origin)
-	 * @param position The position of the particle.
-	 * @param rotation The rotation of the particle.
+	 * 
+	 * @param position
+	 *            The position of the particle.
+	 * @param rotation
+	 *            The rotation of the particle.
 	 */
-	public Particle(Entity e, Vector2 position, float rotation){
-		this(e, position, rotation, new Vector2(0,0));
+	public Particle(Entity e, Vector2 position, float rotation) {
+		this(e, position, rotation, new Vector2(0, 0));
 	}
 
-	//endregion
-	
-	//region Transform Implementation
+	// endregion
+
+	// region Transform Implementation
 
 	@Override
 	public Vector2 getPosition() {
@@ -70,15 +76,15 @@ public class Particle implements Velocity, Transform {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-	
+
 	@Override
 	public Vector2 getOrigin() {
 		return origin;
 	}
-	
-	//endregion
-	
-	//region Velocity
+
+	// endregion
+
+	// region Velocity
 
 	@Override
 	public Vector2 getLinearVelocity() {
@@ -99,17 +105,19 @@ public class Particle implements Velocity, Transform {
 	public void setAngularVelocity(float angularVelocity) {
 		this.angularVelocity = angularVelocity;
 	}
-	
-	//endregion
-	
-	//region Events
-	
-	@Override
-	public void onAdd(ComponentManager container) { }
+
+	// endregion
+
+	// region Events
 
 	@Override
-	public void onRemove(ComponentManager container) { }
+	public void onAdd(ComponentManager container) {
+	}
 
-	//endregion
-	
+	@Override
+	public void onRemove(ComponentManager container) {
+	}
+
+	// endregion
+
 }

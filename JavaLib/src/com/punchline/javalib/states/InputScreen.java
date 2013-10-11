@@ -5,6 +5,7 @@ import com.punchline.javalib.Game;
 
 /**
  * Base class for GameScreens that process input.
+ * 
  * @author Natman64
  * @created Jul 24, 2013
  */
@@ -12,7 +13,9 @@ public abstract class InputScreen extends GameScreen implements InputProcessor {
 
 	/**
 	 * Constructs an InputScreen and adds it to the game's input multiplexor.
-	 * @param game The game.
+	 * 
+	 * @param game
+	 *            The game.
 	 */
 	public InputScreen(Game game) {
 		super(game);
@@ -22,7 +25,7 @@ public abstract class InputScreen extends GameScreen implements InputProcessor {
 	public void show() {
 		game.getInput().addProcessor(this);
 	}
-	
+
 	@Override
 	public void hide() {
 		game.getInput().removeProcessor(this);
