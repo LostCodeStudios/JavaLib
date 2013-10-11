@@ -302,7 +302,8 @@ public abstract class EntityWorld implements Disposable {
 		systems.process(
 				entities.getNewEntities(), 
 				entities.getChangedEntities(), 
-				entities.getRemovedEntities(), Gdx.graphics.getDeltaTime()  * timeCoefficient);
+				entities.getRemovedEntities(), 
+				Gdx.graphics.getDeltaTime()  * timeCoefficient);
 		
 		entities.process();
 		

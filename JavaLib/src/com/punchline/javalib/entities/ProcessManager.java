@@ -78,6 +78,7 @@ public class ProcessManager {
 				 p.onEnd(world, p.getState());
 		
 				 //REMOVE FROM PROCESS MANAGER
+
 				 i.remove();
 			}
 		}

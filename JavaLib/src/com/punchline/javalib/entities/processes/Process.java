@@ -68,6 +68,7 @@ public abstract class Process {
 	
 	/**
 	 * Updates the process.
+	 * @param world
 	 * @param deltaTime The time in seconds since the previous call of update().
 	 */
 	public abstract void update(EntityWorld world, float deltaTime);
@@ -75,11 +76,12 @@ public abstract class Process {
 	/**
 	 * Called when a process is ended (after all updates have been called).
 	 */
-	public void end(ProcessState endState){
-		if(endState.equals(ProcessState.RUNNING))
+	public void end(ProcessState endState) {
+		if (endState.equals(ProcessState.RUNNING)) {
 			return;
-		else
+		} else {
 			state = endState;
+		}
 	}
 	
 	//endregion
