@@ -245,6 +245,13 @@ public abstract class EntityWorld implements Disposable {
 	}
 
 	/**
+	 * @return Get's this world's {@link InputMultiplexer}.
+	 */
+	public InputMultiplexer getInput() {
+		return input;
+	}
+
+	/**
 	 * @return This world's entity count.
 	 */
 	public int getEntityCount() {
@@ -252,10 +259,17 @@ public abstract class EntityWorld implements Disposable {
 	}
 
 	/**
-	 * @return This world's {@link ProcessManager.}
+	 * @return This world's {@link ProcessManager}.
 	 */
 	public ProcessManager getProcessManager() {
 		return processes;
+	}
+
+	/**
+	 * @return This world's {@link SystemManager}.
+	 */
+	public SystemManager getSystemManager() {
+		return systems;
 	}
 
 	/**

@@ -58,7 +58,19 @@ public class SystemManager implements Disposable {
 	 */
 	public EntitySystem addSystem(EntitySystem system) {
 		system.setWorld(world);
+		system.resume();
+
+		// To allow for the addition of systems at runtime.
+		// We must check all the entities in the world for the system.
+		// This shouldn't take up too much processing,
+		// because most systems are added on start up (0) entities.
+		for (Entity e : world.entities.getEntities()) {
+			if (system.canProcess(e))
+				system.add(e);
+		}
+
 		systems.add(system);
+
 		return system;
 	}
 
@@ -108,7 +120,7 @@ public class SystemManager implements Disposable {
 
 			// Processes all of new Entities.
 			for (Entity e : newEntities) {
-				if (system.canProcess(e)) {
+				if (system.canProcess(e) && !system.isProcessing(e)) {
 					system.add(e); // The system can process this Entity, so add
 									// it
 				}
