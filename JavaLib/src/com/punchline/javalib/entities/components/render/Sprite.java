@@ -158,8 +158,8 @@ public class Sprite implements Renderable {
 
 	@Override
 	public Vector2 getPosition() {
-		return new Vector2(sprite.getX() + getWidth() / 2, sprite.getY()
-				+ getHeight() / 2);
+		return new Vector2(sprite.getX() + sprite.getOriginX(), sprite.getY()
+				+ sprite.getOriginY());
 	}
 
 	@Override
@@ -184,8 +184,8 @@ public class Sprite implements Renderable {
 	 */
 	@Override
 	public void setPosition(Vector2 position) {
-		sprite.setPosition(position.x - getWidth() / 2, position.y
-				- getHeight() / 2);
+		sprite.setPosition(position.x - sprite.getOriginX(), position.y
+				- sprite.getOriginY());
 	}
 
 	/**
