@@ -12,8 +12,7 @@ import com.punchline.javalib.entities.components.MultiComponent;
  * @author Natman64
  * @created Aug 12, 2013
  */
-public class MultiRenderable extends MultiComponent<Renderable> implements
-		Renderable {
+public class MultiRenderable extends MultiComponent<Renderable> implements Renderable {
 
 	// region Initialization
 
