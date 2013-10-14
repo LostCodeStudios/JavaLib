@@ -279,6 +279,11 @@ public class Animation implements Renderable {
 	public Vector2 getPosition() {
 		return position.cpy();
 	}
+	
+	@Override
+	public Vector2 getOrigin() {
+		return origin.cpy();
+	}
 
 	@Override
 	public float getRotation() {

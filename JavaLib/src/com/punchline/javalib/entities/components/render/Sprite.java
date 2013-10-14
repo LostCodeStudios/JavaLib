@@ -163,6 +163,11 @@ public class Sprite implements Renderable {
 	}
 
 	@Override
+	public Vector2 getOrigin() {
+		return new Vector2(sprite.getOriginX(), sprite.getOriginY());
+	}
+	
+	@Override
 	public float getRotation() {
 		return sprite.getRotation();
 	}

@@ -162,6 +162,11 @@ public class AnimatedSprite implements Renderable {
 				new Vector2(region.getRegionWidth() / 2, region
 						.getRegionHeight() / 2));
 	}
+	
+	@Override
+	public Vector2 getOrigin() {
+		return origin.cpy();
+	}
 
 	@Override
 	public float getRotation() {

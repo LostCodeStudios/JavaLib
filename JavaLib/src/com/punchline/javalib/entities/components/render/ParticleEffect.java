@@ -66,6 +66,11 @@ public class ParticleEffect implements Renderable {
 	}
 
 	@Override
+	public Vector2 getOrigin() {
+		return new Vector2();
+	}
+	
+	@Override
 	public float getRotation() {
 		return 0f;
 	}

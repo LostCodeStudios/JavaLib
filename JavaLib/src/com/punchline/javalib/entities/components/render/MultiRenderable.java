@@ -78,6 +78,11 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 	}
 
 	@Override
+	public Vector2 getOrigin() {
+		return base.getOrigin();
+	}
+	
+	@Override
 	public float getRotation() {
 		return base.getRotation();
 	}

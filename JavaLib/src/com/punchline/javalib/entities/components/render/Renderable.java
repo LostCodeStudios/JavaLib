@@ -30,6 +30,11 @@ public interface Renderable extends Component {
 	public Vector2 getPosition();
 
 	/**
+	 * @return This Renderable's origin.
+	 */
+	public Vector2 getOrigin();
+	
+	/**
 	 * @return This Renderable's rotation, in radians.
 	 */
 	public float getRotation();
