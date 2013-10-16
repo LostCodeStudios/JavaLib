@@ -98,11 +98,9 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 
 	@Override
 	public void setPosition(Vector2 position) {
-		Vector2 offset = position.cpy().sub(base.getPosition());
-
 		// Move all children relative to their old positions.
 		for (Renderable child : children) {
-			child.setPosition(child.getPosition().add(offset));
+			child.setPosition(position.cpy());
 		}
 
 		return;
@@ -127,7 +125,7 @@ public class MultiRenderable extends MultiComponent<Renderable> implements Rende
 		for (Renderable child : children) {
 			Vector2 offset = child.getPosition().sub(base.getPosition());
 
-			child.setOrigin(origin.cpy().add(offset));
+			child.setOrigin(origin.cpy().sub(offset));
 		}
 	}
 
