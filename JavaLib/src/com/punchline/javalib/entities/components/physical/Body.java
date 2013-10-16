@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
+import com.punchline.javalib.entities.PhysicsWorld;
 import com.punchline.javalib.entities.components.ComponentManager;
 
 /**
@@ -128,7 +129,16 @@ public class Body implements Transform, Velocity {
 
 	@Override
 	public Vector2 getPosition() {
-		return body.getPosition();
+		Vector2 pos = body.getPosition().cpy();
+		
+//		PhysicsWorld world = entityWorld.getPhysicsWorld();
+//		
+//		if (world.getElapsedRatio() > 0) {
+//			Vector2 delta = getLinearVelocity().cpy().scl(world.getElapsedRatio() / (1 / PhysicsWorld.TIME_STEP));
+//			pos.add(delta);
+//		}
+		
+		return pos;
 	}
 
 	@Override

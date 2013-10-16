@@ -16,7 +16,10 @@ public final class PhysicsWorld implements Disposable {
 
 	// region Constants
 
-	private static final float TIME_STEP = 1.0f / 60.0f;
+	/** The world's fixed time step. */
+	public static final float TIME_STEP = 1.0f / 60.0f;
+	
+	/** The maximum number of steps per processing loop. */
 	private static final int MAX_STEPS = 5;
 
 	// endregion
