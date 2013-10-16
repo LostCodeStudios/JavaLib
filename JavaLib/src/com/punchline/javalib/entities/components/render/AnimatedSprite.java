@@ -220,18 +220,15 @@ public class AnimatedSprite implements Renderable {
 	}
 
 	/**
-	 * Unpauses the animation and starts looping.
+	 * Resumes the animation and starts looping.
 	 */
-	public void unpause() {
+	public void resume() {
 		pause = false;
 	}
 
 	@Override
 	public void setPosition(Vector2 position) {
-		TextureRegion region = getCurrentFrame(0f);
-		this.position = position.cpy().sub(
-				new Vector2(region.getRegionWidth() / 2, region
-						.getRegionHeight() / 2));
+		this.position = position.cpy().sub(origin);
 	}
 
 	@Override
