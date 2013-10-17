@@ -128,7 +128,16 @@ public class Body implements Transform, Velocity {
 
 	@Override
 	public Vector2 getPosition() {
-		return body.getPosition().cpy();
+		Vector2 pos = body.getPosition().cpy();
+		
+//		PhysicsWorld world = entityWorld.getPhysicsWorld();
+//		
+//		if (world.getElapsedRatio() > 0) {
+//			Vector2 delta = getLinearVelocity().cpy().scl(world.getElapsedRatio() / (1 / PhysicsWorld.TIME_STEP));
+//			pos.add(delta);
+//		}
+		
+		return pos;
 	}
 
 	@Override
