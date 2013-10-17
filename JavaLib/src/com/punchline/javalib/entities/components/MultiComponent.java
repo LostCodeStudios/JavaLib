@@ -93,8 +93,7 @@ public class MultiComponent<T extends Component> implements Component {
 	 * Reorders the MultiComponent's children.
 	 * 
 	 * @param order
-	 *            An Array of integers, specifying the new order. Example: {0,
-	 *            4, 1, 3, 2}
+	 *            An Array of integers, specifying the new order. Example: {0, 4, 1, 3, 2}
 	 */
 	public void reorder(Array<Integer> order) {
 		// Check for the proper size
@@ -154,4 +153,26 @@ public class MultiComponent<T extends Component> implements Component {
 
 	// endregion
 
+	// region Child Management
+	
+	/**
+	 * Adds a child to the MultiComponent.
+	 * @param child
+	 */
+	public void addChild(T child) {
+		children.add(child);
+	}
+	
+	/**
+	 * Removes a child from the MultiComponent. Will not remove {@link #base}
+	 * @param child
+	 */
+	public void removeChild(T child) {
+		if (child == base) return;
+		
+		children.removeValue(child, true);
+	}
+	
+	// endregion
+	
 }
