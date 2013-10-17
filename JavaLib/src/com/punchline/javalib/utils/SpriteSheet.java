@@ -49,13 +49,13 @@ public class SpriteSheet implements Disposable {
 	
 	/**
 	 * Parses a SpriteSheet from an XML file.
-	 * @param xmlPath Path of the XML file.
+	 * @param xmlPath FileHandle of the XML file.
 	 * @return A fully initialized SpriteSheet.
 	 * @throws IOException
 	 */
-	public static SpriteSheet fromXML(FileHandle xmlPath) throws IOException {
+	public static SpriteSheet fromXML(FileHandle xmlHandle) throws IOException {
 		XmlReader reader = new XmlReader();
-		Element xml = reader.parse(xmlPath);
+		Element xml = reader.parse(xmlHandle);
 		
 		String texturePath = xml.getChildByName("texture").getText();
 		
