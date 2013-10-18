@@ -1,6 +1,7 @@
 package com.punchline.javalib.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Static helper class for keeping track of how the game is being scaled to fit
@@ -97,5 +98,23 @@ public final class Display {
 	}
 
 	// endregion
-
+	
+	/**
+	 * Converts a given touch input location's coordinates into screen coordinates for a camera with viewport size
+	 * equal to the preferred dimensions.
+	 * @param input
+	 * @return An adjusted input location, in the graphical Y-Up coordinate system.
+	 */
+	public static Vector2 getAdjustedInput(Vector2 input) {
+		float w = preferredWidth; float rW = getRealWidth();
+		float h = preferredHeight; float rH = getRealHeight();
+		
+		float xRatio = w / rW;
+		float yRatio = h / rH;
+		
+		return new Vector2(
+				input.x * xRatio, 
+				(getRealHeight() - input.y) * yRatio);
+	}
+	
 }
