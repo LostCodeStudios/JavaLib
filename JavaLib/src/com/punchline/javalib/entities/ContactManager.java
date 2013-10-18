@@ -96,6 +96,7 @@ public final class ContactManager extends EventHandler implements
 						@Override
 						public void invoke(Entity e, Object... args) {
 							c1.onCollide(e1, e2);
+							c1.onBeginContact(e1, e2);
 						}
 					});
 
@@ -104,6 +105,7 @@ public final class ContactManager extends EventHandler implements
 						@Override
 						public void invoke(Entity e, Object... args) {
 							c2.onCollide(e2, e1);
+							c2.onBeginContact(e2, e1);
 						}
 					});
 				}
@@ -118,15 +120,15 @@ public final class ContactManager extends EventHandler implements
 	 */
 	@Override
 	public void endContact(Contact contact) {
-		Fixture f1 = contact.getFixtureA();
-		Fixture f2 = contact.getFixtureB();
+		final Fixture f1 = contact.getFixtureA();
+		final Fixture f2 = contact.getFixtureB();
 
 		if (f1 == null || f2 == null || f1.getBody() == null
 				|| f2.getBody() == null)
 			return;
 
-		Entity e1 = (Entity) f1.getBody().getUserData();
-		Entity e2 = (Entity) f2.getBody().getUserData();
+		final Entity e1 = (Entity) f1.getBody().getUserData();
+		final Entity e2 = (Entity) f2.getBody().getUserData();
 
 		if (e1 == null || e2 == null)
 			return;
@@ -156,6 +158,32 @@ public final class ContactManager extends EventHandler implements
 					}
 				});
 
+			}
+
+		} else { // They are both physical
+
+			if (e1.hasComponent(Collidable.class)
+					&& e2.hasComponent(Collidable.class)) {
+				final Collidable c1 = (Collidable) e1
+						.getComponent(Collidable.class);
+				final Collidable c2 = (Collidable) e2
+						.getComponent(Collidable.class);
+
+				// Add collision events
+				this.addCallback(new Object(), new EventCallback() {
+					@Override
+					public void invoke(Entity e, Object... args) {
+						c1.onEndContact(e1, e2);
+					}
+				});
+
+				// Add collision events
+				this.addCallback(new Object(), new EventCallback() {
+					@Override
+					public void invoke(Entity e, Object... args) {
+						c2.onEndContact(e2, e1);
+					}
+				});
 			}
 
 		}
