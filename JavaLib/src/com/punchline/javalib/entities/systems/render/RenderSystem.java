@@ -104,9 +104,10 @@ public final class RenderSystem extends ComponentSystem {
 				// v = (v - c.p) * modulus_velocity
 				r.setPosition((new Vector2(p.getCameraPosition())).scl(
 						(1 - p.getDepthRatio())).add(pos.cpy()));
-			} else
-				r.setPosition(pos);
-
+			} else {
+				r.setPosition(pos); //Or set normally if this Entity isn't parallax
+			}
+				
 			r.setRotation((float) Math.toDegrees(angle));
 		}
 		r.draw(spriteBatch, deltaSeconds());

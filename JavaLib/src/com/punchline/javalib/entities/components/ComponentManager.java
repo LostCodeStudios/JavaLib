@@ -39,6 +39,7 @@ public abstract class ComponentManager {
 	public void removeComponent(Component component) {
 		component.onRemove(this);
 		components.removeValue(component, true);
+		componentMap.remove(component.getClass());
 	}
 
 	/**

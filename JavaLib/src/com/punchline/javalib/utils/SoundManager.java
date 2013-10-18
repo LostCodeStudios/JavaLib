@@ -1,5 +1,6 @@
 package com.punchline.javalib.utils;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 /**
  * Helper for playing all game audio, including both sound effects and music.
@@ -18,6 +21,8 @@ import com.badlogic.gdx.files.FileHandle;
  */
 public final class SoundManager {
 
+	//region Fields
+	
 	private static Map<String, Sound> soundEffects = new HashMap<String, Sound>();
 	private static Map<String, Music> songs = new HashMap<String, Music>();
 	private static Music currentSong;
@@ -25,6 +30,38 @@ public final class SoundManager {
 	private static float soundVol = 1f;
 	private static float musicVol = 1f;
 
+	//endregion
+	
+	//region Initialization
+	
+	/**
+	 * Loads all the sound effects and songs encoded in the provided content XML file.
+	 * @param xmlHandle FileHandle of the XML file.
+	 * @throws IOException
+	 */
+	public static void loadContent(FileHandle xmlHandle) throws IOException {
+		XmlReader reader = new XmlReader();
+		Element xml = reader.parse(xmlHandle);
+		
+		for (Element sound : xml.getChildrenByName("Sound")) {
+			String key = sound.getAttribute("key");
+			String filePath = sound.getText();
+			
+			addSound(key, Gdx.files.internal(filePath));
+		}
+		
+		for (Element song : xml.getChildrenByName("Song")) {
+			String key = song.getAttribute("key");
+			String filePath = song.getText();
+			
+			addSong(key, Gdx.files.internal(filePath));
+		}
+	}
+	
+	//endregion
+	
+	//region Disposal
+	
 	/**
 	 * Disposes of all sound effects and music, and removes them from the
 	 * SoundManager's memory.
@@ -57,7 +94,11 @@ public final class SoundManager {
 		soundEffects.clear();
 		songs.clear();
 	}
+	
+	//endregion
 
+	//region Sound Volume
+	
 	/**
 	 * @return The current sound volume, from the range [0, 1].
 	 */
@@ -78,6 +119,10 @@ public final class SoundManager {
 		soundVol = volume;
 	}
 
+	//endregion
+	
+	//region Music Volume
+	
 	/**
 	 * @return The current music volume, from the range [0, 1].
 	 */
@@ -98,6 +143,10 @@ public final class SoundManager {
 		musicVol = volume;
 	}
 
+	//endregion
+	
+	//region Helpers
+	
 	/**
 	 * Helper method for making sure a volume amount falls in the valid range of
 	 * [0, 1].
@@ -109,7 +158,11 @@ public final class SoundManager {
 	private static boolean volumeInvalid(float volume) {
 		return (volume < 0 || volume > 1);
 	}
+	
+	//endregion
 
+	//region Sound Management
+	
 	/**
 	 * Adds a sound effect to manager's memory. This sound can later be played
 	 * by calling SoundManager.playSound() with its key.
@@ -144,7 +197,11 @@ public final class SoundManager {
 	private static Sound getSound(String key) {
 		return soundEffects.get(key);
 	}
+	
+	//endregion
 
+	//region Sound Playback
+	
 	/**
 	 * Plays a sound effect.
 	 * 
@@ -170,6 +227,10 @@ public final class SoundManager {
 		playSound(key, 1f);
 	}
 
+	//endregion
+	
+	//region Song Management
+	
 	/**
 	 * Adds a song to the SoundManager's memory.
 	 * 
@@ -202,6 +263,10 @@ public final class SoundManager {
 	private static Music getSong(String key) {
 		return songs.get(key);
 	}
+	
+	//endregion
+	
+	//region Song Playback
 
 	/**
 	 * Plays a song from the SoundManager's memory.
@@ -265,5 +330,7 @@ public final class SoundManager {
 		if (currentSong != null)
 			currentSong.stop();
 	}
+	
+	//endregion
 
 }

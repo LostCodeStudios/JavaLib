@@ -119,7 +119,7 @@ public final class DebugRenderSystem extends InputSystem {
 				Map<String, Float> performance = systems.systemPerformance();
 
 				spriteBatch.begin();
-
+				
 				int i = 1;
 
 				if (Gdx.app.getType() == ApplicationType.Android) {

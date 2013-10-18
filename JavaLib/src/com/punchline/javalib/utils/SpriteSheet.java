@@ -1,12 +1,17 @@
 package com.punchline.javalib.utils;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 /**
  * Contains a texture and a map of Strings to TextureRegions, for accessing the
@@ -37,9 +42,41 @@ public class SpriteSheet implements Disposable {
 	public SpriteSheet(Texture sheet) {
 		this.sheet = sheet;
 	}
-
+	
 	// endregion
 
+	// region Static Initialization
+	
+	/**
+	 * Parses a SpriteSheet from an XML file.
+	 * @param xmlPath FileHandle of the XML file.
+	 * @return A fully initialized SpriteSheet.
+	 * @throws IOException
+	 */
+	public static SpriteSheet fromXML(FileHandle xmlHandle) throws IOException {
+		XmlReader reader = new XmlReader();
+		Element xml = reader.parse(xmlHandle);
+		
+		String texturePath = xml.getChildByName("texture").getText();
+		
+		SpriteSheet sheet = new SpriteSheet(new Texture(Gdx.files.internal(texturePath)));
+		
+		Rectangle rect = new Rectangle();
+		for (Element child : xml.getChildrenByName("rect")) {
+			String[] coords = child.getText().split(",");
+			rect.x = Float.parseFloat(coords[0]);
+			rect.y = Float.parseFloat(coords[1]);
+			rect.width = Float.parseFloat(coords[2]);
+			rect.height = Float.parseFloat(coords[3]);
+			
+			sheet.addRegion(child.getAttribute("key"), rect);
+		}
+		
+		return sheet;
+	}
+	
+	// endregion
+	
 	// region Disposal
 
 	@Override

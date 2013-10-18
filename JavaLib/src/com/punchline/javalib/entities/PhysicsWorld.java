@@ -135,8 +135,9 @@ public final class PhysicsWorld implements Disposable {
 			singleStep();
 		}
 
-		// world.step(elapsedTime, velocityIterations, positionIterations);
-
+		world.step(elapsedTime, velocityIterations, positionIterations);
+		elapsedTime = 0f; //This is temporary to fix temporal aliasing
+		
 		world.clearForces();
 
 	}
