@@ -29,7 +29,7 @@ public final class GenericCollisionEvents {
 			}
 
 			@Override
-			public void onCollide(Entity container, Entity victim) {
+			public void onBeginContact(Entity container, Entity victim) {
 				if (container.hasComponent(Health.class)
 						&& victim.hasComponent(Health.class)) {
 
@@ -64,16 +64,6 @@ public final class GenericCollisionEvents {
 
 			@Override
 			public void onRemove(ComponentManager contanier) {
-			}
-
-			@Override
-			public void onCollide(Entity container, Entity victim) {
-
-			}
-
-			@Override
-			public float continueCollision(Entity container, Entity victim) {
-				return 1;
 			}
 
 		};

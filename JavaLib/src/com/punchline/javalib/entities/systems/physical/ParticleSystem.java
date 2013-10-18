@@ -71,7 +71,7 @@ public class ParticleSystem extends ComponentSystem {
 									@Override
 									public void invoke(Entity es,
 											Object... args) {
-										col.onCollide(e, victim);
+										col.onBeginContact(e, victim);
 									}
 								});
 

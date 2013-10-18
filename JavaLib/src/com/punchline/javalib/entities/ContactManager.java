@@ -95,7 +95,6 @@ public final class ContactManager extends EventHandler implements
 					this.addCallback(new Object(), new EventCallback() {
 						@Override
 						public void invoke(Entity e, Object... args) {
-							c1.onCollide(e1, e2);
 							c1.onBeginContact(e1, e2);
 						}
 					});
@@ -104,7 +103,6 @@ public final class ContactManager extends EventHandler implements
 					this.addCallback(new Object(), new EventCallback() {
 						@Override
 						public void invoke(Entity e, Object... args) {
-							c2.onCollide(e2, e1);
 							c2.onBeginContact(e2, e1);
 						}
 					});

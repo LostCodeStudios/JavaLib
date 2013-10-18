@@ -20,19 +20,8 @@ public abstract class Collidable implements Component {
 	 * @param victim
 	 *            The unfortunate victim of the collision.
 	 */
-	public void onCollide(Entity container, Entity victim) {
-
-	}
-
-	/**
-	 * Called when contact begins between two entities. THE SAME AS ONCOLLIDE.
-	 * 
-	 * @param container
-	 *            The entity who contains the particle/Collidable components
-	 * @param victim
-	 *            The unfortunate victim of the collision.
-	 */
 	public void onBeginContact(Entity container, Entity victim) {
+
 	}
 
 	/**
