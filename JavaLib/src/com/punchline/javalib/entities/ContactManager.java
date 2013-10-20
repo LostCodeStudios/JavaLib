@@ -48,8 +48,8 @@ public final class ContactManager extends EventHandler implements
 			return; // If the collision is invalid
 
 		// SENSOR CODE
-		if ((f1.isSensor() || f2.isSensor())
-				&& !(f2.isSensor() && f2.isSensor())) {
+		if ((f1.isSensor() || f2.isSensor()) 
+				&& !(f2.isSensor() && f2.isSensor())) { //one of them is a sensor, the other is not
 
 			final Sensor sensor;
 			final Entity detectee;
@@ -88,9 +88,9 @@ public final class ContactManager extends EventHandler implements
 				float collide1 = c1.continueCollision(e1, e2);
 				float collide2 = c2.continueCollision(e2, e1);
 
-				if (collide1 == 0f || collide2 == 0f)
-					contact.setEnabled(false);
-				else {
+				if (collide1 == 0f || collide2 == 0f) {
+					return;
+				} else {
 					// Add collision events
 					this.addCallback(new Object(), new EventCallback() {
 						@Override
@@ -189,10 +189,39 @@ public final class ContactManager extends EventHandler implements
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
+		Fixture f1 = contact.getFixtureA();
+		Fixture f2 = contact.getFixtureB();
+
+		final Entity e1 = (Entity) f1.getBody().getUserData();
+		final Entity e2 = (Entity) f2.getBody().getUserData();
+
+		if (e1 == null || e2 == null)
+			return; // If the collision is invalid
+
+		// PHYSICAL CODE
+		if (!f1.isSensor() && !f2.isSensor()) { // They are both physical
+
+			if (e1.hasComponent(Collidable.class) && e2.hasComponent(Collidable.class)) {
+				
+				final Collidable c1 = (Collidable) e1
+						.getComponent(Collidable.class);
+				final Collidable c2 = (Collidable) e2
+						.getComponent(Collidable.class);
+
+				float collide1 = c1.continueCollision(e1, e2);
+				float collide2 = c2.continueCollision(e2, e1);
+
+				if (collide1 == 0f || collide2 == 0f) {
+					contact.setEnabled(false);
+				}
+			}
+
+		}
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+
 	}
 
 	/**
