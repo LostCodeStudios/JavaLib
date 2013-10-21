@@ -24,7 +24,7 @@ public abstract class ComponentManager {
 	 * @param component
 	 *            The component to be added.
 	 */
-	public Component addComponent(Component component) {
+	public Component addComponent(Component component) {		
 		component.onAdd(this);
 		components.add(component);
 		return component;
@@ -39,7 +39,29 @@ public abstract class ComponentManager {
 	public void removeComponent(Component component) {
 		component.onRemove(this);
 		components.removeValue(component, true);
-		componentMap.remove(component.getClass());
+		
+		clearMap(component.getClass());
+	}
+
+	@SuppressWarnings("unchecked")
+	private void clearMap(Class<? extends Component> clazz) {
+		//make sure all superclasses are removed as well (unless there is still another component of that type)
+		
+		if (componentMap.containsKey(clazz) && !components.contains(getComponent(clazz), true)) {
+			componentMap.remove(clazz);
+		}
+		
+		for (Class<?> interfaze : clazz.getInterfaces()) {
+			if (Component.class.isAssignableFrom(interfaze)) {
+				clearMap((Class<? extends Component>) interfaze);
+			}
+		}
+		
+		Class<?> base = clazz.getSuperclass();
+		
+		if (base != null && Component.class.isAssignableFrom(base)) {
+			clearMap((Class<? extends Component>) base);
+		}
 	}
 
 	/**
@@ -50,7 +72,7 @@ public abstract class ComponentManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Component> T getComponent(Class<? extends Component> type) {
-		if (componentMap.containsKey(type)) {
+		if (componentMap.containsKey(type)) {			
 			return (T) componentMap.get(type);
 		}
 
