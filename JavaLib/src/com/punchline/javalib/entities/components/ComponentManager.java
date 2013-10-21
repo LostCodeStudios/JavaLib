@@ -25,8 +25,8 @@ public abstract class ComponentManager {
 	 *            The component to be added.
 	 */
 	public Component addComponent(Component component) {
-		components.add(component);
 		component.onAdd(this);
+		components.add(component);
 		return component;
 	}
 
