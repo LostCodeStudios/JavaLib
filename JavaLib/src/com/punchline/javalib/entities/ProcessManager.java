@@ -49,9 +49,12 @@ public class ProcessManager {
 	 *            The ProcessState to end with.
 	 */
 	public void endAll(Class<? extends Process> type, ProcessState endState) {
-		for (Process p : attachedProcesses) {
-			if (type.isInstance(p))
+		for (int i = 0; i < attachedProcesses.size; i++) {
+			Process p = attachedProcesses.get(i);
+			
+			if (type.isInstance(p)) {
 				p.end(endState);
+			}
 		}
 	}
 
