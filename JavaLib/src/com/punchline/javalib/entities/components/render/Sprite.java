@@ -59,8 +59,8 @@ public class Sprite implements Renderable {
 
 		sprite = new com.badlogic.gdx.graphics.g2d.Sprite(region);
 
-		Vector2 origin = new Vector2(region.getRegionWidth() / 2,
-				region.getRegionHeight() / 2);
+		Vector2 origin = new Vector2((float) region.getRegionWidth() / 2,
+				(float) region.getRegionHeight() / 2);
 
 		setOrigin(origin);
 	}
