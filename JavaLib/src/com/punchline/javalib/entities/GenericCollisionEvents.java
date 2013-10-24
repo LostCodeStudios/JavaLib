@@ -31,7 +31,7 @@ public final class GenericCollisionEvents {
 			@Override
 			public void onBeginContact(Entity container, Entity victim) {
 				if (container.hasComponent(Health.class)
-						&& victim.hasComponent(Health.class)) {
+						&& victim.hasComponent(Health.class) && !victim.getGroup().equals(container.getGroup())) {
 
 					Health h1 = (Health) container.getComponent(Health.class);
 					Health h2 = (Health) victim.getComponent(Health.class);
@@ -41,9 +41,6 @@ public final class GenericCollisionEvents {
 
 			@Override
 			public float continueCollision(Entity container, Entity victim) {
-				if (victim.getGroup().equals(container.getGroup()))
-					return 0;
-
 				return 1;
 			}
 

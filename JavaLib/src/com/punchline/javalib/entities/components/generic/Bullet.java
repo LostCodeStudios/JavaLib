@@ -15,6 +15,7 @@ public class Bullet implements Component {
 	// region Fields/Initialization
 
 	private float damage = 0;
+	public float distance = 0f;
 	private Entity firer;
 
 	/**
