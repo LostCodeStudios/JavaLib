@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Particle;
@@ -45,6 +46,10 @@ public class ParticleSystem extends ComponentSystem {
 		
 		LogManager.debug("Physics", "Started raycasting for particle");
 		if (e.hasComponent(Collidable.class)) {
+			if (p.getLinearVelocity().len() == 0) {
+				throw new GdxRuntimeException("Cannot raycast for particle with speed of 0.");
+			}
+			
 			World c = world.getBox2DWorld();
 
 			// Perform the raycast

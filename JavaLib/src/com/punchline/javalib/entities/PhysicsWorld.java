@@ -3,7 +3,6 @@ package com.punchline.javalib.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import com.punchline.javalib.utils.LogManager;
 
 /**
  * Wrapper class of Box2D {@link World}. Manages the world's time step using the
