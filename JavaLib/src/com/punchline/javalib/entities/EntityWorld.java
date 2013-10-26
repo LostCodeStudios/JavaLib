@@ -113,6 +113,8 @@ public abstract class EntityWorld implements Disposable {
 		buildSystems();
 		buildEntities();
 		positionCamera();
+		
+		LogManager.debug("Game Loop", "*****WORLD INITIALIZED*****");
 	}
 
 	/**
@@ -180,6 +182,8 @@ public abstract class EntityWorld implements Disposable {
 		systems.dispose();
 		physicsWorld.dispose();
 
+		LogManager.debug("Game Loop", "*****WORLD DISPOSED*****");
+		
 	}
 
 	// endregion
