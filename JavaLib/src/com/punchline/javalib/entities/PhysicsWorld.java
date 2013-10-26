@@ -3,6 +3,7 @@ package com.punchline.javalib.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.punchline.javalib.utils.LogManager;
 
 /**
  * Wrapper class of Box2D {@link World}. Manages the world's time step using the
@@ -101,8 +102,42 @@ public final class PhysicsWorld implements Disposable {
 		return elapsedRatio;
 	}
 
+	/**
+	 * @return The number of velocity iterations
+	 */
+	public int getVelocityIterations() {
+		return velocityIterations;
+	}
+	
+	/**
+	 * @return The number of position iterations
+	 */
+	public int getPositionIterations() {
+		return positionIterations;
+	}
+	
 	// endregion
 
+	// region Mutators
+
+	/**
+	 * Sets the number of velocity iterations
+	 * @param velocityIterations
+	 */
+	public void setVelocityIterations(int velocityIterations) {
+		this.velocityIterations = velocityIterations;
+	}
+
+	/**
+	 * Sets the number of position iterations
+	 * @param positionIterations
+	 */
+	public void setPositionIterations(int positionIterations) {
+		this.positionIterations = positionIterations;
+	}
+	
+	//endregion
+	
 	// region Processing
 
 	/**
@@ -113,7 +148,7 @@ public final class PhysicsWorld implements Disposable {
 	 *            The delta time, in seconds.
 	 */
 	public void process(float deltaSeconds) {
-
+		
 		elapsedTime += deltaSeconds; // Calculate how many steps are needed
 		int steps = (int) (elapsedTime / TIME_STEP); // to simulate the last
 														// game loop
@@ -139,7 +174,7 @@ public final class PhysicsWorld implements Disposable {
 		elapsedTime = 0f; //This is temporary to fix temporal aliasing
 		
 		world.clearForces();
-
+		
 	}
 
 	// endregion

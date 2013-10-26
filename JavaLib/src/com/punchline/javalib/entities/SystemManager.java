@@ -8,6 +8,7 @@ import java.util.Map;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.punchline.javalib.entities.systems.EntitySystem;
+import com.punchline.javalib.utils.LogManager;
 
 /**
  * Manages all of the {@link EntityWorld}'s systems.
@@ -153,11 +154,18 @@ public class SystemManager implements Disposable {
 				system.addElapsedInterval(deltaSeconds);
 
 				if (system.getElapsedInterval() >= system.getInterval()) {
+					
+					LogManager.debug("Systems", system.getClass().getSimpleName() + " processing started");
 					system.processEntities();
+					LogManager.debug("Systems", system.getClass().getSimpleName() + " processing finished");
+					
 					system.resetElapsedInterval();
+					
 				}
 			} else {
+				LogManager.debug("Systems", system.getClass().getSimpleName() + " processing started");
 				system.processEntities();
+				LogManager.debug("Systems", system.getClass().getSimpleName() + " processing finished");
 			}
 
 		}

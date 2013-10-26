@@ -10,6 +10,7 @@ import com.punchline.javalib.entities.components.physical.Particle;
 import com.punchline.javalib.entities.events.EventCallback;
 import com.punchline.javalib.entities.events.EventHandler;
 import com.punchline.javalib.entities.systems.ComponentSystem;
+import com.punchline.javalib.utils.LogManager;
 
 /**
  * The particle system which updates the position of particles
@@ -41,6 +42,8 @@ public class ParticleSystem extends ComponentSystem {
 				p.getLinearVelocity().y * deltaSeconds());
 
 		// DO RAY CASTING FOR COLLIDABLE CHECK
+		
+		LogManager.debug("Physics", "Started raycasting for particle");
 		if (e.hasComponent(Collidable.class)) {
 			World c = world.getBox2DWorld();
 
@@ -75,11 +78,12 @@ public class ParticleSystem extends ComponentSystem {
 									}
 								});
 
-					// Return weather or not the ray cast sould be terminated.
+					// Return whether or not the ray cast should be terminated.
 					return col.continueCollision(e, victim);
 				}
 			}, pos, pos.cpy().add(deltaX));
 		}
+		LogManager.debug("Physics", "Finished raycasting for particle");
 
 		// Move and set the final position of the entity.
 		pos.add(deltaX);

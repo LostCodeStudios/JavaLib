@@ -21,6 +21,7 @@ import com.punchline.javalib.entities.templates.EntityGroupTemplate;
 import com.punchline.javalib.entities.templates.EntityTemplate;
 import com.punchline.javalib.entities.tiles.TileMapTemplate;
 import com.punchline.javalib.utils.Convert;
+import com.punchline.javalib.utils.LogManager;
 import com.punchline.javalib.utils.Random;
 import com.punchline.javalib.utils.SpriteSheet;
 
@@ -321,17 +322,27 @@ public abstract class EntityWorld implements Disposable {
 	 */
 	public void process() {
 
-		this.contactManager.process();
-
+		LogManager.debug("Game Loop", "Collision handling started");
+		contactManager.process();
+		LogManager.debug("Game Loop", "Collision handling finished");
+		
+		LogManager.debug("Game Loop", "System processing started");
 		systems.process(entities.getNewEntities(),
 				entities.getChangedEntities(), entities.getRemovedEntities(),
 				Gdx.graphics.getDeltaTime() * timeCoefficient);
-
+		LogManager.debug("Game Loop", "System processing ended");
+		
+		LogManager.debug("Game Loop", "Entity management started");
 		entities.process();
-
+		LogManager.debug("Game Loop", "Entity management finished");
+		
+		LogManager.debug("Game Loop", "Process management started");
 		processes.process(this, Gdx.graphics.getDeltaTime() * timeCoefficient);
-
+		LogManager.debug("Game Loop", "Process management finished");
+		
+		LogManager.debug("Game Loop", "Physics simulation started");
 		physicsWorld.process(Gdx.graphics.getDeltaTime() * timeCoefficient);
+		LogManager.debug("Game Loop", "Physics simulation finished");
 	}
 
 	// endregion

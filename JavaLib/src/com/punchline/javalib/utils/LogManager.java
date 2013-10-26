@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Logger;
  * @author MadcowD A logging utility for all JavaLib projects.
  */
 public final class LogManager {
+	
 	/**
 	 * Contains the logging types for GDX applications.
 	 * 
@@ -81,9 +82,11 @@ public final class LogManager {
 	 *            The message to be sent.
 	 */
 	private static void log(String logName, LogType logType, String message) {
-		Logger log = LogManager.getLog(logName);
+		Logger log = LogManager.getLog(logName, logType);
+		
 		// Invoke the log to log a message
 		switch (logType) {
+		
 		case INFO:
 			log.info(message);
 			break;
@@ -96,6 +99,7 @@ public final class LogManager {
 		case NONE:
 			// Nothing will be logged
 			break;
+			
 		}
 	}
 
@@ -138,20 +142,34 @@ public final class LogManager {
 	// endregion Logging Functions
 
 	// region Getters/Setters
+	
 	/**
 	 * Retrieves a log from the LogManager or creates one if it doesn't exist.
 	 * 
 	 * @param logName
 	 *            The name of the log to retrieve.
+	 * @param type
+	 * 			  The type of the log to retrieve.   
 	 * @return The specified log from the manager.
 	 */
-	public static Logger getLog(String logName) {
+	public static Logger getLog(String logName, LogType type) {
 		// If the log does not exist in the current logs list.
-		if (!logs.containsKey(logName))
+		if (!logs.containsKey(logName)) {
 			// Create a new log with logName.
-			logs.put(logName, new com.badlogic.gdx.utils.Logger(logName));
+			logs.put(logName, new com.badlogic.gdx.utils.Logger(logName, type.asInt()));
+		}
+		
 		return logs.get(logName);
 	}
+	
+	/**
+	 * @param logName The name of the log to return
+	 * @return A debug log of the given name.
+	 */
+	public static Logger getLog(String logName) {
+		return LogManager.getLog(logName, LogType.DEBUG);
+	}
+	
 	// endregion
 
 }

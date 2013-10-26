@@ -9,6 +9,7 @@ import com.punchline.javalib.entities.components.physical.Collidable;
 import com.punchline.javalib.entities.components.physical.Sensor;
 import com.punchline.javalib.entities.events.EventCallback;
 import com.punchline.javalib.entities.events.EventHandler;
+import com.punchline.javalib.utils.LogManager;
 
 /**
  * Listens for all collisions in the Box2D world, and handles them.
@@ -71,6 +72,8 @@ public final class ContactManager extends EventHandler implements
 						sensor.onDetected(detectee, world);
 					}
 				});
+				
+				LogManager.debug("Physics", "Sensor collision ocurred.");
 
 			}
 		}
@@ -106,6 +109,8 @@ public final class ContactManager extends EventHandler implements
 							c2.onBeginContact(e2, e1);
 						}
 					});
+					
+					LogManager.debug("Physics", "Collision ocurred");
 				}
 			}
 

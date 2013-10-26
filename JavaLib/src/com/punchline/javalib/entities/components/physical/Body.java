@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.components.ComponentManager;
+import com.punchline.javalib.utils.LogManager;
 
 /**
  * Component wrapper for a Box2D {@link com.badlogic.gdx.physics.box2d.Body
@@ -47,10 +48,12 @@ public class Body implements Transform, Velocity {
 
 		body = world.getBox2DWorld().createBody(bodyDef);
 		body.setUserData(e);
+		
+		LogManager.debug("Physics", "Body Created");
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-
+		
 		body.createFixture(fixtureDef);
 	}
 
@@ -75,6 +78,8 @@ public class Body implements Transform, Velocity {
 
 		body = world.getBox2DWorld().createBody(bodyDef);
 		body.setUserData(e);
+		
+		LogManager.debug("Physics", "Body Created");
 	}
 
 	/**
@@ -109,6 +114,8 @@ public class Body implements Transform, Velocity {
 		entityWorld = world;
 		body = world.getBox2DWorld().createBody(bd);
 		body.setUserData(e);
+		
+		LogManager.debug("Physics", "Body Created");
 	}
 
 	// endregion
@@ -129,14 +136,6 @@ public class Body implements Transform, Velocity {
 	@Override
 	public Vector2 getPosition() {
 		Vector2 pos = body.getPosition().cpy();
-
-		// PhysicsWorld world = entityWorld.getPhysicsWorld();
-		//
-		// if (world.getElapsedRatio() > 0) {
-		// Vector2 delta = getLinearVelocity().cpy().scl(world.getElapsedRatio()
-		// / (1 / PhysicsWorld.TIME_STEP));
-		// pos.add(delta);
-		// }
 
 		return pos;
 	}
@@ -197,6 +196,8 @@ public class Body implements Transform, Velocity {
 	@Override
 	public void onRemove(ComponentManager container) {
 		entityWorld.getBox2DWorld().destroyBody(body);
+		
+		LogManager.debug("Physics", "Body Destroyed");
 	}
 
 	// endregion
