@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities;
 
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.components.ComponentManager;
@@ -95,6 +96,10 @@ public final class Entity extends ComponentManager implements Poolable {
 		deleted = false;
 		changed = false;
 		onDeleted.clear();
+		
+		if (hasComponent(Component.class)) {
+			throw new GdxRuntimeException("Entity still has components after reset");
+		}
 	}
 
 	// endregion

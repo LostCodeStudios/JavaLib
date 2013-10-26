@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.punchline.javalib.entities.components.Component;
 import com.punchline.javalib.entities.systems.generic.EntitySpawnerSystem;
 import com.punchline.javalib.entities.systems.physical.EntityRemovalSystem;
 import com.punchline.javalib.entities.systems.physical.ParticleSystem;
@@ -364,8 +366,15 @@ public abstract class EntityWorld implements Disposable {
 	 * @return The created entity.
 	 */
 	public Entity createEntity(String template, Object... args) {
-		Entity e = templates.get(template).buildEntity(entities.obtain(), this,
-				args);
+		Entity e = entities.obtain(); //Get an empty entity
+		
+		e.reset(); //extra call to be safe
+		
+		if (e.hasComponent(Component.class)) {
+			throw new GdxRuntimeException("Attempted to initialize non-empty entity");
+		}
+		
+		e = templates.get(template).buildEntity(e, this, args); //initialize from template
 
 		entities.add(e);
 		return e;

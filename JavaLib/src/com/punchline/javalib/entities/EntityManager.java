@@ -1,7 +1,9 @@
 package com.punchline.javalib.entities;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
+import com.punchline.javalib.entities.components.Component;
 
 /**
  * Contains and organizes game {@link Entity Entities}, sorting them according
@@ -54,6 +56,10 @@ public class EntityManager extends Pool<Entity> {
 				e.onDeleted.invoke(e);
 
 			this.free(e); // Frees the entity from the entity pool. See pooling.
+			
+			if (e.hasComponent(Component.class)) {
+				throw new GdxRuntimeException("Entity not properly reset");
+			}
 		}
 
 		removedEntities.clear();
@@ -64,6 +70,7 @@ public class EntityManager extends Pool<Entity> {
 
 			if (e.isDeleted()) {
 				remove(e); // This will add e to the removal list
+				continue;
 			}
 
 			if (e.wasChanged()) {
