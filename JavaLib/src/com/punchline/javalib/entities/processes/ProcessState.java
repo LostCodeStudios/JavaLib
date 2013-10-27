@@ -1,5 +1,6 @@
 package com.punchline.javalib.entities.processes;
 
+
 /**
  * The state of a {@link Process}.
  * 

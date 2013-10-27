@@ -1,8 +1,17 @@
 package com.punchline.javalib.entities.processes;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.utils.Array;
+import com.punchline.javalib.entities.Entity;
 import com.punchline.javalib.entities.EntityWorld;
 import com.punchline.javalib.entities.ProcessManager;
+import com.punchline.javalib.entities.components.generic.Health;
+import com.punchline.javalib.entities.events.EventCallback;
+import com.punchline.javalib.entities.events.processes.EndProcessCallback;
 
 /**
  * A Process that is run repeatedly by the EntityWorld for a temporary amount of
@@ -12,11 +21,32 @@ import com.punchline.javalib.entities.ProcessManager;
  */
 public abstract class Process {
 
+	// region Inner Classes
+	
+	/**
+	 * An event that can occur to an Entity
+	 * @author Natman64
+	 * @created  Oct 27, 2013
+	 */
+	public final class EntityEvent {
+		
+		/** Bitwise flag for deletion events */
+		public static final int DELETION = 1;
+		
+		/** Bitwise flag for death events */
+		public static final int DEATH = 2;
+		
+	}
+	
+	// endregion
+	
 	// region Fields
 
 	private ProcessState state;
 	private Array<Process> childProcesses = new Array<Process>();
-
+	
+	private Map<Entity, Integer> linkedEntities = new HashMap<Entity, Integer>();
+	
 	// endregion
 
 	// region Mutators/Accessors
@@ -92,11 +122,93 @@ public abstract class Process {
 			return;
 		} else {
 			state = endState;
+			
+			unlinkEntities();
 		}
 	}
 
 	// endregion
 
+	// region Entity Linking
+	
+	/**
+	 * Links an Entity to this process.
+	 * @param e The Entity to link.
+	 * @param eventFlags The flags of the events to subscribe to. These flags
+	 * are contained in {@link EntityEvent} and are encoded in bitwise.
+	 * @param eventCallback The callback to be invoked when the entity's event
+	 * takes places
+	 */
+	protected void link(Entity e, Integer eventFlags, EventCallback eventCallback) {
+		linkedEntities.put(e, eventFlags);
+		
+		if ((eventFlags & EntityEvent.DELETION) == EntityEvent.DELETION) {
+			e.onDeleted.addCallback(this, eventCallback);
+		}
+		
+		if ((eventFlags & EntityEvent.DEATH) == EntityEvent.DEATH) {
+			Health h = e.getComponent(Health.class);
+			
+			h.onDeath.addCallback(this, eventCallback);
+		}
+	}
+	
+	/**
+	 * Links an Entity to this Process.
+	 * @param e The entity to link.
+	 * @param eventFlags The events of the entity that will trigger this process to end
+	 * @param endState The state to end on.
+	 */
+	protected void link(Entity e, Integer eventFlags, ProcessState endState) {
+		this.link(e, eventFlags, new EndProcessCallback(this, endState));
+	}
+	
+	/**
+	 * Unlinks an Entity from this Process
+	 * @param e
+	 */
+	protected void unlink(Entity e) {
+		Integer eventFlags = linkedEntities.get(e);
+		
+		linkedEntities.remove(e);
+		
+		if ((eventFlags & EntityEvent.DELETION) == EntityEvent.DELETION) {
+			e.onDeleted.removeCallback(this);
+		}
+		
+		if ((eventFlags & EntityEvent.DEATH) == EntityEvent.DEATH) {
+			Health h = e.getComponent(Health.class);
+			
+			h.onDeath.removeCallback(this);
+		}
+	}
+	
+	/**
+	 * Unlinks all linked entities.
+	 */
+	protected void unlinkEntities() {
+		Iterator<Entry<Entity, Integer>> it = linkedEntities.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<Entity, Integer> entry = it.next();
+			Entity e = entry.getKey();
+			Integer flag = entry.getValue();
+			
+			if ((flag & EntityEvent.DELETION) == EntityEvent.DELETION) {
+				e.onDeleted.removeCallback(this);
+			}
+			
+			if ((flag & EntityEvent.DEATH) == EntityEvent.DEATH) {
+				Health h = e.getComponent(Health.class);
+				
+				h.onDeath.removeCallback(this);
+			}
+		}
+		
+		linkedEntities.clear();
+	}
+	
+	// endregion
+	
 	// region Events
 
 	/**
