@@ -377,6 +377,9 @@ public abstract class EntityWorld implements Disposable {
 		e = templates.get(template).buildEntity(e, this, args); //initialize from template
 
 		entities.add(e);
+		
+		LogManager.debug("Entities", "Entity created");
+		
 		return e;
 	}
 
