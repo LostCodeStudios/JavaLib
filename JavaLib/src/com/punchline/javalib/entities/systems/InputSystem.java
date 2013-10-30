@@ -29,37 +29,32 @@ public abstract class InputSystem extends EntitySystem implements
 	 */
 	protected boolean tiltEnabled;
 
-	/**
-	 * The accelerometer's x value, if it surpasses {@link #tiltThresholdX}.
-	 */
+	/** The accelerometer's x value, if it surpasses {@link #tiltThresholdX}. */
 	protected float tiltX;
 
-	/**
-	 * The accelerometer's y value, if it surpasses {@link #tiltThresholdY}.
-	 */
+	/** The accelerometer's y value, if it surpasses {@link #tiltThresholdY}. */
 	protected float tiltY;
 
-	/**
-	 * The accelerometer's z value, if it surpasses {@link #tiltThresholdZ}.
-	 */
+	/** The accelerometer's z value, if it surpasses {@link #tiltThresholdZ}. */
 	protected float tiltZ;
 
-	// TODO tweak for best thresholds.
+	/** The tiltX value while at rest, for calibration. */
+	protected float tiltHomeX;
+	
+	/** The tiltY value while at rest, for calibration. */
+	protected float tiltHomeY;
+	
+	/** The tiltZ value while at rest, for calibration. */
+	protected float tiltHomeZ;
+	
+	/** The minimum accelerometer x value that will trigger a tilt event. */
+	protected float tiltThresholdX = 0f;
 
-	/**
-	 * The minimum accelerometer x value that will trigger a tilt event.
-	 */
-	protected float tiltThresholdX = 3f;
+	/** The minimum accelerometer y value that will trigger a tilt event. */
+	protected float tiltThresholdY = 0f;
 
-	/**
-	 * The minimum accelerometer y value that will trigger a tilt event.
-	 */
-	protected float tiltThresholdY = 1.5f;
-
-	/**
-	 * The minimum accelerometer z value that will trigger a tilt event.
-	 */
-	protected float tiltThresholdZ = 3f;
+	/** The minimum accelerometer z value that will trigger a tilt event. */
+	protected float tiltThresholdZ = 0f;
 
 	// endregion
 
@@ -106,10 +101,10 @@ public abstract class InputSystem extends EntitySystem implements
 		if (tiltEnabled) {
 
 			// Get accelerometer info
-			float x = Gdx.input.getAccelerometerX();
-			float y = Gdx.input.getAccelerometerY();
-			float z = Gdx.input.getAccelerometerZ();
-
+			float x = Gdx.input.getAccelerometerX() - tiltHomeX;
+			float y = Gdx.input.getAccelerometerY() - tiltHomeY;
+			float z = Gdx.input.getAccelerometerZ() - tiltHomeZ;
+			
 			// Account for input thresholds
 			if (Math.abs(x) < tiltThresholdX)
 				x = 0;
@@ -139,8 +134,6 @@ public abstract class InputSystem extends EntitySystem implements
 		super.processEntities();
 
 	}
-
-	// endregion
 
 	// endregion
 
@@ -249,4 +242,30 @@ public abstract class InputSystem extends EntitySystem implements
 
 	// endregion
 
+	// region Helpers
+	
+	/**
+	 * Calibrates the tilt controls.
+	 * @param homeX
+	 * @param homeY
+	 * @param homeZ
+	 */
+	public void calibrateTilt(float homeX, float homeY, float homeZ) {
+		tiltHomeX = homeX;
+		tiltHomeY = homeY;
+		tiltHomeZ = homeZ;
+	}
+	
+	/**
+	 * Calibrates the tilt controls to the current device orientation.
+	 */
+	public void calibrateTilt() {
+		this.calibrateTilt(
+				Gdx.input.getAccelerometerX(), 
+				Gdx.input.getAccelerometerY(),
+				Gdx.input.getAccelerometerZ());
+	}
+	
+	// endregion
+	
 }
