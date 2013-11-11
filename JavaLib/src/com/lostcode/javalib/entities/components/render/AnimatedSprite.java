@@ -204,6 +204,7 @@ public class AnimatedSprite implements Renderable {
 
 		if (!pause)
 			currentAnimation.setStateTime(stateTime += deltaSeconds);
+		
 		return currentAnimation.getCurrentFrame(0f); // Delta is already
 														// accounted for.
 	}

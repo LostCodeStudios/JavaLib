@@ -43,9 +43,13 @@ public class Animation implements Renderable {
 	// region Fields
 
 	private com.badlogic.gdx.graphics.g2d.Animation animation;
+	
+	private float frameDuration;
+	private float timeCoefficient;
+	
 	private float stateTime = 0f;
 	private boolean looping = true;
-
+	
 	private Vector2 position;
 	private float rotation = 0f;
 	private float scaleX = 1f;
@@ -140,8 +144,11 @@ public class Animation implements Renderable {
 		animation = new com.badlogic.gdx.graphics.g2d.Animation(frameDuration,
 				regions, playType);
 
+		this.frameDuration = frameDuration;
+		this.timeCoefficient = 1f;
+		
 		setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
-
+		
 	}
 
 	/**
@@ -294,7 +301,22 @@ public class Animation implements Renderable {
 	public int getLayer() {
 		return layer;
 	}
-
+	
+	/**
+	 * @return The frame duration of this animation.
+	 */
+	public float getFrameDuration() {
+		return frameDuration * timeCoefficient;
+	}
+	
+	/**
+	 * Sets the frame duration of this animation.
+	 * @param duration
+	 */
+	public void setFrameDuration(float duration) {
+		timeCoefficient = frameDuration / duration;
+	}
+	
 	/**
 	 * @param deltaSeconds
 	 *            The amount of seconds since the last time the current frame
@@ -302,7 +324,9 @@ public class Animation implements Renderable {
 	 * @return The current frame.
 	 */
 	public TextureRegion getCurrentFrame(float deltaSeconds) {
-		return animation.getKeyFrame(stateTime += deltaSeconds, looping);
+		stateTime += deltaSeconds;
+		
+		return animation.getKeyFrame(stateTime, looping);
 	}
 
 	// endregion
@@ -361,7 +385,7 @@ public class Animation implements Renderable {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
-		TextureRegion region = getCurrentFrame(deltaSeconds);
+		TextureRegion region = getCurrentFrame(deltaSeconds * timeCoefficient);
 		spriteBatch.draw(region, position.x, position.y, origin.x, origin.y,
 				region.getRegionWidth(), region.getRegionHeight(), scaleX,
 				scaleY, rotation);
