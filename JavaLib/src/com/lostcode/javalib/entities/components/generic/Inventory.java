@@ -15,10 +15,11 @@ public class Inventory extends MultiComponent<Item> {
 
 	private Entity owner;
 	private EntityWorld world;
-	private float max;
+	private int max;
+	private int selected;
 	
 	/**
-	 * Constructs an Inventory component.
+	 * Constructs an empty Inventory component.
 	 * 
 	 * @param owner
 	 *            The Entity that owns this component.
@@ -27,8 +28,8 @@ public class Inventory extends MultiComponent<Item> {
 	 * @param max
 	 *            The maximum number of items contained within the inventory.
 	 */
-	public Inventory(Item base, Array<Item> children, Entity owner, EntityWorld world, float max) {
-		super(base, children);
+	public Inventory( Entity owner, EntityWorld world, int max ) {
+		super(new Item(null), new Item[0]);
 		
 		this.owner = owner;
 		this.world = world;
@@ -36,7 +37,7 @@ public class Inventory extends MultiComponent<Item> {
 	}
 	
 	/**
-	 * Constructs an Inventory component.
+	 * Constructs an Inventory component with initial contents.
 	 * 
 	 * @param owner
 	 *            The Entity that owns this component.
@@ -45,17 +46,16 @@ public class Inventory extends MultiComponent<Item> {
 	 * @param max
 	 *            The maximum number of items contained within the inventory.
 	 * @param initial
-	 *            The initial contents of the inventory.
+	 *            The initial contents of the inventory. If the size of initial is greater than max, max automatically becomes the size of initial.
 	 */
-	public Inventory(Item base, Array<Item> children, Entity owner, EntityWorld world, float max, Array<Item> initial) {
-		super(base, children);
+	public Inventory(Entity owner, EntityWorld world, int max, Array<Item> initial) {
+		super(new Item(null), initial);
 		
 		this.owner = owner;
 		this.world = world;
 		this.max = max;
-		
-		for (Item item : initial)
-			this.children.add(item);
+		if( max < initial.size )
+			max = initial.size;
 	}
 	
 	/**
@@ -83,6 +83,40 @@ public class Inventory extends MultiComponent<Item> {
 	 */
 	public boolean remove(Item item){
 		return this.children.removeValue(item, true);
+	}
+	
+	/**
+	 * Returns the item currently selected in the inventory.
+	 */
+	public Item getSelected(){
+		return children.get(selected);
+	}
+	
+	/**
+	 * Returns the index of the item currently selected in the inventory.
+	 */
+	public int getSelectedIndex(){
+		return selected;
+	}
+	
+	/**
+	 * Selects the item at the given index
+	 * 
+	 * @param index
+	 *            The index of the item to be selected.
+	 */
+	public void select(int index){
+		selected = index;
+	}
+	
+	/**
+	 * Selects the item at the given index
+	 * 
+	 * @param index
+	 *            The index of the item to be selected.
+	 */
+	public Array<Item> getItems(){
+		return this.children;
 	}
 
 }
