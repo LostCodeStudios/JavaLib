@@ -109,6 +109,12 @@ public class Inventory extends MultiComponent<Item> {
 		selected = index;
 	}
 	
+	public void select(Item item){
+		for ( int i = 0; i < children.size; i++ )
+			if( children.get(i) == item)
+				selected = i;
+	}
+	
 	/**
 	 * Selects the item at the given index
 	 * 

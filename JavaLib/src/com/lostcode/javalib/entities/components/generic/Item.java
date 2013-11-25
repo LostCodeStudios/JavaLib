@@ -12,6 +12,7 @@ import com.lostcode.javalib.entities.components.ComponentManager;
 public class Item implements Component {
 	
 	private String type;
+	protected float useTime;
 	
 	/**
 	 * Constructs an Item component.
@@ -49,6 +50,23 @@ public class Item implements Component {
 	 *            The new type.
 	 */
 	public void setType(String type) {
+		this.type = type;
+	}
+	
+	/**
+	 * Returns the Item's useTime.
+	 */
+	public float getUseTime() {
+		return this.useTime;
+	}
+	
+	/**
+	 * Sets the Item's useTime.
+	 * 
+	 *  @param type
+	 *            The new delay.
+	 */
+	public void setUseTime(String type) {
 		this.type = type;
 	}
 	
