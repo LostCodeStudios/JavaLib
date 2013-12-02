@@ -24,6 +24,18 @@ public class Item implements Component {
 	}
 	
 	/**
+	 * Called when the Item is used. Returns whether use was successful
+	 * 
+	 * @param use
+	 *            Tag communicating how the Item is being used.   
+	 * @param args
+	 *            Arguments needed for the particular use.     
+	 */
+	public boolean use( String use, Object... args ){
+		return false;
+	}
+	
+	/**
 	 * Returns the Item's type.
 	 */
 	public String getType() {
