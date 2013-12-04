@@ -33,7 +33,7 @@ import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 
 /**
- * @author David Saltares Mร�?rquez david.saltares at gmail.com
+ * @author David Saltares Mร�?rquez david.saltares at gmail.com
  * @brief Populates box2D world with static bodies using data from a map object
  * 
  *        It uses an XML formatted materials file to assign properties to the
