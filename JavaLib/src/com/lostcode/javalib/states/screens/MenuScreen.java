@@ -17,7 +17,8 @@ import com.lostcode.javalib.utils.Display;
  * 
  * @author Natman64
  * @created Jul 24, 2013
- * 
+ * @deprecated Dec 2, 2013 
+ * JavaLib will soon implement its own menu screens that do not use Scene2D.
  */
 public abstract class MenuScreen extends InputScreen {
 
