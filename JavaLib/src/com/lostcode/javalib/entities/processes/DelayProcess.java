@@ -13,7 +13,7 @@ public class DelayProcess extends Process {
 
 	// region Fields
 
-	protected float time;
+	private float time;
 
 	// endregion
 
