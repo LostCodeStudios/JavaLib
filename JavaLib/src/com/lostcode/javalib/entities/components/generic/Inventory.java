@@ -16,7 +16,7 @@ public class Inventory extends MultiComponent<Item> {
 	private Entity owner;
 	private EntityWorld world;
 	private int max;
-	private int selected;
+	private Item selected;
 	
 	/**
 	 * Constructs an empty Inventory component.
@@ -86,17 +86,17 @@ public class Inventory extends MultiComponent<Item> {
 	}
 	
 	/**
-	 * Returns the item currently selected in the inventory.
+	 * Returns the item currently selected in the inventory, null if item doesn't exist.
 	 */
 	public Item getSelected(){
-		return children.get(selected);
+		return selected;
 	}
 	
 	/**
 	 * Returns the index of the item currently selected in the inventory.
 	 */
 	public int getSelectedIndex(){
-		return selected;
+		return children.lastIndexOf(selected, true);
 	}
 	
 	/**
@@ -106,13 +106,13 @@ public class Inventory extends MultiComponent<Item> {
 	 *            The index of the item to be selected.
 	 */
 	public void select(int index){
-		selected = index;
+		if( index <= children.size-1 )
+			selected = children.get(index);
 	}
 	
 	public void select(Item item){
-		for ( int i = 0; i < children.size; i++ )
-			if( children.get(i) == item)
-				selected = i;
+		if( children.contains(item, true))
+			selected = item;
 	}
 	
 	/**
