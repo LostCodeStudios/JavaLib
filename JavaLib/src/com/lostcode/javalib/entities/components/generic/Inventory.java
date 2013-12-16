@@ -11,6 +11,7 @@ import com.lostcode.javalib.entities.components.MultiComponent;
  * @Created November 11, 2013
  */
 
+@SuppressWarnings("unused")
 public class Inventory extends MultiComponent<Item> {
 
 	private Entity owner;
@@ -142,12 +143,4 @@ public class Inventory extends MultiComponent<Item> {
 	public Array<Item> getItems(){
 		return this.children;
 	}
-	
-	/**
-	 * Returns the owner of the Inventory
-	 */
-	public Entity getOwner(){
-		return this.owner;
-	}
-
 }
