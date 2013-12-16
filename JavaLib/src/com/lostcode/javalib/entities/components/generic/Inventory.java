@@ -66,7 +66,7 @@ public class Inventory extends MultiComponent<Item> {
 	 *            The item to be added.
 	 */
 	public boolean add(Item item) {
-		if( this.children.size == this.max ) {
+		if( this.children.size < max ) {
 			this.children.add(item);
 			return true;
 		}
@@ -75,32 +75,21 @@ public class Inventory extends MultiComponent<Item> {
 	}
 	
 	/**
-	 * Removes a given Item component from the Inventory.
-	 * Returns true if item was successfully removed, otherwise returns false
-	 * 
-	 * @param item
-	 *            The item to be removed.
-	 */
-	public boolean remove(Item item){
-		return this.children.removeValue(item, true);
-	}
-	
-	/**
-	 * Returns the item currently selected in the inventory, null if item doesn't exist.
+	 * Returns the Item currently selected in the inventory, null if item doesn't exist.
 	 */
 	public Item getSelected(){
 		return selected;
 	}
 	
 	/**
-	 * Returns the index of the item currently selected in the inventory.
+	 * Returns the index of the Item currently selected by the inventory.
 	 */
 	public int getSelectedIndex(){
 		return children.lastIndexOf(selected, true);
 	}
 	
 	/**
-	 * Selects the item at the given index
+	 * Selects the Item at the given index
 	 * 
 	 * @param index
 	 *            The index of the item to be selected.
@@ -110,19 +99,55 @@ public class Inventory extends MultiComponent<Item> {
 			selected = children.get(index);
 	}
 	
+	/**
+	 * Selects the given Item
+	 * 
+	 * @param item
+	 *            The index of the item to be selected.
+	 */
 	public void select(Item item){
 		if( children.contains(item, true))
 			selected = item;
 	}
 	
 	/**
-	 * Selects the item at the given index
+	 * Drops the Item at the given index as it's own entity
 	 * 
 	 * @param index
 	 *            The index of the item to be selected.
 	 */
+	public void drop(int index) {
+		if( index <= children.size-1 ) {
+			world.create( children.get(index).getCreationArgs() );
+			children.removeIndex(index);
+		}
+	}
+	
+	/**
+	 * Drops the given Item as it's own entity
+	 * 
+	 * @param item
+	 *            The index of the item to be selected.
+	 */
+	public void drop(Item item) {
+		if( children.contains(item, true)) {
+			world.create(item.getCreationArgs());
+			removeChild(item);
+		}
+	}
+	
+	/**
+	 * Returns an Array containing the contents of the Inventory
+	 */
 	public Array<Item> getItems(){
 		return this.children;
+	}
+	
+	/**
+	 * Returns the owner of the Inventory
+	 */
+	public Entity getOwner(){
+		return this.owner;
 	}
 
 }

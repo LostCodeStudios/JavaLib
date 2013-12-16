@@ -2,6 +2,7 @@ package com.lostcode.javalib.entities.components.generic;
 
 import com.lostcode.javalib.entities.components.Component;
 import com.lostcode.javalib.entities.components.ComponentManager;
+import com.lostcode.javalib.entities.templates.EntityCreationArgs;
 
 /**
  * Base class for components that belong in an {@link Inventory} 
@@ -12,6 +13,7 @@ import com.lostcode.javalib.entities.components.ComponentManager;
 public class Item implements Component {
 	
 	private String type;
+	private EntityCreationArgs creationArgs;
 	protected float useTime;
 	
 	/**
@@ -68,6 +70,13 @@ public class Item implements Component {
 	 */
 	public void setUseTime(String type) {
 		this.type = type;
+	}
+	
+	/**
+	 * Returns the arguments to create the in-world version of this Item.
+	 */
+	public EntityCreationArgs getCreationArgs() {
+		return this.creationArgs;
 	}
 	
 	@Override
