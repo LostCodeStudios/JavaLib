@@ -15,6 +15,8 @@ import com.lostcode.javalib.entities.components.abstracted.Stat;
 public class Cooldown extends Stat {
 
 	private EntityWorld world;
+	
+	public boolean render = false;
 
 	/**
 	 * Constructs a Cooldown component.
