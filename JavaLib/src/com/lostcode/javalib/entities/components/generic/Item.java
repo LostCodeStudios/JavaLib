@@ -73,7 +73,7 @@ public class Item implements Component {
 	}
 	
 	/**
-	 * Returns the arguments needed to create the in-world version of this Item.
+	 * Returns the arguments needed to create the physical version of this Item.
 	 */
 	public EntityCreationArgs getCreationArgs() {
 		return this.creationArgs;
