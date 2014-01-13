@@ -15,6 +15,7 @@ public class Item implements Component {
 	private String type;
 	private EntityCreationArgs creationArgs;
 	protected float useTime;
+	public boolean busy;
 	
 	/**
 	 * Constructs an Item component.
