@@ -99,9 +99,10 @@ public abstract class ComponentManager {
 	 * Clears all of this manager's components.
 	 */
 	protected void clearComponents() {
-		for (Component c : components)
-			c.onRemove(this);
-
+		for (int i = 0; i < components.size; ++i) {
+			components.get(i).onRemove(this);
+		}
+		
 		componentMap.clear();
 		components.clear();
 	}
