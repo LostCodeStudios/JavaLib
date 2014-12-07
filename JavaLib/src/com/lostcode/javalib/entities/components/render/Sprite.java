@@ -156,6 +156,16 @@ public class Sprite implements Renderable {
 	public float getHeight() {
 		return sprite.getHeight();
 	}
+	
+	public float setWidth(float width){
+		sprite.setSize(width, getHeight());
+		return width;
+	}
+	
+	public float setHeight(float height){
+		sprite.setSize(getWidth(), height);
+		return height;
+	}
 
 	@Override
 	public Vector2 getPosition() {
