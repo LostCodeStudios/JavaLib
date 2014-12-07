@@ -194,7 +194,7 @@ public class EntityManager extends Pool<Entity> {
 				searchScore++;
 
 			// If the entity matches all of the requirements
-			if (searchScore == inclusion) {
+			if (searchScore == inclusion && !e.isDeleted()) {
 				return e;
 			}
 		}
