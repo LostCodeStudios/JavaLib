@@ -1,12 +1,12 @@
 package com.lostcode.javalib.entities.components.render;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.lostcode.javalib.entities.components.ComponentManager;
-import com.lostcode.javalib.utils.LogManager;
 import com.lostcode.javalib.utils.SpriteSheet;
 
 /**
@@ -228,6 +228,14 @@ public class Sprite implements Renderable {
 	@Override
 	public void setLayer(int layer) {
 		this.layer = layer;
+	}
+	
+	/**
+	 * 
+	 * @param tint
+	 */
+	public void setColor(Color tint){
+		sprite.setColor(tint);
 	}
 
 	// endregion
