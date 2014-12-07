@@ -2,6 +2,7 @@ package com.lostcode.javalib.entities.components.render;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -21,22 +22,22 @@ public class Animation implements Renderable {
 	// region Animation Types
 
 	/** Normal animation type. */
-	public static final int NORMAL = com.badlogic.gdx.graphics.g2d.Animation.NORMAL;
+	public static final PlayMode NORMAL = com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 
 	/** Reversed animation. */
-	public static final int REVERSED = com.badlogic.gdx.graphics.g2d.Animation.REVERSED;
+	public static final PlayMode REVERSED = com.badlogic.gdx.graphics.g2d.Animation.PlayMode.REVERSED;
 
 	/** Looping animation. */
-	public static final int LOOP = com.badlogic.gdx.graphics.g2d.Animation.LOOP;
+	public static final PlayMode LOOP = com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 
 	/** Reversed looping animation. */
-	public static final int LOOP_REVERSED = com.badlogic.gdx.graphics.g2d.Animation.LOOP_REVERSED;
+	public static final PlayMode LOOP_REVERSED = com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP_REVERSED;
 
 	/** Animates back and forth. */
-	public static final int LOOP_PINGPONG = com.badlogic.gdx.graphics.g2d.Animation.LOOP_PINGPONG;
+	public static final PlayMode LOOP_PINGPONG = com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP_PINGPONG;
 
 	/** Loops randomly from frame to frame. */
-	public static final int LOOP_RANDOM = com.badlogic.gdx.graphics.g2d.Animation.LOOP_RANDOM;
+	public static final PlayMode LOOP_RANDOM = com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP_RANDOM;
 
 	// endregion
 
@@ -79,7 +80,7 @@ public class Animation implements Renderable {
 	 *            The duration of each animation frame.
 	 */
 	public Animation(SpriteSheet spriteSheet, String key, int frameCols,
-			int frameRows, int playType, float frameDuration) {
+			int frameRows, PlayMode playType, float frameDuration) {
 
 		this(spriteSheet, key, frameCols, frameRows, 0, 0, playType,
 				frameDuration);
@@ -108,7 +109,7 @@ public class Animation implements Renderable {
 	 *            The duration of each animation frame.
 	 */
 	public Animation(SpriteSheet spriteSheet, String key, int frameCols,
-			int frameRows, int xPadding, int yPadding, int playType,
+			int frameRows, int xPadding, int yPadding, PlayMode playType,
 			float frameDuration) {
 
 		Array<TextureRegion> regions = new Array<TextureRegion>();

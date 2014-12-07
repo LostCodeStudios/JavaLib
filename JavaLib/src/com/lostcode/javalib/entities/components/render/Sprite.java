@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.lostcode.javalib.entities.components.ComponentManager;
+import com.lostcode.javalib.utils.LogManager;
 import com.lostcode.javalib.utils.SpriteSheet;
 
 /**

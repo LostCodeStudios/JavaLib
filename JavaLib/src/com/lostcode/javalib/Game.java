@@ -3,7 +3,7 @@ package com.lostcode.javalib;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lostcode.javalib.states.ScreenManager;
@@ -119,7 +119,7 @@ public abstract class Game implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		Gdx.gl.glViewport(0, 0, width, height);
+		Gdx.gl20.glViewport(0, 0, width, height);
 
 		screenManager.resize(width, height);
 	}
@@ -172,7 +172,7 @@ public abstract class Game implements ApplicationListener {
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(backgroundRed, backgroundGreen, backgroundBlue, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		screenManager.render();
 	}

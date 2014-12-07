@@ -3,6 +3,7 @@ package com.lostcode.javalib.entities.components.render;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -53,7 +54,7 @@ public class AnimatedSprite implements Renderable {
 	 *            How the Animations should animate.
 	 */
 	public AnimatedSprite(SpriteSheet spriteSheet, String prefix,
-			int frameWidth, int playType, float frameDuration) {
+			int frameWidth, PlayMode playType, float frameDuration) {
 
 		this(spriteSheet, prefix, frameWidth, 0, 0, playType, frameDuration);
 
@@ -78,7 +79,7 @@ public class AnimatedSprite implements Renderable {
 	 *            How the Animations should animate.
 	 */
 	public AnimatedSprite(SpriteSheet spriteSheet, String prefix,
-			int frameWidth, int xPadding, int yPadding, int playType,
+			int frameWidth, int xPadding, int yPadding, PlayMode playType,
 			float frameDuration) {
 
 		Map<String, TextureRegion> regions = spriteSheet.getRegions(prefix);

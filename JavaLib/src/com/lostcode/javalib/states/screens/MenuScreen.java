@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.lostcode.javalib.Game;
 import com.lostcode.javalib.states.InputScreen;
 import com.lostcode.javalib.utils.Display;
@@ -62,8 +63,7 @@ public abstract class MenuScreen extends InputScreen {
 		super(game);
 
 		skin = new Skin(skinHandle);
-		stage = new Stage(Display.getPreferredWidth(),
-				Display.getPreferredHeight(), false);
+		stage = new Stage(new ScreenViewport());
 
 		this.title = title;
 
