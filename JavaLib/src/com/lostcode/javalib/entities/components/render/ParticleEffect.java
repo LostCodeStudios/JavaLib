@@ -1,6 +1,9 @@
 package com.lostcode.javalib.entities.components.render;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter.ScaledNumericValue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lostcode.javalib.entities.components.ComponentManager;
@@ -91,14 +94,21 @@ public class ParticleEffect implements Renderable {
 
 	@Override
 	public void setRotation(float degrees) {
+		ScaledNumericValue v = particleEffect.getEmitters().first().getAngle();
+		v.setHigh(degrees + 90f, degrees -90f);
+		v.setLow(degrees);
 	}
-
-	@Override
-	public void setScale(float scaleX, float scaleY) {
+	
+	public ParticleEmitter getEmitter(){
+		return particleEffect.getEmitters().first();
 	}
 
 	@Override
 	public void setOrigin(Vector2 origin) {
+	}
+	
+	public void setColor(Color tint){
+		particleEffect.getEmitters().first().getTint().setColors(new float[] {tint.r, tint.g, tint.b});
 	}
 
 	@Override
@@ -113,6 +123,12 @@ public class ParticleEffect implements Renderable {
 	@Override
 	public void draw(SpriteBatch spriteBatch, float deltaSeconds) {
 		particleEffect.draw(spriteBatch, deltaSeconds);
+	}
+
+	@Override
+	public void setScale(float scaleX, float scaleY) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	// endregion
