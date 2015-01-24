@@ -183,7 +183,10 @@ public final class PhysicsWorld implements Disposable {
 	private void singleStep() {
 		world.step(TIME_STEP, velocityIterations, positionIterations);
 	}
-
+	
+	public void setGravity(Vector2 gravity){
+		world.setGravity(gravity);
+	}
 	// endregion
 
 }
