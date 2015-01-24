@@ -28,7 +28,8 @@ public class SpriteSheet implements Disposable {
 
 	private Texture sheet;
 	private Map<String, TextureRegion> regions = new HashMap<String, TextureRegion>();
-
+	private String texturePath;
+	
 	// endregion
 
 	// region Initialization
@@ -60,6 +61,7 @@ public class SpriteSheet implements Disposable {
 		String texturePath = xml.getChildByName("texture").getText();
 		
 		SpriteSheet sheet = new SpriteSheet(new Texture(Gdx.files.internal(texturePath)));
+		sheet.texturePath = texturePath;
 		
 		Rectangle rect = new Rectangle();
 		for (Element child : xml.getChildrenByName("rect")) {
@@ -159,6 +161,10 @@ public class SpriteSheet implements Disposable {
 	 */
 	public Texture getTexture() {
 		return sheet;
+	}
+	
+	public String getTexturePath() {
+		return texturePath;
 	}
 
 	/**
