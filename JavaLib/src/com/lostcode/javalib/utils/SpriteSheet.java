@@ -44,6 +44,9 @@ public class SpriteSheet implements Disposable {
 		this.sheet = sheet;
 	}
 	
+	public SpriteSheet() {
+	}
+	
 	// endregion
 
 	// region Static Initialization

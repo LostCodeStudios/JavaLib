@@ -65,6 +65,33 @@ public class Sprite implements Renderable {
 
 		setOrigin(origin);
 	}
+	
+	/**
+	 * Constructs a Sprite using the given SpriteSheet. This should always be
+	 * preferred over the other constructors because SpriteSheet improves
+	 * performance.
+	 * 
+	 * @param spriteSheet
+	 *            The SpriteSheet to use.
+	 * @param key
+	 *            The key of the Sprite's TextureRegion.
+	 * @param scale
+	 *            The Sprite's origin.
+	 */
+	public Sprite(SpriteSheet spriteSheet, String key, float scale, int layer) {
+		TextureRegion region = spriteSheet.getRegion(key);
+
+		sprite = new com.badlogic.gdx.graphics.g2d.Sprite(region);
+
+		Vector2 origin = new Vector2((float) region.getRegionWidth() / 2,
+				(float) region.getRegionHeight() / 2);
+
+		setOrigin(origin);
+		setScale(scale,scale);
+		setLayer(layer);
+	}
+	
+	
 
 	/**
 	 * Constructs a Sprite.
