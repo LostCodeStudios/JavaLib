@@ -465,6 +465,10 @@ public abstract class EntityWorld implements Disposable {
 		return pos;
 	}
 
+	protected boolean containsTemplate(String templateName){
+		return templates.containsKey(templateName);
+	}
+	
 	/**
 	 * @param screenCoordinates
 	 *            A Vector2 whose coordinates are in screen pixels.
