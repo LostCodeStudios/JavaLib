@@ -1,5 +1,7 @@
 package com.lostcode.javalib.utils;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * A wrapper of Java's Random class that provides extra functionality for making
  * games.
@@ -128,4 +130,11 @@ public class Random {
 		return i;
 	}
 
+	/**
+	 * Random vector2
+	 * @return
+	 */
+	public Vector2 nextVector2(){
+		return new Vector2(rand.nextFloat()*2 -1,rand.nextFloat()*2 -1);
+	}
 }

@@ -26,6 +26,13 @@ public class DelayProcess extends Process {
 			attachChild(child);
 		}
 	}
+	
+	public DelayProcess(float time, Process child) {
+		this.time = time;
+
+		attachChild(child);
+		
+	}
 
 	// endregion
 
