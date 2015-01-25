@@ -133,6 +133,10 @@ public class Sensor implements Component {
 			body.destroyFixture(fixture); // Destroy the old fixture, if there
 											// is one
 	}
+	
+	public boolean contains(Entity e){
+		return entitiesInView.contains(e, false);
+	}
 
 	// endregion
 
