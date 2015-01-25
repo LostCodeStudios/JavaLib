@@ -127,8 +127,7 @@ public class ParticleEffect implements Renderable {
 
 	@Override
 	public void setScale(float scaleX, float scaleY) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	// endregion

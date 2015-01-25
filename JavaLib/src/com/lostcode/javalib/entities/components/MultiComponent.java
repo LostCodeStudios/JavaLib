@@ -173,6 +173,19 @@ public class MultiComponent<T extends Component> implements Component {
 		children.removeValue(child, true);
 	}
 	
+	/**
+	 * Removes all children from the MultiComponent, leaving only the base.
+	 */
+	public void clearChildren() {
+		for (int i = children.size - 1; i >= 0; i--) {
+			T child = children.get(i);
+			
+			if (child == base) continue;
+			
+			children.removeIndex(i);
+		}
+	}
+	
 	// endregion
 	
 }
