@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
  * @author Natman64
  * 
  */
-public class SpriteSheet implements Disposable {
+public class SpriteSheet implements Disposable, AbstractSpriteSheet {
 
 	// region Fields
 
